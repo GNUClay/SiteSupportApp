@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<article>
+  <title>
+    Hello
+  </title>
+
+  <para>
+     This is my first paragraph.
+  </para>
+
+  <section>
+       <title>
+          Hello
+       </title>
+
+       <para>
+           This is my first sub paragraph.
+       </para>
+
+       <itemizedlist>
+           <listitem>
+             <para>
+                Undo
+             </para>
+           </listitem>
+         <listitem>
+           <para>
+               Redo
+           </para>
+         </listitem>         
+       </itemizedlist>
+
+    <orderedlist>
+      <listitem>
+        <para>
+          Undo 2
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Redo 2
+        </para>
+      </listitem>
+    </orderedlist>
+
+    <para>
+      This is my second sub paragraph.
+    </para>
+  </section>
+</article>
