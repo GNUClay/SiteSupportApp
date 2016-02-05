@@ -29,26 +29,18 @@ namespace SiteGenerator
         }
 
         public static void Run(PageNodeInfo info)
-        {
-            NLog.LogManager.GetCurrentClassLogger().Info("Run");
-            NLog.LogManager.GetCurrentClassLogger().Info("info.SourceName = {0}", info.SourceName);
-            NLog.LogManager.GetCurrentClassLogger().Info("info.TargetDir = {0}", info.TargetDirName);
-            NLog.LogManager.GetCurrentClassLogger().Info("info.FileNameWithOutExtension = {0}", info.FileNameWithOutExtension);
-            
+        {         
             var tmpSitePage = sitePage.LoadFromFile(info.SourceName);
-
-            NLog.LogManager.GetCurrentClassLogger().Info("tmpSitePage.contentPath = {0}", tmpSitePage.contentPath);
-            NLog.LogManager.GetCurrentClassLogger().Info("tmpSitePage.extension = {0}", tmpSitePage.extension);
-            NLog.LogManager.GetCurrentClassLogger().Info("tmpSitePage.title = {0}", tmpSitePage.title);
 
             if (string.IsNullOrWhiteSpace(tmpSitePage.contentPath))
             {
-                NLog.LogManager.GetCurrentClassLogger().Info("Run FindContent Path");
-
-                tmpSitePage.contentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + ".html");
+                tmpSitePage.contentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + ".thtml");
             }
 
-            NLog.LogManager.GetCurrentClassLogger().Info("tmpSitePage.contentPath = {0}", tmpSitePage.contentPath);
+            if (string.IsNullOrWhiteSpace(tmpSitePage.title))
+            {
+                tmpSitePage.title = GeneralSettings.SiteSettings.title;
+            }
 
             var tmpPage = new TargetPage();
 

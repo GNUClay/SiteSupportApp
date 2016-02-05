@@ -17,24 +17,47 @@
 */
 
 using System.IO;
+
 namespace SiteGenerator
 {
     public class Creator
     {
         public Creator()
         {
-
         }
 
         public void Run()
         {
+            ClearDir();
             ProcessDir(GeneralSettings.SourcePath);
+        }
+
+        private void ClearDir()
+        {
+            var tmpDirs = Directory.GetDirectories(GeneralSettings.DestPath);
+
+            foreach (var subDir in tmpDirs)
+            {
+                var tmpDirInfo = new DirectoryInfo(subDir);
+
+                if (tmpDirInfo.Name == GeneralSettings.IgnoreDestDir)
+                {
+                    continue;
+                }              
+
+                tmpDirInfo.Delete(true);
+            }
+
+            var tmpFiles = Directory.GetFiles(GeneralSettings.DestPath);
+
+            foreach (var file in tmpFiles)
+            {
+                File.Delete(file);
+            }
         }
 
         private void ProcessDir(string dir)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info("ProcessDir dir = {0}", dir);
-
             var tmpInfo = new DirProcesor.SiteNodeInfo();
 
             tmpInfo.SourceDirName = dir;

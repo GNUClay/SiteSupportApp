@@ -18,6 +18,7 @@
 
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SiteGenerator
 {
@@ -59,16 +60,12 @@ namespace SiteGenerator
         {
             mResult = new StringBuilder();
 
-            NLog.LogManager.GetCurrentClassLogger().Info("Run");
-
             GenerateText();
         }
 
         public void Run(string targetFileName)
         {
             Run();
-
-            NLog.LogManager.GetCurrentClassLogger().Info("Run targetFileName = {0}", targetFileName);
 
             using (var tmpTextWriter = new StreamWriter(targetFileName))
             {
@@ -102,38 +99,71 @@ namespace SiteGenerator
                 AppendLine("</title>");
             }
 
+            if (GeneralSettings.SiteSettings.enabledFavicon)
+            {
+                AppendLine("<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'>");
+                AppendLine("<link rel='icon' href='/favicon.ico' type='image/x-icon'>");
+            }
+
             AppendLine("    </head>");
             AppendLine("    <body>");
             AppendLine("        <header>");
-            //AppendLine(mCommonPageSupport.Header);
+            GenerateHeader();
             AppendLine("        </header>");
 
             AppendLine("        <nav>");
-            //AppendLine(mCommonPageSupport.Menu);
+            GenerateMainMenu();
             AppendLine("        </nav>");
 
             AppendLine("<hr>");
 
             AppendLine("        <article>");
 
-            //if (!string.IsNullOrWhiteSpace(TextTitle))
-            //{
-            //    Append("            <h1>");
-            //    AppendLine(TextTitle);
-            //    AppendLine("</h1>");
-            //}
-
             AppendLine(Content);
 
             AppendLine("        </article>");
 
-            AppendLine("<hr>");
-
-            AppendLine("        <footer>");
-            //AppendLine(mCommonPageSupport.Footer);
-            AppendLine("        </footer>");
             AppendLine("    </body>");
             AppendLine("</html>");
+        }
+
+        private void GenerateHeader()
+        {
+            Append("<p>");
+            Append("<span style='font-size: 30px; font-weight: bold;'>");
+            Append("GNU Clay");
+            Append("</span>");
+            Append("&nbsp;");
+            Append("<span>");
+            Append("The small simple AI");
+            Append("</span>");
+            AppendLine("</p>");
+        }
+
+        private void GenerateMainMenu()
+        {
+            var tmpItems = new List<string>();
+
+            foreach(var item in GeneralSettings.SiteSettings.menu.items)
+            {
+                var tmpSb = new StringBuilder();
+
+                tmpSb.Append("<a href ='");
+                tmpSb.Append(item.href);
+                tmpSb.Append("' target='_blank'>");
+                tmpSb.Append(item.label);
+                tmpSb.Append("</a>");
+
+                tmpItems.Add(tmpSb.ToString());
+                tmpItems.Add("&nbsp;|&nbsp;");
+            }
+
+            tmpItems.RemoveAt(tmpItems.Count - 1);
+
+            foreach (var item in tmpItems)
+            {
+                Append(item);
+            }
         }
 
         public string Result

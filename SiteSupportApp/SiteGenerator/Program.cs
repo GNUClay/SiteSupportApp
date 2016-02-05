@@ -24,9 +24,6 @@ namespace SiteGenerator
     {
         static void Main(string[] args)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info("GeneralSettings.SourcePath = {0}", GeneralSettings.SourcePath);
-            NLog.LogManager.GetCurrentClassLogger().Info("GeneralSettings.DestPath = {0}", GeneralSettings.DestPath);
-
             var tmpCreator = new Creator();
 
             tmpCreator.Run();

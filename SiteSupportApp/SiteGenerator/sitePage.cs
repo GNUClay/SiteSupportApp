@@ -29,9 +29,6 @@ namespace SiteGenerator
 
         public static sitePage LoadFromFile(string path)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info("LoadFromFile");
-            NLog.LogManager.GetCurrentClassLogger().Info("path = {0}", path);
-
             using (var tmpfile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 if (tmpfile.Length == 0)

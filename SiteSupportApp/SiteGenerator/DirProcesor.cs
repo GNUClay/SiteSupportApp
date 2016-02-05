@@ -18,7 +18,6 @@
 
 using System.IO;
 
-
 namespace SiteGenerator
 {
     public class DirProcesor
@@ -34,17 +33,15 @@ namespace SiteGenerator
 
         public static void Run(SiteNodeInfo info)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info("Run");
-            NLog.LogManager.GetCurrentClassLogger().Info("info.SourceDirName = {0}", info.SourceDirName);
-            NLog.LogManager.GetCurrentClassLogger().Info("info.TargetDirName = {0}", info.TargetDirName);
-            NLog.LogManager.GetCurrentClassLogger().Info("info.RelativeDirName = {0}", info.RelativeDirName);
+            if (!Directory.Exists(info.TargetDirName))
+            {
+                Directory.CreateDirectory(info.TargetDirName);
+            }
 
             var tmpFiles = Directory.GetFiles(info.SourceDirName, "*.sp");
 
             foreach (var file in tmpFiles)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info(file);
-
                 var tmpInfo = new PageProcessor.PageNodeInfo();
 
                 tmpInfo.SourceName = file;
@@ -52,6 +49,32 @@ namespace SiteGenerator
                 tmpInfo.TargetDirName = info.TargetDirName;
 
                 PageProcessor.Run(tmpInfo);
+            }
+
+            tmpFiles = Directory.GetFiles(info.SourceDirName);
+
+            foreach (var file in tmpFiles)
+            {
+                var tmpFileExtension = Path.GetExtension(file);
+
+                if (tmpFileExtension == ".sp")
+                {
+                    continue;
+                }
+
+                if (tmpFileExtension == ".thtml")
+                {
+                    continue;
+                }
+
+                if (tmpFileExtension == ".site")
+                {
+                    continue;
+                }
+
+                var tmpTargetFileName = Path.Combine(info.TargetDirName, Path.GetFileName(file));
+
+                File.Move(file, tmpTargetFileName);
             }
         }
     }

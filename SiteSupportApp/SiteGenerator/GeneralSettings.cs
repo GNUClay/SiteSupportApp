@@ -17,6 +17,9 @@
 */
 
 using System.Configuration;
+using System.IO;
+
+
 namespace SiteGenerator
 {
     public static class GeneralSettings
@@ -29,6 +32,8 @@ namespace SiteGenerator
 
             ReadSiteSettings();
         }
+
+        public const string IgnoreDestDir = "siteSource";
 
         private static string mSourcePath = string.Empty;
 
@@ -50,9 +55,21 @@ namespace SiteGenerator
             }
         }
 
+        private static site mSiteSettings = null;
+
+        public static site SiteSettings
+        {
+            get
+            {
+                return mSiteSettings;
+            }
+        }
+
         private static void ReadSiteSettings()
         {
-            NLog.LogManager.GetCurrentClassLogger().Info("ReadSiteSettings");
+            var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
+
+            mSiteSettings = site.LoadFromFile(tmpSiteSettingsPath);
         }
     }
 }

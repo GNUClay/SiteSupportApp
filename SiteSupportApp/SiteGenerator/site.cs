@@ -26,12 +26,11 @@ namespace SiteGenerator
     public class site
     {
         public menu menu = null;
+        public string title = string.Empty;
+        public bool enabledFavicon = false;
 
         public static site LoadFromFile(string path)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info("LoadFromFile");
-            NLog.LogManager.GetCurrentClassLogger().Info("path = {0}", path);
-
             using (var tmpfile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 if (tmpfile.Length == 0)
