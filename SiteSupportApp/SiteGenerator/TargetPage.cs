@@ -101,8 +101,8 @@ namespace SiteGenerator
 
             if (GeneralSettings.SiteSettings.enabledFavicon)
             {
-                AppendLine("<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'>");
-                AppendLine("<link rel='icon' href='/favicon.ico' type='image/x-icon'>");
+                //AppendLine("<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'>");
+                AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
 
             AppendLine("    </head>");

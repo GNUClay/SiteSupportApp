@@ -74,7 +74,7 @@ namespace SiteGenerator
 
                 var tmpTargetFileName = Path.Combine(info.TargetDirName, Path.GetFileName(file));
 
-                File.Move(file, tmpTargetFileName);
+                File.Copy(file, tmpTargetFileName, true);
             }
         }
     }
