@@ -43,7 +43,12 @@ namespace SiteGenerator
                 if (tmpDirInfo.Name == GeneralSettings.IgnoreDestDir)
                 {
                     continue;
-                }              
+                }
+
+                if (tmpDirInfo.Name == GeneralSettings.IgnoreGitDir)
+                {
+                    continue;
+                }
 
                 tmpDirInfo.Delete(true);
             }

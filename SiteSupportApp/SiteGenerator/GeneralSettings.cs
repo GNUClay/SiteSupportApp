@@ -35,6 +35,8 @@ namespace SiteGenerator
 
         public const string IgnoreDestDir = "siteSource";
 
+        public const string IgnoreGitDir = ".git";
+
         private static string mSourcePath = string.Empty;
 
         public static string SourcePath
