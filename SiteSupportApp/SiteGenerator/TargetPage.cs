@@ -130,6 +130,15 @@ namespace SiteGenerator
         private void GenerateHeader()
         {
             Append("<p>");
+
+            if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.logo))
+            {
+                Append("<img src='");
+                Append(GeneralSettings.SiteSettings.logo);
+                Append("'>");
+                Append("&nbsp;");
+            }
+
             Append("<span style='font-size: 30px; font-weight: bold;'>");
             Append("GNU Clay");
             Append("</span>");
