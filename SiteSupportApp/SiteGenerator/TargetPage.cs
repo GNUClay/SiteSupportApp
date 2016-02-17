@@ -105,6 +105,19 @@ namespace SiteGenerator
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
 
+            var tmpGAScript = new StringBuilder();
+
+            tmpGAScript.Append("<script>");
+            tmpGAScript.Append("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){");
+            tmpGAScript.Append("(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),");
+            tmpGAScript.Append("m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)");
+            tmpGAScript.Append("})(window,document,'script','//www.google-analytics.com/analytics.js','ga');");
+            tmpGAScript.Append("ga('create', 'UA-73880715-1', 'auto');");
+            tmpGAScript.Append("ga('send', 'pageview');");  
+            tmpGAScript.Append("</script>");
+
+            AppendLine(tmpGAScript.ToString());
+
             AppendLine("    </head>");
             AppendLine("    <body>");
             AppendLine("        <header>");
