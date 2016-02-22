@@ -91,6 +91,7 @@ namespace SiteGenerator
             AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
             AppendLine("    <head>");
             AppendLine("        <meta charset=\"utf-8\" />");
+            AppendLine("        <meta name='generator' content='GNUClay/SiteSupportApp'>");
 
             if (!string.IsNullOrWhiteSpace(Title))
             {
@@ -104,6 +105,8 @@ namespace SiteGenerator
                 //AppendLine("<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'>");
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
+
+            AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>");
 
             var tmpGAScript = new StringBuilder();
 
