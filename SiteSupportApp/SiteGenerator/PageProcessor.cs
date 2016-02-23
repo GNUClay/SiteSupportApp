@@ -46,6 +46,10 @@ namespace SiteGenerator
 
             tmpPage.Title = tmpSitePage.title;
 
+            var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
+
+            tmpPage.LastUpdateDate = tmpFileInfo.LastWriteTime;
+
             using (var tmpTextReader = new StreamReader(tmpSitePage.contentPath))
             {
                 tmpPage.Content = tmpTextReader.ReadToEnd();

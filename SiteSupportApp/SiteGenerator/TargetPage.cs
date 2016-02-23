@@ -54,6 +54,21 @@ namespace SiteGenerator
             }
         }
 
+        private System.DateTime mLastUpdateDate = System.DateTime.Now;
+
+        public System.DateTime LastUpdateDate
+        {
+            get
+            {
+                return mLastUpdateDate;
+            }
+
+            set
+            {
+                mLastUpdateDate = value;
+            }
+        }
+
         private StringBuilder mResult = null;
 
         public void Run()
@@ -87,6 +102,8 @@ namespace SiteGenerator
 
         private void GenerateText()
         {
+            var tmpFormat = new System.Globalization.CultureInfo("en-GB");
+
             AppendLine("<!DOCTYPE html>");
             AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
             AppendLine("    <head>");
@@ -138,6 +155,17 @@ namespace SiteGenerator
             AppendLine(Content);
 
             AppendLine("        </article>");
+
+            AppendLine("<footer style='font-size: 9px;'>");
+            Append("This page was last modified on ");
+            Append(LastUpdateDate.ToString("dd MMMM yyyy", tmpFormat));
+            Append(", at ");
+            Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
+            AppendLine("</br>");
+
+            AppendLine("&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016</br>");
+            AppendLine("The text is available under the <a href='https://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>");
+            AppendLine("</footer>");
 
             AppendLine("    </body>");
             AppendLine("</html>");
