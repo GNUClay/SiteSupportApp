@@ -26,6 +26,7 @@ namespace SiteGenerator
     public class site
     {
         public menu menu = null;
+        public string mainTitle = string.Empty;
         public string title = string.Empty;
         public bool enabledFavicon = false;
         public string logo = string.Empty;

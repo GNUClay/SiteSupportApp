@@ -42,6 +42,8 @@ namespace SiteGenerator
                 tmpSitePage.title = GeneralSettings.SiteSettings.title;
             }
 
+            tmpSitePage.title = GeneralSettings.SiteSettings.mainTitle + tmpSitePage.title;
+
             var tmpPage = new TargetPage();
 
             tmpPage.Title = tmpSitePage.title;
