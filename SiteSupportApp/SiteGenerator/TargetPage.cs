@@ -159,8 +159,8 @@ namespace SiteGenerator
             AppendLine("<footer style='font-size: 9px;'>");
             Append("This page was last modified on ");
             Append(LastUpdateDate.ToString("dd MMMM yyyy", tmpFormat));
-            Append(", at ");
-            Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
+            //Append(", at ");
+            //Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
             AppendLine("</br>");
 
             AppendLine("&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016</br>");
