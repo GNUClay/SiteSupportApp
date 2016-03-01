@@ -44,6 +44,8 @@ namespace SiteGenerator
 
             tmpSitePage.title = GeneralSettings.SiteSettings.mainTitle + tmpSitePage.title;
 
+            tmpSitePage.title = tmpSitePage.title.Trim();
+
             var tmpPage = new TargetPage();
 
             tmpPage.Title = tmpSitePage.title;
@@ -51,6 +53,13 @@ namespace SiteGenerator
             var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
 
             tmpPage.LastUpdateDate = tmpFileInfo.LastWriteTime;
+
+            if (!string.IsNullOrWhiteSpace(tmpSitePage.description))
+            {
+                tmpSitePage.description = tmpSitePage.description.Trim();
+            }
+
+            tmpPage.Description = tmpSitePage.description;
 
             using (var tmpTextReader = new StreamReader(tmpSitePage.contentPath))
             {

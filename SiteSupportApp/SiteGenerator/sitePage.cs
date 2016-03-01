@@ -26,6 +26,7 @@ namespace SiteGenerator
         public string extension = "html";
         public string contentPath = string.Empty;
         public string title = string.Empty;
+        public string description = string.Empty;
 
         public static sitePage LoadFromFile(string path)
         {

@@ -30,7 +30,7 @@ namespace SiteGenerator
         public string title = string.Empty;
         public bool enabledFavicon = false;
         public string logo = string.Empty;
-
+       
         public static site LoadFromFile(string path)
         {
             using (var tmpfile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))

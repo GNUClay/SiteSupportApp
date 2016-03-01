@@ -24,6 +24,21 @@ namespace SiteGenerator
 {
     public class TargetPage
     {
+        private string mDescription = string.Empty;
+
+        public string Description
+        {
+            get
+            {
+                return mDescription;
+            }
+
+            set
+            {
+                mDescription = value;
+            }
+        }
+
         private string mTitle = string.Empty;
 
         public string Title
@@ -109,6 +124,13 @@ namespace SiteGenerator
             AppendLine("    <head>");
             AppendLine("        <meta charset=\"utf-8\" />");
             AppendLine("        <meta name='generator' content='GNUClay/SiteSupportApp'>");
+
+            if(!string.IsNullOrWhiteSpace(Description))
+            {
+                Append("<meta name='description' content='");
+                Append(Description);              
+                AppendLine("'>");
+            }
 
             if (!string.IsNullOrWhiteSpace(Title))
             {
