@@ -65,8 +65,6 @@ namespace SiteGenerator
         {
             var tmpFormat = new System.Globalization.CultureInfo("en-GB");
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"(AdditionalMenu == null) = `{AdditionalMenu == null}`");
-
             AppendLine("<!DOCTYPE html>");
             AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
             AppendLine("    <head>");
@@ -111,7 +109,7 @@ namespace SiteGenerator
             AppendLine(tmpGAScript.ToString());
 
             AppendLine("    </head>");
-            AppendLine("    <body>");
+            AppendLine("    <body style='margin: 8px;'>");
             AppendLine("        <header>");
             GenerateHeader();
             AppendLine("        </header>");
@@ -122,11 +120,27 @@ namespace SiteGenerator
 
             AppendLine("<hr>");
 
-            AppendLine("        <article>");
-
-            AppendLine(Content);
-
-            AppendLine("        </article>");
+            if(AdditionalMenu == null)
+            {
+                AppendLine("        <article>");
+                AppendLine(Content);
+                AppendLine("        </article>");
+            }
+            else
+            {
+                AppendLine("        <div style='display: table; width: 100%;'>");
+                AppendLine("            <div style='display: table-row;'>");
+                AppendLine("            <div style='display: table-cell; position: relative;  vertical-align: top; width: 260px; max-width: 500px;'>");
+                GenerateAdditionalMenu();
+                AppendLine("        </div>");
+                AppendLine("        <div style='display: table-cell; position: relative; vertical-align: top;'>");
+                AppendLine("        <article>");
+                AppendLine(Content);
+                AppendLine("        </article>");
+                AppendLine("        </div>");
+                AppendLine("        </div>");
+                AppendLine("        </div>");
+            }
 
             AppendLine("<footer style='font-size: 9px;'>");
             Append("This page was last modified on ");
@@ -144,14 +158,16 @@ namespace SiteGenerator
         }
 
         private void GenerateHeader()
-        {
+        {         
             Append("<p>");
 
             if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.logo))
             {
+                Append("<a href = '/'>");
                 Append("<img src='");
                 Append(GeneralSettings.SiteSettings.logo);
                 Append("'>");
+                Append("</a>");
                 Append("&nbsp;");
             }
 
@@ -162,7 +178,7 @@ namespace SiteGenerator
             Append("<span>");
             Append("The small simple AI");
             Append("</span>");
-            AppendLine("</p>");
+            AppendLine("</p>");          
         }
 
         private void GenerateMainMenu()
@@ -188,6 +204,36 @@ namespace SiteGenerator
             foreach (var item in tmpItems)
             {
                 Append(item);
+            }
+        }
+
+        private void GenerateAdditionalMenu()
+        {
+            GenerateAdditionalMenuRunItems(AdditionalMenu.items);
+
+            AppendLine("<script>$('.ui.accordion').accordion();</script>");
+        }
+
+        private void GenerateAdditionalMenuRunItems(List<item> items)
+        {
+            foreach (var item in items)
+            {
+                if (item.items == null || item.items.Count == 0)
+                {
+                    AppendLine($"<div><a href='{item.href}' target='_blank'>{item.label}</a></div>");
+                }
+                else
+                {
+                    AppendLine("<div class='ui accordion'>");
+                    AppendLine("<div class='title'>");
+                    AppendLine("<i class='dropdown icon'></i>");
+                    AppendLine(item.label);
+                    AppendLine("</div>");
+                    AppendLine("<div class ='content'>");
+                    GenerateAdditionalMenuRunItems(item.items);
+                    AppendLine("</div>");
+                    AppendLine("</div>");
+                }
             }
         }
 
