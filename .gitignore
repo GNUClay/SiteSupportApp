@@ -6,3 +6,5 @@
 /SiteSupportApp/TstApp/bin/Debug
 /SiteSupportApp/SiteGenerator/obj/Debug
 /SiteSupportApp/TstApp/obj/Debug
+/SiteSupportApp/packages
+*.dll
