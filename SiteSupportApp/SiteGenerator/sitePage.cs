@@ -16,9 +16,9 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Newtonsoft.Json;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
+
 namespace SiteGenerator
 {
     public class sitePage
@@ -27,6 +27,7 @@ namespace SiteGenerator
         public string contentPath = string.Empty;
         public string title = string.Empty;
         public string description = string.Empty;
+        public string additionalMenu = null;
 
         public static sitePage LoadFromFile(string path)
         {
@@ -37,11 +38,10 @@ namespace SiteGenerator
                     return new sitePage();
                 }
 
-                var tmpSerializer = new XmlSerializer(typeof(sitePage));
-
-                var tmpReader = XmlReader.Create(tmpfile);
-
-                return (sitePage)tmpSerializer.Deserialize(tmpReader);
+                using (var reader = new StreamReader(tmpfile))
+                {
+                    return JsonConvert.DeserializeObject<sitePage>(reader.ReadToEnd());
+                }
             }
         }
     }

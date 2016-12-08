@@ -50,6 +50,11 @@ namespace SiteGenerator
 
             tmpPage.Title = tmpSitePage.title;
 
+            if (!string.IsNullOrWhiteSpace(tmpSitePage.additionalMenu))
+            {
+                tmpPage.AdditionalMenu = menu.GetMenu(tmpSitePage.additionalMenu);
+            }
+
             var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
 
             tmpPage.LastUpdateDate = tmpFileInfo.LastWriteTime;

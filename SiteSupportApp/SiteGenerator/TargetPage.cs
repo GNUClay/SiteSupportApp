@@ -24,65 +24,11 @@ namespace SiteGenerator
 {
     public class TargetPage
     {
-        private string mDescription = string.Empty;
-
-        public string Description
-        {
-            get
-            {
-                return mDescription;
-            }
-
-            set
-            {
-                mDescription = value;
-            }
-        }
-
-        private string mTitle = string.Empty;
-
-        public string Title
-        {
-            get
-            {
-                return mTitle;
-            }
-
-            set
-            {
-                mTitle = value;
-            }
-        }
-
-        private string mContent = string.Empty;
-
-        public string Content
-        {
-            get
-            {
-                return mContent;
-            }
-
-            set
-            {
-                mContent = value;
-            }
-        }
-
-        private System.DateTime mLastUpdateDate = System.DateTime.Now;
-
-        public System.DateTime LastUpdateDate
-        {
-            get
-            {
-                return mLastUpdateDate;
-            }
-
-            set
-            {
-                mLastUpdateDate = value;
-            }
-        }
+        public string Description { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public System.DateTime LastUpdateDate { get; set; } = System.DateTime.Now;
+        public menu AdditionalMenu { get; set; }
 
         private StringBuilder mResult = null;
 
@@ -119,6 +65,8 @@ namespace SiteGenerator
         {
             var tmpFormat = new System.Globalization.CultureInfo("en-GB");
 
+            NLog.LogManager.GetCurrentClassLogger().Info($"(AdditionalMenu == null) = `{AdditionalMenu == null}`");
+
             AppendLine("<!DOCTYPE html>");
             AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
             AppendLine("    <head>");
@@ -145,7 +93,9 @@ namespace SiteGenerator
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
 
-            AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>");
+            AppendLine("<link rel='stylesheet' href='/semantic.min.css'>");
+            AppendLine("<script src='/jquery-3.1.1.min.js'></script>");
+            AppendLine("<script src='/semantic.min.js'></script>");
 
             var tmpGAScript = new StringBuilder();
 

@@ -16,10 +16,8 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
+using Newtonsoft.Json;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace SiteGenerator
 {
@@ -40,11 +38,10 @@ namespace SiteGenerator
                     return new site();
                 }
 
-                var tmpSerializer = new XmlSerializer(typeof(site), new Type[] { typeof(menu), typeof(item) });
-
-                var tmpReader = XmlReader.Create(tmpfile);
-
-                return (site)tmpSerializer.Deserialize(tmpReader);
+                using (var reader = new StreamReader(tmpfile))
+                {
+                    return JsonConvert.DeserializeObject<site>(reader.ReadToEnd());
+                }
             }
         }
     }

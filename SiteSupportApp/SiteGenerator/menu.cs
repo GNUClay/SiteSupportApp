@@ -16,7 +16,9 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SiteGenerator
 {
@@ -24,10 +26,42 @@ namespace SiteGenerator
     {
         public string href = string.Empty;
         public string label = string.Empty;
+        public List<item> items { get; set; } = new List<item>();
+
     }
 
     public class menu
     {
         public List<item> items = new List<item>();
+
+        public static menu GetMenu(string menuName)
+        {
+            if (mMenuDict.ContainsKey(menuName))
+            {
+                return mMenuDict[menuName];
+            }
+
+            var menu = LoadFromFile(Path.Combine(GeneralSettings.SourcePath, menuName));
+            mMenuDict[menuName] = menu;
+            return menu;
+        }
+
+        private static Dictionary<string, menu> mMenuDict = new Dictionary<string, menu>();
+
+        public static menu LoadFromFile(string path)
+        {
+            using (var tmpfile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                if (tmpfile.Length == 0)
+                {
+                    return null;
+                }
+
+                using (var reader = new StreamReader(tmpfile))
+                {
+                    return JsonConvert.DeserializeObject<menu>(reader.ReadToEnd());
+                }
+            }
+        }
     }
 }
