@@ -29,6 +29,7 @@ namespace SiteGenerator
         public string Content { get; set; } = string.Empty;
         public System.DateTime LastUpdateDate { get; set; } = System.DateTime.Now;
         public menu AdditionalMenu { get; set; }
+        public bool UseMinification { get; set; } = false;
 
         private StringBuilder mResult = null;
 
@@ -53,11 +54,21 @@ namespace SiteGenerator
 
         protected void Append(string val)
         {
+            if(UseMinification)
+            {
+                val = val.Trim();
+            }
             mResult.Append(val);
         }
 
         protected void AppendLine(string val)
         {
+            if (UseMinification)
+            {
+                Append(val);
+                return;
+            }
+
             mResult.AppendLine(val);
         }
 
@@ -109,8 +120,9 @@ namespace SiteGenerator
             AppendLine(tmpGAScript.ToString());
 
             AppendLine("    </head>");
-            AppendLine("    <body style='margin: 8px;'>");
+            AppendLine("    <body style='margin: 8px; font-family: sans-serif;'>");
             AppendLine("        <header>");
+            GenerateMainWarning();
             GenerateHeader();
             AppendLine("        </header>");
 
@@ -181,6 +193,13 @@ namespace SiteGenerator
             AppendLine("</p>");          
         }
 
+        private void GenerateMainWarning()
+        {
+            AppendLine("<div style='background-color: red;'>");
+            AppendLine("<i class='warning sign icon big'></i> This poject is experimental. And it is not suitable for practical use.");
+            AppendLine("</div>");
+        }
+
         private void GenerateMainMenu()
         {
             var tmpItems = new List<string>();
@@ -209,30 +228,40 @@ namespace SiteGenerator
 
         private void GenerateAdditionalMenu()
         {
-            GenerateAdditionalMenuRunItems(AdditionalMenu.items);
+            GenerateAdditionalMenuRunItems(AdditionalMenu.items, false);
 
-            AppendLine("<script>$('.ui.accordion').accordion();</script>");
+            AppendLine("<script>$('.ui.accordion').accordion({exclusive:false});</script>");
         }
 
-        private void GenerateAdditionalMenuRunItems(List<item> items)
+        private void GenerateAdditionalMenuRunItems(List<item> items, bool isChild)
         {
             foreach (var item in items)
             {
                 if (item.items == null || item.items.Count == 0)
                 {
-                    AppendLine($"<div><a href='{item.href}' target='_blank'>{item.label}</a></div>");
+                    AppendLine($"<ul><li><a href='{item.href}' target='_blank'>{item.label}</a></li></ul>");
                 }
                 else
                 {
-                    AppendLine("<div class='ui accordion'>");
-                    AppendLine("<div class='title'>");
-                    AppendLine("<i class='dropdown icon'></i>");
-                    AppendLine(item.label);
-                    AppendLine("</div>");
-                    AppendLine("<div class ='content'>");
-                    GenerateAdditionalMenuRunItems(item.items);
-                    AppendLine("</div>");
-                    AppendLine("</div>");
+                    if(isChild)
+                    {
+                        AppendLine("<ul><li>");
+                        AppendLine($"<p>{item.label}</p>");
+                        GenerateAdditionalMenuRunItems(item.items, true);
+                        AppendLine("</li></ul>");
+                    }
+                    else
+                    {
+                        AppendLine("<div class='ui accordion'>");
+                        AppendLine("<div class='title'>");
+                        AppendLine("<i class='dropdown icon'></i>");
+                        AppendLine(item.label);
+                        AppendLine("</div>");
+                        AppendLine("<div class ='content'>");
+                        GenerateAdditionalMenuRunItems(item.items, true);
+                        AppendLine("</div>");
+                        AppendLine("</div>");
+                    }
                 }
             }
         }
