@@ -161,7 +161,7 @@ namespace SiteGenerator
             //Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
             AppendLine("</br>");
 
-            AppendLine("&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016</br>");
+            AppendLine("&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016 - 2017</br>");
             AppendLine("The text is available under the <a href='https://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>");
             AppendLine("</footer>");
 
