@@ -196,7 +196,7 @@ namespace SiteGenerator
         private void GenerateMainWarning()
         {
             AppendLine("<div style='background-color: red;'>");
-            AppendLine("<i class='warning sign icon big'></i> This poject is experimental. And it is not suitable for practical use.");
+            AppendLine("<i class='warning sign icon big'></i> This project is experimental. And it is not suitable for practical use.");
             AppendLine("</div>");
         }
 
