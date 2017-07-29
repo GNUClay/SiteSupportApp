@@ -19,6 +19,7 @@
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System;
 
 namespace SiteGenerator
 {
@@ -102,9 +103,19 @@ namespace SiteGenerator
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
 
-            AppendLine("<link rel='stylesheet' href='/semantic.min.css'>");
-            AppendLine("<script src='/jquery-3.1.1.min.js'></script>");
-            AppendLine("<script src='/semantic.min.js'></script>");
+            AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>");
+            AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css' integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp' crossorigin='anonymous'>");
+            AppendLine("<link rel='stylesheet' href='/icon.min.css'>");
+            AppendLine("<link rel='stylesheet' href='/site.css'>");
+
+            if(AdditionalMenu != null)
+            {
+                AppendLine("<link rel='stylesheet' href='/gnu-clay-menu.css'>");
+            }
+            
+            AppendLine("<script src='https://code.jquery.com/jquery-3.2.1.js'></script>");
+            AppendLine("<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>");
+            AppendLine("<script src='https://use.fontawesome.com/9ecadafb0a.js'></script>");
 
             var tmpGAScript = new StringBuilder();
 
@@ -120,19 +131,25 @@ namespace SiteGenerator
             AppendLine(tmpGAScript.ToString());
 
             AppendLine("    </head>");
-            AppendLine("    <body style='margin: 8px; font-family: sans-serif;'>");
-            AppendLine("        <header>");
+            AppendLine("<body>");
+            AppendLine("<div class='container main-container'>");
+            AppendLine("<div class='row justify-content-center'>");
+            AppendLine("<div class='col col-md-10'>");
+            AppendLine("<header>");
             GenerateMainWarning();
             GenerateHeader();
-            AppendLine("        </header>");
-
+            AppendLine("</header>");
             AppendLine("        <nav>");
             GenerateMainMenu();
             AppendLine("        </nav>");
-
             AppendLine("<hr>");
+            AppendLine("</div>");
+            AppendLine("</div>");
 
-            if(AdditionalMenu == null)
+            AppendLine("<div class='row justify-content-center'>");
+            AppendLine("<div class='col col-md-10'>");
+
+            if (AdditionalMenu == null)
             {
                 AppendLine("        <article>");
                 AppendLine(Content);
@@ -140,29 +157,37 @@ namespace SiteGenerator
             }
             else
             {
-                AppendLine("        <div style='display: table; width: 100%;'>");
-                AppendLine("            <div style='display: table-row;'>");
-                AppendLine("            <div style='display: table-cell; position: relative;  vertical-align: top; width: 260px; max-width: 500px;'>");
+                AppendLine("<div class='container-fluid'>");
+                AppendLine("<div class='row'>");
+                AppendLine("<div class='col col-md-3 my-menu-col'>");
                 GenerateAdditionalMenu();
-                AppendLine("        </div>");
-                AppendLine("        <div style='display: table-cell; position: relative; vertical-align: top;'>");
+                AppendLine("</div>");
+                AppendLine("<div class='col col-md-7'>");
                 AppendLine("        <article>");
                 AppendLine(Content);
                 AppendLine("        </article>");
-                AppendLine("        </div>");
-                AppendLine("        </div>");
-                AppendLine("        </div>");
+                AppendLine("</div>");
+                AppendLine("</div>");
+                AppendLine("</div>");
             }
 
-            AppendLine("<footer style='font-size: 9px;'>");
+            AppendLine("</div>");
+            AppendLine("</div>");
+            AppendLine("</div>");
+
+            AppendLine("<footer class='container'>");
+            AppendLine("<div class='row justify-content-center'>");
+            AppendLine("<div class='col col-md-10'>");
             Append("This page was last modified on ");
             Append(LastUpdateDate.ToString("dd MMMM yyyy", tmpFormat));
             //Append(", at ");
             //Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
             AppendLine("</br>");
 
-            AppendLine("&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016 - 2017</br>");
+            AppendLine($"&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016 - {DateTime.Today.Year}</br>");
             AppendLine("The text is available under the <a href='https://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>");
+            AppendLine("</div>");
+            AppendLine("</div>");
             AppendLine("</footer>");
 
             AppendLine("    </body>");
@@ -170,7 +195,7 @@ namespace SiteGenerator
         }
 
         private void GenerateHeader()
-        {         
+        {
             Append("<p>");
 
             if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.logo))
@@ -178,7 +203,7 @@ namespace SiteGenerator
                 Append("<a href = '/'>");
                 Append("<img src='");
                 Append(GeneralSettings.SiteSettings.logo);
-                Append("'>");
+                Append("' style='margin-top: -12px;'>");
                 Append("</a>");
                 Append("&nbsp;");
             }
@@ -188,15 +213,15 @@ namespace SiteGenerator
             Append("</span>");
             Append("&nbsp;");
             Append("<span>");
-            Append("The small simple AI");
+            Append("The small and simple game AI");
             Append("</span>");
             AppendLine("</p>");          
         }
 
         private void GenerateMainWarning()
-        {
-            AppendLine("<div style='background-color: red;'>");
-            AppendLine("<i class='warning sign icon big'></i> This project is experimental. And it is not suitable for practical use.");
+        {                          
+            AppendLine("<div class='not-suitable-danger'>");
+            AppendLine("<i class='warning sign icon big'></i> <span class='not-suitable-danger-text'>This project is experimental. And it is not suitable for practical using.</span>");
             AppendLine("</div>");
         }
 
@@ -229,9 +254,9 @@ namespace SiteGenerator
         private void GenerateAdditionalMenu()
         {
             GenerateAdditionalMenuRunItems(AdditionalMenu.items, false);
-
-            AppendLine("<script>$('.ui.accordion').accordion({exclusive:false});</script>");
         }
+
+        private int mN = 0;
 
         private void GenerateAdditionalMenuRunItems(List<item> items, bool isChild)
         {
@@ -239,26 +264,40 @@ namespace SiteGenerator
             {
                 if (item.items == null || item.items.Count == 0)
                 {
-                    AppendLine($"<ul><li><a href='{item.href}' target='_blank'>{item.label}</a></li></ul>");
+                    if(isChild)
+                    {
+                        AppendLine($"<ul class='my-second-menu-item'><li><a href='{item.href}' target='_blank'>{item.label}</a></li></ul>");
+                    }
+                    else
+                    {
+                        AppendLine($"<p class='my-root-menu-item'><a href='{item.href}' target='_blank'>{item.label}</a></p>");
+                    }
                 }
                 else
                 {
                     if(isChild)
                     {
-                        AppendLine("<ul><li>");
-                        AppendLine($"<p>{item.label}</p>");
+                        AppendLine("<ul class='my-second-menu-item'><li>");
+                        AppendLine($"<p class='my-second-menu-label'>{item.label}</p>");
                         GenerateAdditionalMenuRunItems(item.items, true);
                         AppendLine("</li></ul>");
                     }
                     else
                     {
-                        AppendLine("<div class='ui accordion'>");
-                        AppendLine("<div class='title'>");
-                        AppendLine("<i class='dropdown icon'></i>");
-                        AppendLine(item.label);
+                        mN++;
+
+                        AppendLine($"<div class='panel-group myslim-panel-group' id='accordion_{mN}' role='tablist' aria-multiselectable='true'>");
+                        AppendLine("<div class='panel panel-default' style='margin-bottom: 5px;'>");
+                        AppendLine($"<div class='panel-heading myslim-panel-heading' role='tab' id='headingOne_{mN}'>");
+                        AppendLine($"<a class='myslim-panel-button' role='button' data-toggle='collapse' data-parent='#accordion_{mN}' href='#collapseOne_{mN}' aria-expanded='false' aria-controls='collapseOne_{mN}'>");
+                        AppendLine($"&#9660;&nbsp;<span style='font-weight: bold;'>{item.label}</span>");
+                        AppendLine("</a>");
                         AppendLine("</div>");
-                        AppendLine("<div class ='content'>");
+                        AppendLine($"<div id='collapseOne_{mN}' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne_{mN}'>");
+                        AppendLine("<div class='panel-body myslim-panel-body'>");
                         GenerateAdditionalMenuRunItems(item.items, true);
+                        AppendLine("</div>");
+                        AppendLine("</div>");
                         AppendLine("</div>");
                         AppendLine("</div>");
                     }
