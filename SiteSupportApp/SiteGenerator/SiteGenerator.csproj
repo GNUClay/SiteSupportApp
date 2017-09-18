@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Creator.cs" />
     <Compile Include="DirProcesor.cs" />
-    <Compile Include="DocBookProcessor\DbkToHtml\SimpleProcessor.cs" />
     <Compile Include="GeneralSettings.cs" />
     <Compile Include="menu.cs" />
     <Compile Include="PageProcessor.cs" />

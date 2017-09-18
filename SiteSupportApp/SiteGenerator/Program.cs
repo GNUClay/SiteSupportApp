@@ -25,7 +25,6 @@ namespace SiteGenerator
         static void Main(string[] args)
         {
             var tmpCreator = new Creator();
-
             tmpCreator.Run();
         }
     }
