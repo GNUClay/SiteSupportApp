@@ -26,25 +26,25 @@ namespace SiteGenerator
     public static class GeneralSettings
     {
         public const string CommonProgramFiles_x86 = "$(CommonProgramFiles(x86))";
-        OneDrive
-        TMP
-        TEMP
-        LOCALAPPDATA
-        $(PUBLIC)
-        ProgramFiles(x86)
-        CommonProgramFiles
-        VisualStudioDir
-        ProgramData
-        ProgramW6432
-        ProgramFiles
-        SystemRoot
-        CommonProgramW6432
-        USERPROFILE
-        APPDATA
-        HOMEDRIVE
-        SystemDrive
-        windir
-        ALLUSERSPROFILE
+        //OneDrive
+        //TMP
+        //TEMP
+        //LOCALAPPDATA
+        //$(PUBLIC)
+        //ProgramFiles(x86)
+        //CommonProgramFiles
+        //VisualStudioDir
+        //ProgramData
+        //ProgramW6432
+        //ProgramFiles
+        //SystemRoot
+        //CommonProgramW6432
+        //USERPROFILE
+        //APPDATA
+        //HOMEDRIVE
+        //SystemDrive
+        //windir
+        //ALLUSERSPROFILE
         private static Dictionary<string, string> mVarConstDict = new Dictionary<string, string>();
 
         private static void InitVarConstDict()
