@@ -53,6 +53,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
+      <Project>{4e73ad09-7a17-455b-bd21-e155216b3007}</Project>
+      <Name>CommonUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SiteGenerator\SiteGenerator.csproj">
       <Project>{98e3db34-7d59-4ee5-a853-c2015f9fa63f}</Project>
       <Name>SiteGenerator</Name>
