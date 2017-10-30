@@ -1,0 +1,11 @@
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\NLog.config
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\npp.exe.config
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\npp.exe
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\npp.pdb
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\NLog.dll
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\NLog.xml
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\obj\Debug\NPackagePublisher.csprojResolveAssemblyReference.cache
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\obj\Debug\npp.exe
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\obj\Debug\npp.pdb
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\NPackagePublisher\bin\Debug\Newtonsoft.Json.xml

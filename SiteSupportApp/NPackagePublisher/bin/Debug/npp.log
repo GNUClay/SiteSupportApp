@@ -1,0 +1,54 @@
+2017-10-30 21:30:49.2196|INFO|NPackagePublisher.Program|Run args.Count() = 1
+2017-10-30 21:30:49.2508|INFO|NPackagePublisher.Program|Run arg = nuget-packages.json
+2017-10-30 21:30:49.2508|INFO|NPackagePublisher.Program|Run mRootFilePath = c:\Users\Sergey\Documents\GitHub\GNUClay\nuget-packages.json
+2017-10-30 21:30:49.2508|INFO|NPackagePublisher.Program|Run mRootDirectory = c:\Users\Sergey\Documents\GitHub\GNUClay
+2017-10-30 21:30:49.3794|INFO|NPackagePublisher.Program|Run arg = GnuClay.CommonUtils
+2017-10-30 21:30:49.3794|INFO|NPackagePublisher.Program|Run arg = GnuClay.CommonClientTypes
+2017-10-30 21:30:49.3874|INFO|NPackagePublisher.Program|Run arg = GnuClay.Engine
+2017-10-30 21:30:49.3874|INFO|NPackagePublisher.Program|Run arg = GnuClay.LocalHost
+2017-10-30 21:31:09.4783|INFO|NPackagePublisher.Program|Run item.Key = PROCESSOR_ARCHITEW6432 item.Value = AMD64
+2017-10-30 21:31:09.4942|INFO|NPackagePublisher.Program|Run item.Key = COMMANDER_PATH item.Value = C:\totalcmd
+2017-10-30 21:31:09.4942|INFO|NPackagePublisher.Program|Run item.Key = COMPUTERNAME item.Value = DESKTOP-SJAK0VV
+2017-10-30 21:31:09.4942|INFO|NPackagePublisher.Program|Run item.Key = CommonProgramFiles(x86) item.Value = C:\Program Files (x86)\Common Files
+2017-10-30 21:31:09.5103|INFO|NPackagePublisher.Program|Run item.Key = OneDrive item.Value = C:\Users\Sergey\OneDrive
+2017-10-30 21:31:09.5103|INFO|NPackagePublisher.Program|Run item.Key = GTK_BASEPATH item.Value = C:\Program Files (x86)\GtkSharp\2.12\
+2017-10-30 21:31:09.5103|INFO|NPackagePublisher.Program|Run item.Key = HOMEPATH item.Value = \Users\Sergey
+2017-10-30 21:31:09.5243|INFO|NPackagePublisher.Program|Run item.Key = PROCESSOR_REVISION item.Value = 8e09
+2017-10-30 21:31:09.5243|INFO|NPackagePublisher.Program|Run item.Key = PATHEXT item.Value = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+2017-10-30 21:31:09.5243|INFO|NPackagePublisher.Program|Run item.Key = TMP item.Value = C:\Users\Sergey\AppData\Local\Temp
+2017-10-30 21:31:09.5404|INFO|NPackagePublisher.Program|Run item.Key = TEMP item.Value = C:\Users\Sergey\AppData\Local\Temp
+2017-10-30 21:31:09.5404|INFO|NPackagePublisher.Program|Run item.Key = LOCALAPPDATA item.Value = C:\Users\Sergey\AppData\Local
+2017-10-30 21:31:09.5404|INFO|NPackagePublisher.Program|Run item.Key = PUBLIC item.Value = C:\Users\Public
+2017-10-30 21:31:09.5554|INFO|NPackagePublisher.Program|Run item.Key = COMMANDER_EXE item.Value = C:\totalcmd\TOTALCMD64.EXE
+2017-10-30 21:31:09.5554|INFO|NPackagePublisher.Program|Run item.Key = USERDOMAIN item.Value = DESKTOP-SJAK0VV
+2017-10-30 21:31:09.5554|INFO|NPackagePublisher.Program|Run item.Key = COMMANDER_INSTANCE item.Value = 1
+2017-10-30 21:31:09.5554|INFO|NPackagePublisher.Program|Run item.Key = Path item.Value = C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\Users\Sergey\AppData\Local\Microsoft\WindowsApps;C:\Users\Sergey\AppData\Local\GitHubDesktop\bin;C:\Users\Sergey\AppData\Roaming\npm
+2017-10-30 21:31:09.5780|INFO|NPackagePublisher.Program|Run item.Key = PROCESSOR_LEVEL item.Value = 6
+2017-10-30 21:31:09.5780|INFO|NPackagePublisher.Program|Run item.Key = PROCESSOR_IDENTIFIER item.Value = Intel64 Family 6 Model 142 Stepping 9, GenuineIntel
+2017-10-30 21:31:09.5780|INFO|NPackagePublisher.Program|Run item.Key = PROMPT item.Value = $P$G
+2017-10-30 21:31:09.5780|INFO|NPackagePublisher.Program|Run item.Key = ProgramFiles(x86) item.Value = C:\Program Files (x86)
+2017-10-30 21:31:09.5947|INFO|NPackagePublisher.Program|Run item.Key = NUMBER_OF_PROCESSORS item.Value = 4
+2017-10-30 21:31:09.5947|INFO|NPackagePublisher.Program|Run item.Key = FPS_BROWSER_USER_PROFILE_STRING item.Value = Default
+2017-10-30 21:31:09.5947|INFO|NPackagePublisher.Program|Run item.Key = CommonProgramFiles item.Value = C:\Program Files (x86)\Common Files
+2017-10-30 21:31:09.6104|INFO|NPackagePublisher.Program|Run item.Key = ProgramData item.Value = C:\ProgramData
+2017-10-30 21:31:09.6104|INFO|NPackagePublisher.Program|Run item.Key = ProgramW6432 item.Value = C:\Program Files
+2017-10-30 21:31:09.6195|INFO|NPackagePublisher.Program|Run item.Key = ProgramFiles item.Value = C:\Program Files (x86)
+2017-10-30 21:31:09.6195|INFO|NPackagePublisher.Program|Run item.Key = SystemRoot item.Value = C:\Windows
+2017-10-30 21:31:09.6195|INFO|NPackagePublisher.Program|Run item.Key = SESSIONNAME item.Value = Console
+2017-10-30 21:31:09.6195|INFO|NPackagePublisher.Program|Run item.Key = CommonProgramW6432 item.Value = C:\Program Files\Common Files
+2017-10-30 21:31:09.6365|INFO|NPackagePublisher.Program|Run item.Key = LOGONSERVER item.Value = \\DESKTOP-SJAK0VV
+2017-10-30 21:31:09.6365|INFO|NPackagePublisher.Program|Run item.Key = USERPROFILE item.Value = C:\Users\Sergey
+2017-10-30 21:31:09.6365|INFO|NPackagePublisher.Program|Run item.Key = USERDOMAIN_ROAMINGPROFILE item.Value = DESKTOP-SJAK0VV
+2017-10-30 21:31:09.6496|INFO|NPackagePublisher.Program|Run item.Key = COMMANDER_INI item.Value = C:\Users\Sergey\AppData\Roaming\GHISLER\wincmd.ini
+2017-10-30 21:31:09.6496|INFO|NPackagePublisher.Program|Run item.Key = APPDATA item.Value = C:\Users\Sergey\AppData\Roaming
+2017-10-30 21:31:09.6496|INFO|NPackagePublisher.Program|Run item.Key = HOMEDRIVE item.Value = C:
+2017-10-30 21:31:09.6496|INFO|NPackagePublisher.Program|Run item.Key = COMMANDER_DRIVE item.Value = C:
+2017-10-30 21:31:09.6676|INFO|NPackagePublisher.Program|Run item.Key = PSModulePath item.Value = C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+2017-10-30 21:31:09.6676|INFO|NPackagePublisher.Program|Run item.Key = USERNAME item.Value = Sergey
+2017-10-30 21:31:09.6676|INFO|NPackagePublisher.Program|Run item.Key = FPS_BROWSER_APP_PROFILE_STRING item.Value = Internet Explorer
+2017-10-30 21:31:09.6676|INFO|NPackagePublisher.Program|Run item.Key = PROCESSOR_ARCHITECTURE item.Value = x86
+2017-10-30 21:31:09.6842|INFO|NPackagePublisher.Program|Run item.Key = OS item.Value = Windows_NT
+2017-10-30 21:31:09.6842|INFO|NPackagePublisher.Program|Run item.Key = ComSpec item.Value = C:\Windows\system32\cmd.exe
+2017-10-30 21:31:09.6842|INFO|NPackagePublisher.Program|Run item.Key = SystemDrive item.Value = C:
+2017-10-30 21:31:09.6982|INFO|NPackagePublisher.Program|Run item.Key = windir item.Value = C:\Windows
+2017-10-30 21:31:09.6982|INFO|NPackagePublisher.Program|Run item.Key = ALLUSERSPROFILE item.Value = C:\ProgramData
