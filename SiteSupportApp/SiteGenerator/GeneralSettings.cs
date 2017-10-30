@@ -20,83 +20,23 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using CommonUtils;
 
 namespace SiteGenerator
 {
     public static class GeneralSettings
     {
-        public const string CommonProgramFiles_x86 = "$(CommonProgramFiles(x86))";
-        //OneDrive
-        //TMP
-        //TEMP
-        //LOCALAPPDATA
-        //$(PUBLIC)
-        //ProgramFiles(x86)
-        //CommonProgramFiles
-        //VisualStudioDir
-        //ProgramData
-        //ProgramW6432
-        //ProgramFiles
-        //SystemRoot
-        //CommonProgramW6432
-        //USERPROFILE
-        //APPDATA
-        //HOMEDRIVE
-        //SystemDrive
-        //windir
-        //ALLUSERSPROFILE
-        private static Dictionary<string, string> mVarConstDict = new Dictionary<string, string>();
-
-        private static void InitVarConstDict()
-        {
-            mVarConstDict[CommonProgramFiles_x86] = "CommonProgramFiles(x86)";
-
-        }
-
         static GeneralSettings()
         {
-            InitVarConstDict();
-
-            mSourcePath = ResolvePath(ConfigurationManager.AppSettings["sourcePath"]);
+            mSourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
 
             NLog.LogManager.GetCurrentClassLogger().Info($"mSourcePath = {mSourcePath}");
 
-            mDestPath = ResolvePath(ConfigurationManager.AppSettings["destPath"]);
+            mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
 
             NLog.LogManager.GetCurrentClassLogger().Info($"mDestPath = {mDestPath}");
 
             ReadSiteSettings();
-        }
-
-        private static string ResolvePath(string source)
-        {
-            NLog.LogManager.GetCurrentClassLogger().Info($"ResolvePath source = '{source}'");
-
-            if(source.StartsWith(CommonProgramFiles_x86))
-            {
-                return ReplaceConstInPath(source, CommonProgramFiles_x86);
-            }
-
-            return source;
-        }
-
-        private static string ReplaceConstInPath(string source, string varName)
-        {
-            var variableName = mVarConstDict[varName];
-            var value = Environment.GetEnvironmentVariable(variableName);
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"ResolvePath value = '{value}'");
-
-            source = source.Replace(varName, string.Empty);
-
-            if(source.StartsWith("/"))
-            {
-                source = source.Substring(1);
-            }
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"ResolvePath source = '{source}'");
-
-            return Path.Combine(value, source);
         }
 
         public const string IgnoreDestDir = "siteSource";

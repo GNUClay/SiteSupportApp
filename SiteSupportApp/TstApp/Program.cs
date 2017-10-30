@@ -16,11 +16,13 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using CommonUtils;
 using SiteGenerator;
 using System;
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -40,9 +42,28 @@ namespace TstApp
                 NLog.LogManager.GetCurrentClassLogger().Info($"GetPath item.Key = {item.Key} item.Value = {item.Value}");
             }
 
-            var sourcePath = GeneralSettings.SourcePath;
+            var sourcePath = "%USERPROFILE%/Source";
+
+            //var sourcePath = GeneralSettings.SourcePath;
 
             NLog.LogManager.GetCurrentClassLogger().Info($"GetPath sourcePath = {sourcePath}");
+
+            var normalizedPath = EVPath.Normalize(sourcePath);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath normalizedPath = {normalizedPath}");
+
+            sourcePath = "%CommonProgramFiles(x86)%/Source";
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath sourcePath = {sourcePath}");
+
+            normalizedPath = EVPath.Normalize(sourcePath);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath normalizedPath = {normalizedPath}");
+
+            sourcePath = "c:/users//Source";
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath sourcePath = {sourcePath}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath Path.GetDirectoryName(sourcePath) = {Path.GetFullPath(sourcePath)}");
         }
     }
 }
