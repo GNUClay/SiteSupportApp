@@ -33,6 +33,8 @@ namespace NPackagePublisher
             LoadConfigInfo();
             FindNugetExe();
             Pack();
+            Push();
+            Clear();
 
             NLog.LogManager.GetCurrentClassLogger().Info($"Run mNugetExePath = {mNugetExePath}");
 
@@ -100,6 +102,11 @@ namespace NPackagePublisher
                 NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.ProjectName = {packageInfo.ProjectName}");
 
                 packageInfo.Version = VersionWorker.GetVersion(packageInfo.Path);
+                packageInfo.PackageName = $"{item}.{packageInfo.Version}.nupkg";
+                packageInfo.PackageFullName = Path.Combine(packageInfo.Path, packageInfo.PackageName);
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.Version = {packageInfo.Version}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.PackageName = {packageInfo.PackageName}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.PackageFullName = {packageInfo.PackageFullName}");
 
                 mPackageInfoList.Add(packageInfo);
             }
@@ -161,6 +168,35 @@ namespace NPackagePublisher
 
                 var process = Process.Start(mNugetExePath, $" pack {packageInfo.ProjectName}");
                 process.WaitForExit();
+
+                if(process.ExitCode != 0)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
+
+        private void Push()
+        {
+            foreach (var packageInfo in mPackageInfoList)
+            {
+                Directory.SetCurrentDirectory(packageInfo.Path);
+
+                var process = Process.Start(mNugetExePath, $" push {packageInfo.ProjectName} {mApiKey}");
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
+
+        private void Clear()
+        {
+            foreach (var packageInfo in mPackageInfoList)
+            {
+                File.Delete(packageInfo.PackageFullName);
             }
         }
     }

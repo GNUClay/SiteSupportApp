@@ -13,5 +13,7 @@ namespace NPackagePublisher
         public string NuspecName { get; set; }
         public string ProjectName { get; set; }
         public string Version { get; set; }
+        public string PackageName { get; set; }
+        public string PackageFullName { get; set; }
     }
 }
