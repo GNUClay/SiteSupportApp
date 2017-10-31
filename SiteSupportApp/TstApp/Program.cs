@@ -32,7 +32,17 @@ namespace TstApp
     {
         static void Main(string[] args)
         {
-            GetPath();
+            //GetPath();
+
+            var content = "[assembly: AssemblyFileVersion(\"1.1.0.0\")]";
+
+            var match = Regex.Match(content, "AssemblyFileVersion\\(\"\\d+.\\d+.\\d+.\\d+\"\\)");
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath match = {match}");
+
+            var version = VersionWorker.GetVersion(@"c:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\TstApp");
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath version = {version}");
         }
 
         private static void GetPath()

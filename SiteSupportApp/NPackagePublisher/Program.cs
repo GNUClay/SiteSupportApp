@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using CommonUtils;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,8 +29,12 @@ namespace NPackagePublisher
             }
 
             PreparareParams();
+            GetApiKey();
             LoadConfigInfo();
             FindNugetExe();
+            Pack();
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run mNugetExePath = {mNugetExePath}");
 
             foreach (DictionaryEntry item in Environment.GetEnvironmentVariables())
             {
@@ -37,9 +43,11 @@ namespace NPackagePublisher
         }
 
         private string[] mArgs;
+        private string mApiKey;
         private string mRootFilePath;
         private string mRootDirectory;
         private ConfigInfo mConfigInfo;
+        private List<PackageInfo> mPackageInfoList = new List<PackageInfo>();
         private string mNugetFileName = "nuget.exe";
         private string mNugetExePath;
 
@@ -59,6 +67,14 @@ namespace NPackagePublisher
             NLog.LogManager.GetCurrentClassLogger().Info($"Run mRootDirectory = {mRootDirectory}");
         }
 
+        private void GetApiKey()
+        {
+            Console.Write("Please! Enter your nuget API key here:");
+            mApiKey = Console.ReadLine();
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run mApiKey = {mApiKey}");
+        }
+
         private void LoadConfigInfo()
         {
             using (var tmpfile = new FileStream(mRootFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -68,10 +84,24 @@ namespace NPackagePublisher
                     mConfigInfo = JsonConvert.DeserializeObject<ConfigInfo>(reader.ReadToEnd());
                 }
             }
-                
-            foreach (var arg in mConfigInfo.items)
+
+            foreach (var item in mConfigInfo.items)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"Run arg = {arg}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo item = {item}");
+
+                var packageInfo = new PackageInfo();
+                packageInfo.Name = item;
+                packageInfo.Path = Path.Combine(mRootDirectory, item);
+                packageInfo.NuspecName = Path.Combine(packageInfo.Path, $"{item}.nuspec");
+                packageInfo.ProjectName = Path.Combine(packageInfo.Path, $"{item}.csproj");
+
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.Path = {packageInfo.Path}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.NuspecName = {packageInfo.NuspecName}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.ProjectName = {packageInfo.ProjectName}");
+
+                packageInfo.Version = VersionWorker.GetVersion(packageInfo.Path);
+
+                mPackageInfoList.Add(packageInfo);
             }
         }
 
@@ -119,6 +149,19 @@ namespace NPackagePublisher
             catch
             {
             }            
+        }
+
+        private void Pack()
+        {
+            foreach(var packageInfo in mPackageInfoList)
+            {
+                Directory.SetCurrentDirectory(packageInfo.Path);
+
+                NLog.LogManager.GetCurrentClassLogger().Info($"Pack currDir = `{Directory.GetCurrentDirectory()}`");
+
+                var process = Process.Start(mNugetExePath, $" pack {packageInfo.ProjectName}");
+                process.WaitForExit();
+            }
         }
     }
 }

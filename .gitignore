@@ -8,3 +8,14 @@
 /SiteSupportApp/TstApp/obj/Debug
 /SiteSupportApp/packages
 *.dll
+/SiteSupportApp/.vs/SiteSupportApp/v15/Server/sqlite3/db.lock
+/SiteSupportApp/.vs/SiteSupportApp/v15/Server/sqlite3/storage.ide
+/SiteSupportApp/.vs/SiteSupportApp/v15/Server/sqlite3/storage.ide-shm
+/SiteSupportApp/.vs/SiteSupportApp/v15/Server/sqlite3/storage.ide-wal
+/SiteSupportApp/.vs/SiteSupportApp/v15/sqlite3/db.lock
+/SiteSupportApp/.vs/SiteSupportApp/v15/sqlite3/storage.ide-wal
+/SiteSupportApp/.vs/SiteSupportApp/v15/sqlite3/storage.ide-shm
+/SiteSupportApp/CommonUtils/obj/Debug/CommonUtils.csproj.CopyComplete
+/SiteSupportApp/NPackagePublisher/bin/Debug/CommonUtils.pdb
+/SiteSupportApp/NPackagePublisher/obj/Debug/NPackagePublisher.csproj.CopyComplete
+/SiteSupportApp/NPackagePublisher/obj/Debug/NPackagePublisher.csproj.CoreCompileInputs.cache
