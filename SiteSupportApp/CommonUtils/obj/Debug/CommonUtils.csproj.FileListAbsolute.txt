@@ -1,8 +1,0 @@
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\bin\Debug\CommonUtils.dll
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\bin\Debug\CommonUtils.pdb
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\obj\Debug\CommonUtils.csproj.CoreCompileInputs.cache
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\obj\Debug\CommonUtils.dll
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\obj\Debug\CommonUtils.pdb
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\bin\Debug\NLog.dll
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\bin\Debug\NLog.xml
-C:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\CommonUtils\obj\Debug\CommonUtils.csprojResolveAssemblyReference.cache
