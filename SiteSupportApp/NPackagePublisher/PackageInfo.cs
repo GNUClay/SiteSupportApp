@@ -16,5 +16,7 @@ namespace NPackagePublisher
         public string ShortVersion { get; set; }
         public string PackageName { get; set; }
         public string PackageFullName { get; set; }
+        public string AlternatePackageName { get; set; }
+        public string AlternatePackageFullName { get; set; }
     }
 }

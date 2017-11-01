@@ -98,6 +98,8 @@ namespace NPackagePublisher
                 packageInfo.ShortVersion = VersionWorker.GetShortVersion(packageInfo.Version);
                 packageInfo.PackageName = $"{item}.{packageInfo.Version}.nupkg";
                 packageInfo.PackageFullName = Path.Combine(packageInfo.Path, packageInfo.PackageName);
+                packageInfo.AlternatePackageName = $"{item}.{packageInfo.ShortVersion}.nupkg";
+                packageInfo.AlternatePackageFullName = Path.Combine(packageInfo.Path, packageInfo.AlternatePackageName);
 
                 mPackageInfoList.Add(packageInfo);
             }
@@ -174,7 +176,12 @@ namespace NPackagePublisher
             {
                 Directory.SetCurrentDirectory(packageInfo.Path);
 
-                var process = Process.Start(mNugetExePath, $" pack {packageInfo.ProjectName}");
+                var process = new Process();
+                process.StartInfo.FileName = mNugetExePath;
+                process.StartInfo.Arguments = $" pack {packageInfo.ProjectName}";
+                process.StartInfo.UseShellExecute = false;
+                process.Start();
+                //var process = Process.Start(mNugetExePath, );
                 process.WaitForExit();
 
                 if(process.ExitCode != 0)
@@ -194,7 +201,24 @@ namespace NPackagePublisher
             {
                 Directory.SetCurrentDirectory(packageInfo.Path);
 
-                var process = Process.Start(mNugetExePath, $" push {packageInfo.PackageName} {mApiKey}");
+                var commandLine = string.Empty;
+
+                if(File.Exists(packageInfo.PackageFullName))
+                {
+                    commandLine = $" push {packageInfo.PackageName} {mApiKey} -Source https://www.nuget.org/api/v2/package";
+                }
+                else
+                {
+                    commandLine = $" push {packageInfo.AlternatePackageName} {mApiKey} -Source https://www.nuget.org/api/v2/package";
+                }
+
+                //NLog.LogManager.GetCurrentClassLogger().Info($"Push commandLine = {commandLine}");
+
+                var process = new Process();
+                process.StartInfo.FileName = mNugetExePath;
+                process.StartInfo.Arguments = commandLine;
+                process.StartInfo.UseShellExecute = false;
+                process.Start();
                 process.WaitForExit();
 
                 if (process.ExitCode != 0)
