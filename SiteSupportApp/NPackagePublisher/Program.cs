@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace NPackagePublisher
 
             if(mArgs.Count() == 0)
             {
+                PipelineMessages.WriteLine("There are not command line any arguments! :(");
                 return;
             }
 
@@ -36,12 +38,7 @@ namespace NPackagePublisher
             Push();
             Clear();
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run mNugetExePath = {mNugetExePath}");
-
-            foreach (DictionaryEntry item in Environment.GetEnvironmentVariables())
-            {
-                NLog.LogManager.GetCurrentClassLogger().Info($"Run item.Key = {item.Key} item.Value = {item.Value}");
-            }
+            PipelineMessages.WriteLine("The publication was successfull! :)");
         }
 
         private string[] mArgs;
@@ -55,18 +52,12 @@ namespace NPackagePublisher
 
         private void PreparareParams()
         {
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run args.Count() = {mArgs.Count()}");
-
-            foreach (var arg in mArgs)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Info($"Run arg = {arg}");
-            }
+            PipelineMessages.WriteLine("Prepare arguments ...");
 
             mRootFilePath = Path.GetFullPath(mArgs.First());
             mRootDirectory = Path.GetDirectoryName(mRootFilePath);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run mRootFilePath = {mRootFilePath}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run mRootDirectory = {mRootDirectory}");
+            PipelineMessages.InitResponseFile(Path.Combine(mRootDirectory, "result.txt"));
         }
 
         private void GetApiKey()
@@ -74,11 +65,15 @@ namespace NPackagePublisher
             Console.Write("Please! Enter your nuget API key here:");
             mApiKey = Console.ReadLine();
 
+            PipelineMessages.WriteLine("");
+
             NLog.LogManager.GetCurrentClassLogger().Info($"Run mApiKey = {mApiKey}");
         }
 
         private void LoadConfigInfo()
         {
+            PipelineMessages.WriteLine("Begin loading configInfo...");
+
             using (var tmpfile = new FileStream(mRootFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 using (var reader = new StreamReader(tmpfile))
@@ -87,46 +82,61 @@ namespace NPackagePublisher
                 }
             }
 
+            if (mConfigInfo.items.Count == 0)
+            {
+                throw new BusinessLogicException();
+            }
+
             foreach (var item in mConfigInfo.items)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo item = {item}");
-
                 var packageInfo = new PackageInfo();
                 packageInfo.Name = item;
                 packageInfo.Path = Path.Combine(mRootDirectory, item);
                 packageInfo.NuspecName = Path.Combine(packageInfo.Path, $"{item}.nuspec");
                 packageInfo.ProjectName = Path.Combine(packageInfo.Path, $"{item}.csproj");
-
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.Path = {packageInfo.Path}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.NuspecName = {packageInfo.NuspecName}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.ProjectName = {packageInfo.ProjectName}");
-
                 packageInfo.Version = VersionWorker.GetVersion(packageInfo.Path);
+                packageInfo.ShortVersion = VersionWorker.GetShortVersion(packageInfo.Version);
                 packageInfo.PackageName = $"{item}.{packageInfo.Version}.nupkg";
                 packageInfo.PackageFullName = Path.Combine(packageInfo.Path, packageInfo.PackageName);
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.Version = {packageInfo.Version}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.PackageName = {packageInfo.PackageName}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"LoadConfigInfo packageInfo.PackageFullName = {packageInfo.PackageFullName}");
 
                 mPackageInfoList.Add(packageInfo);
             }
+
+            PipelineMessages.WriteLine("All of items of configinfo have loaded successfully! :)");
         }
 
-        private void FindNugetExe(string initPath = null)
+        private void FindNugetExe()
         {
-            //NLog.LogManager.GetCurrentClassLogger().Info($"FindNugetExe initPath = {initPath}");
+            PipelineMessages.WriteLine("Find nuget.exe ...");
 
+            var initPath = EVPath.Normalize(ConfigurationManager.AppSettings["NuGetPath"]);
+
+            if(!string.IsNullOrWhiteSpace(initPath))
+            {
+                if(File.Exists(initPath))
+                {
+                    mNugetExePath = initPath;
+                }       
+            }
+
+            initPath = $"{Environment.GetEnvironmentVariable("SystemDrive")}/";
+
+            FindNugetExe(initPath);
+
+            if(string.IsNullOrWhiteSpace(mNugetExePath))
+            {
+                throw new BusinessLogicException();
+            }
+
+            PipelineMessages.WriteLine("The nuget.exe have found successfully! :)");
+        }
+
+        private void FindNugetExe(string initPath)
+        {
             if(!string.IsNullOrWhiteSpace(mNugetExePath))
             {
                 return;
             }
-
-            if(string.IsNullOrWhiteSpace(initPath))
-            {
-                initPath = $"{Environment.GetEnvironmentVariable("SystemDrive")}/";
-            }
-
-            //NLog.LogManager.GetCurrentClassLogger().Info($"FindNugetExe after initPath = {initPath}");
 
             try
             {
@@ -134,8 +144,6 @@ namespace NPackagePublisher
 
                 foreach (var childrenFile in curentDirectory.EnumerateFiles())
                 {
-                    //NLog.LogManager.GetCurrentClassLogger().Info($"FindNugetExe childrenFile.Name = {childrenFile.Name} childrenFile.FullName = {childrenFile.FullName}");
-
                     if (childrenFile.Name == mNugetFileName)
                     {
                         mNugetExePath = childrenFile.FullName;
@@ -160,44 +168,58 @@ namespace NPackagePublisher
 
         private void Pack()
         {
-            foreach(var packageInfo in mPackageInfoList)
+            PipelineMessages.WriteLine("Pack items ...");
+
+            foreach (var packageInfo in mPackageInfoList)
             {
                 Directory.SetCurrentDirectory(packageInfo.Path);
-
-                NLog.LogManager.GetCurrentClassLogger().Info($"Pack currDir = `{Directory.GetCurrentDirectory()}`");
 
                 var process = Process.Start(mNugetExePath, $" pack {packageInfo.ProjectName}");
                 process.WaitForExit();
 
                 if(process.ExitCode != 0)
                 {
-                    throw new NotSupportedException();
+                    throw new BusinessLogicException();
                 }
             }
+
+            PipelineMessages.WriteLine("All of items have packed successfully! :)");
         }
 
         private void Push()
         {
+            PipelineMessages.WriteLine("Push items ...");
+
             foreach (var packageInfo in mPackageInfoList)
             {
                 Directory.SetCurrentDirectory(packageInfo.Path);
 
-                var process = Process.Start(mNugetExePath, $" push {packageInfo.ProjectName} {mApiKey}");
+                var process = Process.Start(mNugetExePath, $" push {packageInfo.PackageName} {mApiKey}");
                 process.WaitForExit();
 
                 if (process.ExitCode != 0)
                 {
-                    throw new NotSupportedException();
+                    throw new BusinessLogicException();
                 }
+
+                var targetLink = $"https://www.nuget.org/packages/{packageInfo.Name}/{packageInfo.ShortVersion}";
+
+                PipelineMessages.WriteLine($"Uploaded package:{targetLink}");
             }
+
+            PipelineMessages.WriteLine("All of items have pushed successfully! :)");
         }
 
         private void Clear()
         {
+            PipelineMessages.WriteLine("Clear items ...");
+
             foreach (var packageInfo in mPackageInfoList)
             {
                 File.Delete(packageInfo.PackageFullName);
             }
+
+            PipelineMessages.WriteLine("All of items have cleaned successfully! :)");
         }
     }
 }

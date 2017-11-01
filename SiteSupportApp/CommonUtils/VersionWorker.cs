@@ -11,7 +11,8 @@ namespace CommonUtils
     public static class VersionWorker
     {
         private static Regex mGetVersionRegex = new Regex("AssemblyFileVersion\\(\"\\d+.\\d+.\\d+.\\d+\"\\)");
-        private static Regex mGetVersionRegex2 = new Regex("\\d+.\\d+.\\d+");
+        private static Regex mGetVersionRegex2 = new Regex("\\d+.\\d+.\\d+.\\d+");
+        private static Regex mGetVersionShortRegex2 = new Regex("\\d+.\\d+.\\d+");
 
         public static string GetVersion(string projectPath)
         {
@@ -35,6 +36,18 @@ namespace CommonUtils
             }
 
             return string.Empty;
+        }
+
+        public static string GetShortVersion(string longVersion)
+        {
+            var match = mGetVersionShortRegex2.Match(longVersion);
+
+            if (match.Success)
+            {
+                return match.Value;
+            }
+
+            return longVersion;
         }
     }
 }

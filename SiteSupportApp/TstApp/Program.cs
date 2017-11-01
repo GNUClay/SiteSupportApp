@@ -40,9 +40,13 @@ namespace TstApp
 
             NLog.LogManager.GetCurrentClassLogger().Info($"GetPath match = {match}");
 
-            var version = VersionWorker.GetVersion(@"c:\Users\Sergey\Documents\GitHub\SiteSupportApp\SiteSupportApp\TstApp");
+            var version = VersionWorker.GetVersion(@"c:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\TstApp");
 
             NLog.LogManager.GetCurrentClassLogger().Info($"GetPath version = {version}");
+
+            var shortVersion = VersionWorker.GetShortVersion(version);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath shortVersion = {shortVersion}");
         }
 
         private static void GetPath()
