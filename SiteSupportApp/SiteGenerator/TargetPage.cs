@@ -105,7 +105,6 @@ namespace SiteGenerator
 
             AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>");
             AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css' integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp' crossorigin='anonymous'>");
-            AppendLine("<link rel='stylesheet' href='/icon.min.css'>");
             AppendLine("<link rel='stylesheet' href='/site.css'>");
 
             if(AdditionalMenu != null)
@@ -219,7 +218,7 @@ namespace SiteGenerator
         private void GenerateMainWarning()
         {                          
             AppendLine("<div class='not-suitable-danger'>");
-            AppendLine("<i class='warning sign icon big'></i> <span class='not-suitable-danger-text'>This project is experimental. And it is not suitable for practical using.</span>");
+            AppendLine("<i class='fa fa-exclamation-triangle' aria-hidden='true' style='font-size:20px;'></i> <span class='not-suitable-danger-text'>This project is experimental. And it is not suitable for practical using.</span>");
             AppendLine("</div>");
         }
 
@@ -312,7 +311,7 @@ namespace SiteGenerator
                     return string.Empty;
                 }
 
-                return mResult.ToString();
+                return mResult.ToString().Replace(Environment.NewLine, string.Empty).Trim();
             }
         }
     }
