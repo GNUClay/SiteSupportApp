@@ -79,9 +79,9 @@ namespace SiteGenerator
 
             AppendLine("<!DOCTYPE html>");
             AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
-            AppendLine("    <head>");
-            AppendLine("        <meta charset=\"utf-8\" />");
-            AppendLine("        <meta name='generator' content='GNUClay/SiteSupportApp'>");
+            AppendLine("<head>");
+            AppendLine("<meta charset=\"utf-8\" />");
+            AppendLine("<meta name='generator' content='GNUClay/SiteSupportApp'>");
 
             if(!string.IsNullOrWhiteSpace(Description))
             {
@@ -92,7 +92,7 @@ namespace SiteGenerator
 
             if (!string.IsNullOrWhiteSpace(Title))
             {
-                Append("        <title>");
+                Append("<title>");
                 Append(Title);
                 AppendLine("</title>");
             }
@@ -130,7 +130,7 @@ namespace SiteGenerator
 
             AppendLine(tmpGAScript.ToString());
 
-            AppendLine("    </head>");
+            AppendLine("</head>");
             AppendLine("<body>");
             AppendLine("<div class='container main-container'>");
             AppendLine("<div class='row justify-content-center'>");
@@ -139,9 +139,9 @@ namespace SiteGenerator
             GenerateMainWarning();
             GenerateHeader();
             AppendLine("</header>");
-            AppendLine("        <nav>");
+            AppendLine("<nav>");
             GenerateMainMenu();
-            AppendLine("        </nav>");
+            AppendLine("</nav>");
             AppendLine("<hr>");
             AppendLine("</div>");
             AppendLine("</div>");
@@ -151,9 +151,9 @@ namespace SiteGenerator
 
             if (AdditionalMenu == null)
             {
-                AppendLine("        <article>");
+                AppendLine("<article>");
                 AppendLine(Content);
-                AppendLine("        </article>");
+                AppendLine("</article>");
             }
             else
             {
@@ -162,10 +162,10 @@ namespace SiteGenerator
                 AppendLine("<div class='col col-md-3 my-menu-col'>");
                 GenerateAdditionalMenu();
                 AppendLine("</div>");
-                AppendLine("<div class='col col-md-7'>");
-                AppendLine("        <article>");
+                AppendLine("<div class='col col-md-9'>");
+                AppendLine("<article>");
                 AppendLine(Content);
-                AppendLine("        </article>");
+                AppendLine("</article>");
                 AppendLine("</div>");
                 AppendLine("</div>");
                 AppendLine("</div>");
@@ -178,11 +178,9 @@ namespace SiteGenerator
             AppendLine("<footer class='container'>");
             AppendLine("<div class='row justify-content-center'>");
             AppendLine("<div class='col col-md-10'>");
-            Append("This page was last modified on ");
-            Append(LastUpdateDate.ToString("dd MMMM yyyy", tmpFormat));
+            AppendLine($"This page was last modified on {LastUpdateDate.ToString("dd MMMM yyyy", tmpFormat)}</br>");
             //Append(", at ");
             //Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
-            AppendLine("</br>");
 
             AppendLine($"&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016 - {DateTime.Today.Year}</br>");
             AppendLine("The text is available under the <a href='https://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>");
@@ -190,7 +188,7 @@ namespace SiteGenerator
             AppendLine("</div>");
             AppendLine("</footer>");
 
-            AppendLine("    </body>");
+            AppendLine("</body>");
             AppendLine("</html>");
         }
 
