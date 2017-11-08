@@ -311,7 +311,7 @@ namespace SiteGenerator
                     return string.Empty;
                 }
 
-                return mResult.ToString().Replace(Environment.NewLine, string.Empty).Trim();
+                return mResult.ToString()/*.Replace(Environment.NewLine, string.Empty)*/.Trim();
             }
         }
     }
