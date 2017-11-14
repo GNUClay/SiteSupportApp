@@ -36,6 +36,14 @@ namespace SiteGenerator
 
             NLog.LogManager.GetCurrentClassLogger().Info($"mDestPath = {mDestPath}");
 
+            mApiReferenceConfigPath = EVPath.Normalize(ConfigurationManager.AppSettings["apiReferenceConfigPath"]);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferenceConfigPath = {mApiReferenceConfigPath}");
+
+            mApiReferencePath = Path.GetDirectoryName(mApiReferenceConfigPath);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferencePath = {mApiReferencePath}");
+
             ReadSiteSettings();
         }
 
@@ -44,6 +52,9 @@ namespace SiteGenerator
         public const string IgnoreGitDir = ".git";
 
         private static string mSourcePath = string.Empty;
+
+        private static string mApiReferenceConfigPath;
+        private static string mApiReferencePath;
 
         public static string SourcePath
         {
@@ -60,6 +71,22 @@ namespace SiteGenerator
             get
             {
                 return mDestPath;
+            }
+        }
+
+        public static string ApiReferenceConfigPath
+        {
+            get
+            {
+                return mApiReferenceConfigPath;
+            }
+        }
+
+        public static string ApiReferencePath
+        {
+            get
+            {
+                return mApiReferencePath;
             }
         }
 

@@ -17,13 +17,16 @@
 */
 
 using CommonUtils;
+using HtmlAgilityPack;
 using SiteGenerator;
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace TstApp
@@ -32,21 +35,32 @@ namespace TstApp
     {
         static void Main(string[] args)
         {
+            TSTLoadDocumentation();
             //GetPath();
+            //TstVersion();
+        }
 
-            var content = "[assembly: AssemblyFileVersion(\"1.1.0.0\")]";
+        private static void TSTLoadDocumentation()
+        {
+            var sourcePath = GeneralSettings.SourcePath;
 
-            var match = Regex.Match(content, "AssemblyFileVersion\\(\"\\d+.\\d+.\\d+.\\d+\"\\)");
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation sourcePath = {sourcePath}");
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath match = {match}");
+            var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.LocalHost.xml");
 
-            var version = VersionWorker.GetVersion(@"c:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\TstApp");
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation path = {path}");
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath version = {version}");
+            using (var fs = File.OpenRead(path))
+            {
+                var doc = XDocument.Load(fs);
 
-            var shortVersion = VersionWorker.GetShortVersion(version);
+                var members = doc.Root.Elements().Where(p => p.Name.LocalName.ToLower() == "members").Elements().ToList();
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath shortVersion = {shortVersion}");
+                foreach(var item in members)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation item = {item.ToString()}");
+                }
+            }
         }
 
         private static void GetPath()
@@ -78,6 +92,23 @@ namespace TstApp
 
             NLog.LogManager.GetCurrentClassLogger().Info($"GetPath sourcePath = {sourcePath}");
             NLog.LogManager.GetCurrentClassLogger().Info($"GetPath Path.GetDirectoryName(sourcePath) = {Path.GetFullPath(sourcePath)}");
+        }
+
+        private static void TstVersion()
+        {
+            var content = "[assembly: AssemblyFileVersion(\"1.1.0.0\")]";
+
+            var match = Regex.Match(content, "AssemblyFileVersion\\(\"\\d+.\\d+.\\d+.\\d+\"\\)");
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath match = {match}");
+
+            var version = VersionWorker.GetVersion(@"c:\Users\Сергей\Documents\GitHub\SiteSupportApp\SiteSupportApp\TstApp");
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath version = {version}");
+
+            var shortVersion = VersionWorker.GetShortVersion(version);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPath shortVersion = {shortVersion}");
         }
     }
 }
