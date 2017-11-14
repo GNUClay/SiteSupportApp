@@ -19,6 +19,7 @@
 using CommonUtils;
 using HtmlAgilityPack;
 using SiteGenerator;
+using SiteGenerator.ApiReferenceGenerator;
 using System;
 using System.Collections;
 using System.IO;
@@ -50,17 +51,26 @@ namespace TstApp
 
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation path = {path}");
 
-            using (var fs = File.OpenRead(path))
+            var xmlDocWrapper = new XMLDocWrapper(path);
+
+            var types = xmlDocWrapper.LoadTypeNames();
+
+            foreach(var typeName in types)
             {
-                var doc = XDocument.Load(fs);
-
-                var members = doc.Root.Elements().Where(p => p.Name.LocalName.ToLower() == "members").Elements().ToList();
-
-                foreach(var item in members)
-                {
-                    NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation item = {item.ToString()}");
-                }
+                NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation typeName = {typeName}");
             }
+
+            //using (var fs = File.OpenRead(path))
+            //{
+            //    var doc = XDocument.Load(fs);
+
+            //    var members = doc.Root.Elements().Where(p => p.Name.LocalName.ToLower() == "members").Elements().ToList();
+
+            //    foreach(var item in members)
+            //    {
+            //        NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation item = {item.ToString()}");
+            //    }
+            //}
         }
 
         private static void GetPath()

@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="ApiReferenceGenerator\ApiProject.cs" />
     <Compile Include="ApiReferenceGenerator\ApiSolution.cs" />
+    <Compile Include="ApiReferenceGenerator\XMLDocWrapper.cs" />
     <Compile Include="Creator.cs" />
     <Compile Include="DirProcesor.cs" />
     <Compile Include="GeneralSettings.cs" />
