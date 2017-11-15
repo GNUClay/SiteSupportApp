@@ -28,9 +28,22 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             foreach (var item in members)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation item = {item.ToString()}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation item = {item.Attributes().FirstOrDefault(p => p.Name.LocalName == "name")?.Value}");
+                var name = item.Attributes().FirstOrDefault(p => p.Name.LocalName == "name")?.Value?.Trim();
+
+                if(string.IsNullOrWhiteSpace(name))
+                {
+                    continue;
+                }
+
+                if(!name.StartsWith("T:"))
+                {
+                    continue;
+                }
+
+                result.Add(name.Replace("T:", "").Trim());
             }
+
+            result = result.Distinct().ToList();
 
             return result;
         }
