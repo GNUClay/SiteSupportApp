@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             FillChildren(initList);
         }
+
+        public override string KindName => "namespace";
 
         public bool IsRoot { get; private set; }
         public List<NameOfNamespaceNode> Namespaces { get; set; } = new List<NameOfNamespaceNode>();
@@ -47,6 +50,45 @@ namespace SiteGenerator.ApiReferenceGenerator
             }
 
             ProcessWithoutTailes(splitedResult.WithoutTailes);
+        }
+
+        public string DisplayHierarchy()
+        {
+            return DisplayHierarchy(0);
+        }
+
+        public override string DisplayHierarchy(int ident)
+        {
+            var spaces = _ObjectHelper.CreateSpaces(ident);
+            var nextIdent = ident + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}Begin {KindName}:{Name}");
+            foreach (var item in Namespaces)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach(var item in Classes)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Interfaces)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Structs)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Delegates)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Enums)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            sb.AppendLine($"{spaces}End {KindName}:{Name}");
+            return sb.ToString();
         }
     }
 }

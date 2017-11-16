@@ -96,5 +96,99 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             return mMembersList.FirstOrDefault(p => p.Attributes().FirstOrDefault(x => x.Name.LocalName == "name").Value.Trim() == key);
         }
+
+        public List<string> GetPropertiesNames(string key)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetPropertiesNames key = {key}");
+
+            if (key.StartsWith("T:"))
+            {
+                key = key.Replace("T:", "");
+            }
+
+            if (!key.StartsWith("P:"))
+            {
+                key = $"P:{key}";
+            }
+
+            return GetMemberNames(key);
+        }
+
+        private List<string> GetMemberNames(string key)
+        {
+            var result = new List<string>();
+
+            foreach (var item in mMembersList)
+            {
+                var name = item.Attributes().FirstOrDefault(p => p.Name.LocalName == "name")?.Value?.Trim();
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    continue;
+                }
+
+                if (!name.StartsWith(key))
+                {
+                    continue;
+                }
+
+                result.Add(name);
+            }
+
+            result = result.Distinct().ToList();
+
+            return result;
+        }
+
+        public List<string> GetMethodsNames(string key)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetMethodsNames key = {key}");
+
+            if (key.StartsWith("T:"))
+            {
+                key = key.Replace("T:", "");
+            }
+
+            if (!key.StartsWith("M:"))
+            {
+                key = $"M:{key}";
+            }
+
+            return GetMemberNames(key);
+        }
+
+        public List<string> GetEventsNames(string key)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetEventsNames key = {key}");
+
+            if (key.StartsWith("T:"))
+            {
+                key = key.Replace("T:", "");
+            }
+
+            if (!key.StartsWith("E:"))
+            {
+                key = $"E:{key}";
+            }
+
+            return GetMemberNames(key);
+        }
+
+        public List<string> GetEnumElementsNames(string key)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetEnumElementsNames key = {key}");
+
+            if (key.StartsWith("T:"))
+            {
+                key = key.Replace("T:", "");
+            }
+
+            if (!key.StartsWith("F:"))
+            {
+                key = $"F:{key}";
+            }
+
+            return GetMemberNames(key);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,27 @@ namespace SiteGenerator.ApiReferenceGenerator
             Class,
             Interface,
             Struct
+        }
+
+        public override string KindName
+        {
+            get
+            {
+                switch(Kind)
+                {
+                    case KindOfClass.Class:
+                        return "class";
+
+                    case KindOfClass.Interface:
+                        return "interface";
+
+                    case KindOfClass.Struct:
+                        return "struct";
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+                }
+            }
         }
 
         public NameOfClassNode(XMLDocWrapper doc, AbstractNameNode parent, string name, KindOfClass kind, List<string> initList)
@@ -43,6 +65,36 @@ namespace SiteGenerator.ApiReferenceGenerator
             }
 
             ProcessWithoutTailes(splitedResult.WithoutTailes);
+        }
+
+        public override string DisplayHierarchy(int ident)
+        {
+            var spaces = _ObjectHelper.CreateSpaces(ident);
+            var nextIdent = ident + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}Begin {KindName}:{Name}");
+            foreach (var item in Classes)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Interfaces)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Structs)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Delegates)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            foreach (var item in Enums)
+            {
+                sb.Append(item.DisplayHierarchy(nextIdent));
+            }
+            sb.AppendLine($"{spaces}End {KindName}:{Name}");
+            return sb.ToString();
         }
     }
 }

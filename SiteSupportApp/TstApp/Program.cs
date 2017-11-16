@@ -57,6 +57,11 @@ namespace TstApp
 
             var tree = xmlDocWrapper.LoadTreeOfTypes();
 
+            var treeAsString = tree.DisplayHierarchy();
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation treeAsString = {treeAsString}");
+
+            var classInfo = new ClassInfo(xmlDocWrapper, "T:TstApp.ExampleNamespace.Example2");
+
             //using (var fs = File.OpenRead(path))
             //{
             //    var doc = XDocument.Load(fs);

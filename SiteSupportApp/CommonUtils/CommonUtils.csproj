@@ -48,6 +48,7 @@
     <Compile Include="PipelineMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VersionWorker.cs" />
+    <Compile Include="_ObjectHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

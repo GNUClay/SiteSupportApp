@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace SiteGenerator.ApiReferenceGenerator
         public List<string> WithoutTailes { get; set; } = new List<string>();
     }
 
-    public class AbstractNameNode
+    public abstract class AbstractNameNode
     {
         protected AbstractNameNode(XMLDocWrapper doc, AbstractNameNode parent, string name)
         {
@@ -50,6 +51,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         public string Name { get; private set; } = string.Empty;
         public string FullName { get; private set; }
+        public abstract string KindName { get; }
 
         public List<NameOfClassNode> Classes { get; set; } = new List<NameOfClassNode>();
         public List<NameOfClassNode> Interfaces { get; set; } = new List<NameOfClassNode>();
@@ -152,6 +154,12 @@ namespace SiteGenerator.ApiReferenceGenerator
                     }
                 }
             }
+        }
+
+        public virtual string DisplayHierarchy(int ident)
+        {
+            var spaces = _ObjectHelper.CreateSpaces(ident);
+            return $"{spaces}{KindName}:{Name}{Environment.NewLine}";
         }
     }
 }

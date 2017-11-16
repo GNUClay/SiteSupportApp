@@ -16,9 +16,21 @@ namespace TstApp
         /// </summary>
         public enum ExampleEnum
         {
+            /// <summary>
+            /// Comment 1
+            /// </summary>
             F,
+
+            /// <summary>
+            /// Comment 2
+            /// </summary>
             G
         }
+
+        /// <summary>
+        /// Some Prop2
+        /// </summary>
+        public ExampleEnum SomeProp2 { get; set; }
     }
 }
 
@@ -29,6 +41,23 @@ namespace TstApp.ExampleNamespace
     /// </summary>
     public class Example2
     {
+        /// <summary>
+        /// SomeProp
+        /// </summary>
+        public int SomeProp { get; set; }
+
+        /// <summary>
+        /// SomeMethod
+        /// </summary>
+        /// <param name="a">SomeParam</param>
+        public void Run(int a)
+        {
+        }
+
+        /// <summary>
+        /// Some Event
+        /// </summary>
+        event Action SomeEvent;
     }
 
     /// <summary type="i">

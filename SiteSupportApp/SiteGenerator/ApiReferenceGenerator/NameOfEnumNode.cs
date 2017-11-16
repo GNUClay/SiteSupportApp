@@ -12,5 +12,7 @@ namespace SiteGenerator.ApiReferenceGenerator
             : base(doc, parent, name)
         {
         }
+
+        public override string KindName => "enum";
     }
 }
