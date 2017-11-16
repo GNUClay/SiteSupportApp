@@ -47,18 +47,15 @@ namespace TstApp
 
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation sourcePath = {sourcePath}");
 
-            var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.LocalHost.xml");
+            //var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.LocalHost.xml");
+            //var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.CommonClientTypes.xml");
+            var path = EVPath.Normalize("TstApp.xml");
 
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation path = {path}");
 
             var xmlDocWrapper = new XMLDocWrapper(path);
 
-            var types = xmlDocWrapper.LoadTypeNames();
-
-            foreach(var typeName in types)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation typeName = {typeName}");
-            }
+            var tree = xmlDocWrapper.LoadTreeOfTypes();
 
             //using (var fs = File.OpenRead(path))
             //{

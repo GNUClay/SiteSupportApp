@@ -8,5 +8,9 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class NameOfDelegateNode: AbstractNameNode
     {
+        public NameOfDelegateNode(XMLDocWrapper doc, AbstractNameNode parent, string name)
+            : base(doc, parent, name)
+        {
+        }
     }
 }
