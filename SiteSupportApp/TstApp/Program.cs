@@ -48,8 +48,8 @@ namespace TstApp
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation sourcePath = {sourcePath}");
 
             //var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.LocalHost.xml");
-            //var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.CommonClientTypes.xml");
-            var path = EVPath.Normalize("TstApp.xml");
+            var path = EVPath.Normalize(@"%USERPROFILE%\Documents\GitHub\gnuclay.github.io\siteSource\api\GnuClay.CommonClientTypes.xml");
+            //var path = EVPath.Normalize("TstApp.xml");
 
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation path = {path}");
 
@@ -58,6 +58,10 @@ namespace TstApp
             var tree = xmlDocWrapper.LoadTreeOfTypes();
 
             var treeAsString = tree.DisplayHierarchy();
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation treeAsString = {treeAsString}");
+
+            var notSimpleTree = tree.GetNotSimpleNamespace();
+            treeAsString = notSimpleTree.DisplayHierarchy();
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation treeAsString = {treeAsString}");
 
             var classInfo = new ClassInfo(xmlDocWrapper, "T:TstApp.ExampleNamespace.Example2", KindOfClass.Class);

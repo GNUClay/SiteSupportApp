@@ -24,6 +24,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         public bool IsRoot { get; private set; }
         public List<NameOfNamespaceNode> Namespaces { get; set; } = new List<NameOfNamespaceNode>();
+        public bool IsSimple { get; private set; } = true;
 
         private void FillChildren(List<string> initList)
         {
@@ -50,6 +51,23 @@ namespace SiteGenerator.ApiReferenceGenerator
             }
 
             ProcessWithoutTailes(splitedResult.WithoutTailes);
+
+            IsSimple = (Namespaces.Count == 0 || Namespaces.Count == 1) && Classes.Count == 0 && Delegates.Count == 0 && Interfaces.Count == 0 && Structs.Count == 0 && Enums.Count == 0;
+        }
+
+        public NameOfNamespaceNode GetNotSimpleNamespace()
+        {
+            if(!IsSimple)
+            {
+                return this;
+            }
+
+            if(Namespaces.Count == 0)
+            {
+                return null;
+            }
+
+            return Namespaces[0].GetNotSimpleNamespace();
         }
 
         public string DisplayHierarchy()
@@ -62,7 +80,17 @@ namespace SiteGenerator.ApiReferenceGenerator
             var spaces = _ObjectHelper.CreateSpaces(ident);
             var nextIdent = ident + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}Begin {KindName}:{Name}");
+            sb.Append($"{spaces}Begin {KindName}:{Name}");
+            if(IsRoot)
+            {
+                sb.Append(" root");
+            }
+            if(IsSimple)
+            {
+                sb.Append(" simple");
+            }
+            sb.AppendLine();
+
             foreach (var item in Namespaces)
             {
                 sb.Append(item.DisplayHierarchy(nextIdent));

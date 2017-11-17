@@ -190,9 +190,14 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         public MemberInfo LoadMemberInfo(string key)
         {
-            var result = new MemberInfo(key);
-
             var element = NGetMember(key);
+
+            if(element == null)
+            {
+                return null;
+            }
+
+            var result = new MemberInfo(key);
 
             var summaries = element.Elements().Where(p => p.Name.LocalName.ToLower() == "summary").ToList();
 
