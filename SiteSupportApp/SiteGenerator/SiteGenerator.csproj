@@ -71,6 +71,7 @@
     <Compile Include="ApiReferenceGenerator\ApiSolution.cs" />
     <Compile Include="ApiReferenceGenerator\ClassInfo.cs" />
     <Compile Include="ApiReferenceGenerator\EnumInfo.cs" />
+    <Compile Include="ApiReferenceGenerator\MemberInfo.cs" />
     <Compile Include="ApiReferenceGenerator\NameOfClassNode.cs" />
     <Compile Include="ApiReferenceGenerator\NameOfDelegateNode.cs" />
     <Compile Include="ApiReferenceGenerator\NameOfEnumNode.cs" />

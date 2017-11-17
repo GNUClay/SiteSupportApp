@@ -49,26 +49,9 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         private void FillMembers()
         {
-            var propertiesList = mDoc.GetPropertiesNames(FullName);
-
-            foreach(var item in propertiesList)
-            {
-                Properties.Add(item);
-            }
-
-            var methodsList = mDoc.GetMethodsNames(FullName);
-
-            foreach (var item in methodsList)
-            {
-                Methods.Add(item);
-            }
-
-            var eventsList = mDoc.GetEventsNames(FullName);
-
-            foreach (var item in eventsList)
-            {
-                Events.Add(item);
-            }
+            Properties = mDoc.GetPropertiesNames(FullName);
+            Methods = mDoc.GetMethodsNames(FullName);
+            Events = mDoc.GetEventsNames(FullName);
         }
 
         public string DisplayMembers()

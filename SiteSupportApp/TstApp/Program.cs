@@ -67,6 +67,13 @@ namespace TstApp
             var enumInfo = new EnumInfo(xmlDocWrapper, "T:TstApp.ExampleClass.ExampleEnum");
             var enumInfoAsString = enumInfo.DisplayItems();
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation enumInfoAsString = {enumInfoAsString}");
+
+            var memberInfo = xmlDocWrapper.LoadMemberInfo("P:TstApp.ExampleNamespace.Example2.SomeProp");
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation memberInfo = {memberInfo}");
+
+            memberInfo = xmlDocWrapper.LoadMemberInfo("M:TstApp.ExampleNamespace.Example2.Run2``1(System.Int32)");
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation memberInfo = {memberInfo}");
+
             //using (var fs = File.OpenRead(path))
             //{
             //    var doc = XDocument.Load(fs);
