@@ -16,6 +16,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using SiteGenerator.ApiReferenceGenerator;
 using System.IO;
 
 namespace SiteGenerator
@@ -33,6 +34,12 @@ namespace SiteGenerator
 
         public static void Run(SiteNodeInfo info)
         {
+            if(info.SourceDirName == GeneralSettings.ApiReferencePath)
+            {
+                ApiDirProcessor.Run(info);
+                return;
+            }
+
             if (!Directory.Exists(info.TargetDirName))
             {
                 Directory.CreateDirectory(info.TargetDirName);
