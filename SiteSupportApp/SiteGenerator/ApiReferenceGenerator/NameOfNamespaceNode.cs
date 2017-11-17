@@ -39,7 +39,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
                 if (mDoc.HasSummary(fullTypeName))
                 {
-                    var classNode = new NameOfClassNode(mDoc, this, kvpItem.Key, NameOfClassNode.KindOfClass.Class, kvpItem.Value);
+                    var classNode = new NameOfClassNode(mDoc, this, kvpItem.Key, KindOfClass.Class, kvpItem.Value);
                     Classes.Add(classNode);
                 }
                 else

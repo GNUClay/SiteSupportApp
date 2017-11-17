@@ -60,8 +60,13 @@ namespace TstApp
             var treeAsString = tree.DisplayHierarchy();
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation treeAsString = {treeAsString}");
 
-            var classInfo = new ClassInfo(xmlDocWrapper, "T:TstApp.ExampleNamespace.Example2");
+            var classInfo = new ClassInfo(xmlDocWrapper, "T:TstApp.ExampleNamespace.Example2", KindOfClass.Class);
+            var classInfoAsString = classInfo.DisplayMembers();
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation classInfoAsString = {classInfoAsString}");
 
+            var enumInfo = new EnumInfo(xmlDocWrapper, "T:TstApp.ExampleClass.ExampleEnum");
+            var enumInfoAsString = enumInfo.DisplayItems();
+            NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation enumInfoAsString = {enumInfoAsString}");
             //using (var fs = File.OpenRead(path))
             //{
             //    var doc = XDocument.Load(fs);

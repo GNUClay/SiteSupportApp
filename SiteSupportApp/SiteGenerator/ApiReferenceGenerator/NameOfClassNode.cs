@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator.ApiReferenceGenerator
 {
+    public enum KindOfClass
+    {
+        Class,
+        Interface,
+        Struct
+    }
+
     public class NameOfClassNode: AbstractNameNode
     {
-        public enum KindOfClass
-        {
-            Class,
-            Interface,
-            Struct
-        }
-
         public override string KindName
         {
             get
@@ -60,7 +60,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             foreach (var kvpItem in dict)
             {
-                var classNode = new NameOfClassNode(mDoc, this, kvpItem.Key, NameOfClassNode.KindOfClass.Class, kvpItem.Value);
+                var classNode = new NameOfClassNode(mDoc, this, kvpItem.Key, KindOfClass.Class, kvpItem.Value);
                 Classes.Add(classNode);
             }
 

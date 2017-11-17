@@ -113,14 +113,14 @@ namespace SiteGenerator.ApiReferenceGenerator
 
                 if (string.IsNullOrWhiteSpace(summaryType))
                 {
-                    var classNode = new NameOfClassNode(mDoc, this, typeName, NameOfClassNode.KindOfClass.Class, new List<string>());
+                    var classNode = new NameOfClassNode(mDoc, this, typeName, KindOfClass.Class, new List<string>());
                     Classes.Add(classNode);
                 }
                 else
                 {
                     if (summaryType == "i")
                     {
-                        var interfaceNode = new NameOfClassNode(mDoc, this, typeName, NameOfClassNode.KindOfClass.Interface, new List<string>());
+                        var interfaceNode = new NameOfClassNode(mDoc, this, typeName, KindOfClass.Interface, new List<string>());
                         Interfaces.Add(interfaceNode);
                     }
                     else
@@ -141,12 +141,12 @@ namespace SiteGenerator.ApiReferenceGenerator
                             {
                                 if (summaryType == "s")
                                 {
-                                    var classNode = new NameOfClassNode(mDoc, this, typeName, NameOfClassNode.KindOfClass.Struct, new List<string>());
+                                    var classNode = new NameOfClassNode(mDoc, this, typeName, KindOfClass.Struct, new List<string>());
                                     Structs.Add(classNode);
                                 }
                                 else
                                 {
-                                    var classNode = new NameOfClassNode(mDoc, this, typeName, NameOfClassNode.KindOfClass.Class, new List<string>());
+                                    var classNode = new NameOfClassNode(mDoc, this, typeName, KindOfClass.Class, new List<string>());
                                     Classes.Add(classNode);
                                 }
                             }
