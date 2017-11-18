@@ -18,14 +18,13 @@ namespace SiteGenerator
 
         private StringBuilder mResult = null;
 
-        public void Run()
+        public virtual void Run()
         {
             mResult = new StringBuilder();
-
             GenerateText();
         }
 
-        public void Run(string targetFileName)
+        public virtual void Run(string targetFileName)
         {
             Run();
 
@@ -174,6 +173,11 @@ namespace SiteGenerator
             AppendLine("</html>");
         }
 
+        protected virtual void GenerateArticle()
+        {
+            d
+        }
+
         private void GenerateHeader()
         {
             Append("<p>");
@@ -294,7 +298,14 @@ namespace SiteGenerator
                     return string.Empty;
                 }
 
-                return mResult.ToString()/*.Replace(Environment.NewLine, string.Empty)*/.Trim();
+                var result = mResult.ToString();
+
+                if(UseMinification)
+                {
+                    //result = result.Replace(Environment.NewLine, string.Empty);
+                }
+               
+                return result.Trim();
             }
         }
     }
