@@ -25,6 +25,11 @@ namespace SiteGenerator
 {
     public class TargetPage : BaseTargetPage
     {
-
+        protected override void GenerateArticle()
+        {
+            AppendLine("<article>");
+            AppendLine(Content);
+            AppendLine("</article>");
+        }
     }
 }

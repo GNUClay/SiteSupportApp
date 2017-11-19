@@ -132,9 +132,7 @@ namespace SiteGenerator
 
             if (AdditionalMenu == null)
             {
-                AppendLine("<article>");
-                AppendLine(Content);
-                AppendLine("</article>");
+                GenerateArticle();
             }
             else
             {
@@ -144,9 +142,7 @@ namespace SiteGenerator
                 GenerateAdditionalMenu();
                 AppendLine("</div>");
                 AppendLine("<div class='col col-md-9'>");
-                AppendLine("<article>");
-                AppendLine(Content);
-                AppendLine("</article>");
+                GenerateArticle();
                 AppendLine("</div>");
                 AppendLine("</div>");
                 AppendLine("</div>");
@@ -175,7 +171,6 @@ namespace SiteGenerator
 
         protected virtual void GenerateArticle()
         {
-            d
         }
 
         private void GenerateHeader()
