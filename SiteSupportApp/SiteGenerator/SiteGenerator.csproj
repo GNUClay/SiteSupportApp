@@ -70,10 +70,10 @@
     <Compile Include="ApiReferenceGenerator\ApiDirProcessor.cs" />
     <Compile Include="ApiReferenceGenerator\ApiProject.cs" />
     <Compile Include="ApiReferenceGenerator\ApiSolution.cs" />
+    <Compile Include="ApiReferenceGenerator\BaseApiPage.cs" />
     <Compile Include="ApiReferenceGenerator\BaseStructElementPage.cs" />
     <Compile Include="ApiReferenceGenerator\ClassInfo.cs" />
     <Compile Include="ApiReferenceGenerator\ClassPage.cs" />
-    <Compile Include="ApiReferenceGenerator\DelegatePage.cs" />
     <Compile Include="ApiReferenceGenerator\DllPage.cs" />
     <Compile Include="ApiReferenceGenerator\EnumInfo.cs" />
     <Compile Include="ApiReferenceGenerator\EnumPage.cs" />

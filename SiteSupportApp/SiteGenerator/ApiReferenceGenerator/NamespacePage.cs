@@ -48,17 +48,19 @@ namespace SiteGenerator.ApiReferenceGenerator
                 tmpPage.Run();
             }
 
-            foreach (var item in mNameNode.Delegates)
-            {
-                var tmpPage = new DelegatePage(item);
-                tmpPage.Run();
-            }
+            //foreach (var item in mNameNode.Delegates)
+            //{
+            //    var tmpPage = new DelegatePage(item);
+            //    tmpPage.Run();
+            //}
 
             base.GenerateText();
         }
 
         protected override void GenerateArticle()
         {
+
+
             AppendLine("<article>");
             AppendLine("</article>");
         }

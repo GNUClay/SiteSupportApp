@@ -76,11 +76,11 @@ namespace SiteGenerator.ApiReferenceGenerator
                 tmpPage.Run();
             }
 
-            foreach (var item in mSimpleRoot.Delegates)
-            {
-                var tmpPage = new DelegatePage(item);
-                tmpPage.Run();
-            }
+            //foreach (var item in mSimpleRoot.Delegates)
+            //{
+            //    var tmpPage = new DelegatePage(item);
+            //    tmpPage.Run();
+            //}
 
             base.GenerateText();
         }

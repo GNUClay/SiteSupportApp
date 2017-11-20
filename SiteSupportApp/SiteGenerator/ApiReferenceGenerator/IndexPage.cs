@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator.ApiReferenceGenerator
 {
-    public class IndexPage : BaseTargetPage
+    public class IndexPage : BaseApiPage
     {
         public IndexPage()
+            : base(null)
         {
             TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, "index.html");
 
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
+
+            Name = "Api reference";
         }
 
         protected override void GenerateText()
@@ -23,18 +26,29 @@ namespace SiteGenerator.ApiReferenceGenerator
             {
                 var tmpDllPage = new DllPage(item);
                 tmpDllPage.Run();
+                mChildren.Add(tmpDllPage);
             }
             base.GenerateText();
         }
+
+        private List<DllPage> mChildren = new List<DllPage>();
 
         private ApiSolution mApiSolution;
 
         protected override void GenerateArticle()
         {
+            GenerateNavBar();
+
             AppendLine("<article>");
-            
 
+            AppendLine("<ul>");
 
+            foreach (var page in mChildren)
+            {
+                AppendLine($"<li></li>");
+            }
+
+            AppendLine("</ul>");
             AppendLine("</article>");
         }
     }
