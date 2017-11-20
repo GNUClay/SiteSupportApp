@@ -10,8 +10,15 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class XMLDocWrapper
     {
-        public XMLDocWrapper(string path)
+        public XMLDocWrapper(string path, List<string> targetTypes)
         {
+            mTargetTypes = targetTypes;
+
+            if(mTargetTypes == null)
+            {
+                mTargetTypes = new List<string>();
+            }
+
             using (var fs = File.OpenRead(path))
             {
                 mDocument = XDocument.Load(fs);
@@ -21,6 +28,12 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         private XDocument mDocument;
         private List<XElement> mMembersList;
+        private List<string> mTargetTypes;
+
+        public string AssemblyName()
+        {
+            return mDocument.Root.Elements().Where(p => p.Name.LocalName.ToLower() == "assembly").Elements().Where(p => p.Name.LocalName.ToLower() == "name").FirstOrDefault()?.Value?.Trim();
+        }
 
         public List<string> LoadTypeNames()
         {
@@ -40,7 +53,17 @@ namespace SiteGenerator.ApiReferenceGenerator
                     continue;
                 }
 
-                result.Add(name.Replace("T:", "").Trim());
+                name = name.Replace("T:", "").Trim();
+
+                if (mTargetTypes.Count > 0)
+                {
+                    if(!mTargetTypes.Contains(name))
+                    {
+                        continue;
+                    }
+                }
+
+                result.Add(name);
             }
 
             result = result.Distinct().ToList();

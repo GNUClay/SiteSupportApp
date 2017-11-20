@@ -16,19 +16,32 @@ namespace SiteGenerator
         public menu AdditionalMenu { get; set; }
         public bool UseMinification { get; set; } = false;
 
-        private StringBuilder mResult = null;
+        private StringBuilder mResult;
+
+        private string mTargetFileName;
+
+        public string TargetFileName
+        {
+            get
+            {
+                return mTargetFileName;
+            }
+            set
+            {
+                mTargetFileName = value;
+
+                var pos = mTargetFileName.IndexOf("gnuclay.github.io");
+                RelativeHref = mTargetFileName.Substring(pos).Replace("gnuclay.github.io", "").ToLower();
+            }
+        }
+        public string RelativeHref { get; private set; }
 
         public virtual void Run()
         {
             mResult = new StringBuilder();
             GenerateText();
-        }
 
-        public virtual void Run(string targetFileName)
-        {
-            Run();
-
-            using (var tmpTextWriter = new StreamWriter(targetFileName))
+            using (var tmpTextWriter = new StreamWriter(TargetFileName))
             {
                 tmpTextWriter.Write(Result);
                 tmpTextWriter.Flush();
@@ -55,7 +68,7 @@ namespace SiteGenerator
             mResult.AppendLine(val);
         }
 
-        private void GenerateText()
+        protected virtual void GenerateText()
         {
             var tmpFormat = new System.Globalization.CultureInfo("en-GB");
 

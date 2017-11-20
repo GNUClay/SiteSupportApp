@@ -34,7 +34,7 @@ namespace SiteGenerator
 
         public static void Run(SiteNodeInfo info)
         {
-            if(info.SourceDirName == GeneralSettings.ApiReferencePath)
+            if(info.SourceDirName == GeneralSettings.ApiReferenceSourcePath)
             {
                 ApiDirProcessor.Run(info);
                 return;

@@ -20,7 +20,8 @@ namespace SiteGenerator.ApiReferenceGenerator
                 Directory.CreateDirectory(info.TargetDirName);
             }
 
-
+            var tmpIndexPage = new IndexPage();
+            tmpIndexPage.Run();
         }
     }
 }

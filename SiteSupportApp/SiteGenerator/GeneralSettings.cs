@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using CommonUtils;
+using SiteGenerator.ApiReferenceGenerator;
 
 namespace SiteGenerator
 {
@@ -40,9 +41,11 @@ namespace SiteGenerator
 
             NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferenceConfigPath = {mApiReferenceConfigPath}");
 
-            mApiReferencePath = Path.GetDirectoryName(mApiReferenceConfigPath);
+            mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferencePath = {mApiReferencePath}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferencePath = {mApiReferenceSourcePath}");
+
+            mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", "");
 
             ReadSiteSettings();
         }
@@ -54,7 +57,8 @@ namespace SiteGenerator
         private static string mSourcePath = string.Empty;
 
         private static string mApiReferenceConfigPath;
-        private static string mApiReferencePath;
+        private static string mApiReferenceSourcePath;
+        private static string mApiReferenceTargetPath;
 
         public static string SourcePath
         {
@@ -82,15 +86,23 @@ namespace SiteGenerator
             }
         }
 
-        public static string ApiReferencePath
+        public static string ApiReferenceSourcePath
         {
             get
             {
-                return mApiReferencePath;
+                return mApiReferenceSourcePath;
             }
         }
 
-        private static site mSiteSettings = null;
+        public static string ApiReferenceTargetPath
+        {
+            get
+            {
+                return mApiReferenceTargetPath;
+            }
+        }
+
+        private static site mSiteSettings;
 
         public static site SiteSettings
         {
@@ -100,11 +112,23 @@ namespace SiteGenerator
             }
         }
 
+        private static ApiSolution mApiSolution;
+
+        public static ApiSolution ApiSolution
+        {
+            get
+            {
+                return mApiSolution;
+            }
+        }
+
         private static void ReadSiteSettings()
         {
             var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
 
             mSiteSettings = site.LoadFromFile(tmpSiteSettingsPath);
+
+
         }
     }
 }

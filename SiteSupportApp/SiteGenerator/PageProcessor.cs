@@ -71,7 +71,9 @@ namespace SiteGenerator
                 tmpPage.Content = tmpTextReader.ReadToEnd();
             }
 
-            tmpPage.Run(Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) +"." + tmpSitePage.extension));
+            tmpPage.TargetFileName = Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) + "." + tmpSitePage.extension);
+
+            tmpPage.Run();
         }
     }
 }
