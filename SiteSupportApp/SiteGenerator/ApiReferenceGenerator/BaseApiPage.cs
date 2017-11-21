@@ -14,7 +14,7 @@ namespace SiteGenerator.ApiReferenceGenerator
         }
 
         private BaseApiPage mParent;
-        protected string Name { get; set; }
+        public string Name { get; protected set; }
 
         protected List<BaseApiPage> GetNavBarList()
         {

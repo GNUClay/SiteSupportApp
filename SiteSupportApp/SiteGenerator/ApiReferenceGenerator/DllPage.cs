@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator.ApiReferenceGenerator
 {
-    public class DllPage : BaseTargetPage
+    public class DllPage : BaseApiPage
     {
-        public DllPage(string configName)
+        public DllPage(string configName, BaseApiPage parent)
+            : base(parent)
         {
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor configName = {configName}");
 
@@ -31,6 +32,8 @@ namespace SiteGenerator.ApiReferenceGenerator
             mAsseblyName = mXMLDocWrapper.AssemblyName();
 
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor mAsseblyName = {mAsseblyName}");
+
+            Name = mAsseblyName;
 
             TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAsseblyName.ToLower()}.html");
 
@@ -87,6 +90,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         protected override void GenerateArticle()
         {
+            GenerateNavBar();
+
             AppendLine("<article>");
             AppendLine($"<p>{mAsseblyName}</p>");
 

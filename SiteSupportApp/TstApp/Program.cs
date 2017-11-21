@@ -53,7 +53,7 @@ namespace TstApp
 
             NLog.LogManager.GetCurrentClassLogger().Info($"TSTLoadDocumentation path = {path}");
 
-            var xmlDocWrapper = new XMLDocWrapper(path);
+            var xmlDocWrapper = new XMLDocWrapper(path, null);
 
             var tree = xmlDocWrapper.LoadTreeOfTypes();
 

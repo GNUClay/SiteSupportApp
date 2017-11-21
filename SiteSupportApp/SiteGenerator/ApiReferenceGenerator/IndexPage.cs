@@ -24,7 +24,7 @@ namespace SiteGenerator.ApiReferenceGenerator
             mApiSolution = ApiSolution.LoadFromFile(GeneralSettings.ApiReferenceConfigPath);
             foreach (var item in mApiSolution.items)
             {
-                var tmpDllPage = new DllPage(item);
+                var tmpDllPage = new DllPage(item, this);
                 tmpDllPage.Run();
                 mChildren.Add(tmpDllPage);
             }
@@ -45,7 +45,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             foreach (var page in mChildren)
             {
-                AppendLine($"<li></li>");
+                AppendLine($"<li><a href='{page.RelativeHref}'>{page.Name}</a></li>");
             }
 
             AppendLine("</ul>");
