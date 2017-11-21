@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -211,6 +212,39 @@ namespace SiteGenerator.ApiReferenceGenerator
             return GetMemberNames(key);
         }
 
+        private string GetNameByFullName(string key)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetNameByFullName key = {key}");
+
+            key = Regex.Replace(key, @"\w:", "").Trim();
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"GetNameByFullName key = {key}");
+
+            var pointPos = 0;// ;
+
+            while((pointPos = key.IndexOf(".")) > -1)
+            {
+                key = key.Substring(pointPos + 1);
+
+                var openRoundPos = key.IndexOf("(");
+
+                if(openRoundPos > -1)
+                {
+                    var nextPointPos = key.IndexOf(".");
+
+                    if(nextPointPos > -1)
+                    {
+                        if(openRoundPos < nextPointPos)
+                        {
+                            return key;
+                        }
+                    }
+                }
+            }
+
+            return key;
+        }
+
         public MemberInfo LoadMemberInfo(string key)
         {
             var element = NGetMember(key);
@@ -221,6 +255,10 @@ namespace SiteGenerator.ApiReferenceGenerator
             }
 
             var result = new MemberInfo(key);
+
+            result.Name = GetNameByFullName(key);
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"LoadMemberInfo result.Name = {result.Name}");
 
             var summaries = element.Elements().Where(p => p.Name.LocalName.ToLower() == "summary").ToList();
 

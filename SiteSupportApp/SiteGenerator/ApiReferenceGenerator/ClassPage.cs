@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator.ApiReferenceGenerator
 {
-    public class ClassPage : BaseStructElementPage
+    public class ClassPage : BaseClassPage
     {
         public ClassPage(NameOfClassNode nameNode, BaseApiPage parent)
             : base(nameNode, parent)
@@ -16,8 +16,41 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         private NameOfClassNode mNameNode;
 
+        private List<ClassPage> mClasses = new List<ClassPage>();
+        private List<InterfacePage> mInterfaces = new List<InterfacePage>();
+        private List<StructPage> mStructs = new List<StructPage>();
+        private List<EnumPage> mEnums = new List<EnumPage>();
+
         protected override void GenerateText()
         {
+            foreach (var item in mNameNode.Classes)
+            {
+                var tmpPage = new ClassPage(item, this);
+                tmpPage.Run();
+                mClasses.Add(tmpPage);
+            }
+
+            foreach (var item in mNameNode.Interfaces)
+            {
+                var tmpPage = new InterfacePage(item, this);
+                tmpPage.Run();
+                mInterfaces.Add(tmpPage);
+            }
+
+            foreach (var item in mNameNode.Structs)
+            {
+                var tmpPage = new StructPage(item, this);
+                tmpPage.Run();
+                mStructs.Add(tmpPage);
+            }
+
+            foreach (var item in mNameNode.Enums)
+            {
+                var tmpPage = new EnumPage(item, this);
+                tmpPage.Run();
+                mEnums.Add(tmpPage);
+            }
+
             base.GenerateText();
         }
 
@@ -26,11 +59,13 @@ namespace SiteGenerator.ApiReferenceGenerator
             GenerateNavBar();
 
             AppendLine("<article>");
-            //PrintClassesList(mClasses);
-            //PrintInterfacesList(mInterfaces);
-            //PrintStructsList(mStructs);
-            //PrintEnumsList(mEnums);
-            //PrintDelegates(mNameNode.Delegates);
+            PrintFirstText();
+            PrintClassesList(mClasses);
+            PrintInterfacesList(mInterfaces);
+            PrintStructsList(mStructs);
+            PrintEnumsList(mEnums);
+            PrintDelegates(mNameNode.Delegates);
+            PrintMembers();
 
             AppendLine("</article>");
         }
