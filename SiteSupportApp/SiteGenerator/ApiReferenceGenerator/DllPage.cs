@@ -33,9 +33,9 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor mAsseblyName = {mAsseblyName}");
 
-            Name = mAsseblyName;
+            Name = $"{mAsseblyName}.dll";
 
-            TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAsseblyName.ToLower()}.html");
+            TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAsseblyName.ToLower()}.dll.html");
 
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
 
@@ -46,44 +46,25 @@ namespace SiteGenerator.ApiReferenceGenerator
         private XMLDocWrapper mXMLDocWrapper;
         private string mAsseblyName;
         private NameOfNamespaceNode mSimpleRoot;
+        private List<NamespacePage> mNamespaces = new List<NamespacePage>();
 
         protected override void GenerateText()
         {
-            foreach(var item in mSimpleRoot.Namespaces)
+            if(mSimpleRoot.IsRoot)
             {
-                var tmpPage = new NamespacePage(item);
-                tmpPage.Run();
+                foreach (var item in mSimpleRoot.Namespaces)
+                {
+                    var tmpPage = new NamespacePage(item, this);
+                    tmpPage.Run();
+                    mNamespaces.Add(tmpPage);
+                }
             }
-
-            foreach(var item in mSimpleRoot.Classes)
+            else
             {
-                var tmpPage = new ClassPage(item);
+                var tmpPage = new NamespacePage(mSimpleRoot, this);
                 tmpPage.Run();
+                mNamespaces.Add(tmpPage);
             }
-
-            foreach (var item in mSimpleRoot.Interfaces)
-            {
-                var tmpPage = new InterfacePage(item);
-                tmpPage.Run();
-            }
-
-            foreach (var item in mSimpleRoot.Structs)
-            {
-                var tmpPage = new StructPage(item);
-                tmpPage.Run();
-            }
-
-            foreach (var item in mSimpleRoot.Enums)
-            {
-                var tmpPage = new EnumPage(item);
-                tmpPage.Run();
-            }
-
-            //foreach (var item in mSimpleRoot.Delegates)
-            //{
-            //    var tmpPage = new DelegatePage(item);
-            //    tmpPage.Run();
-            //}
 
             base.GenerateText();
         }
@@ -95,6 +76,19 @@ namespace SiteGenerator.ApiReferenceGenerator
             AppendLine("<article>");
             AppendLine($"<p>{mAsseblyName}</p>");
 
+            AppendLine($"<p>{mSimpleRoot.FullName}</p>");
+
+            if (mNamespaces.Count > 0)
+            {
+                AppendLine("<h3>Namespaces</h3>");
+
+                AppendLine("<ul>");
+                foreach (var item in mNamespaces)
+                {
+                    AppendLine($"<li><a href='{item.RelativeHref}'>{item.Name}</a></li>");
+                }
+                AppendLine("</ul>");
+            }
 
             AppendLine("</article>");
         }

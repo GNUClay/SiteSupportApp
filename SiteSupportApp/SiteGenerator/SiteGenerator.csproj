@@ -71,6 +71,7 @@
     <Compile Include="ApiReferenceGenerator\ApiProject.cs" />
     <Compile Include="ApiReferenceGenerator\ApiSolution.cs" />
     <Compile Include="ApiReferenceGenerator\BaseApiPage.cs" />
+    <Compile Include="ApiReferenceGenerator\BaseClassPage.cs" />
     <Compile Include="ApiReferenceGenerator\BaseStructElementPage.cs" />
     <Compile Include="ApiReferenceGenerator\ClassInfo.cs" />
     <Compile Include="ApiReferenceGenerator\ClassPage.cs" />

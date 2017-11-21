@@ -49,6 +49,14 @@ namespace SiteGenerator.ApiReferenceGenerator
         protected XMLDocWrapper mDoc;
         protected AbstractNameNode mParent;
 
+        public XMLDocWrapper XMLDocWrapper
+        {
+            get
+            {
+                return mDoc;
+            }
+        }
+
         public string Name { get; private set; } = string.Empty;
         public string FullName { get; private set; }
         public abstract string KindName { get; }

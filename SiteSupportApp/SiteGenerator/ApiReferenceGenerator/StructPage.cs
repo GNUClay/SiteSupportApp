@@ -8,8 +8,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class StructPage : BaseStructElementPage
     {
-        public StructPage(NameOfClassNode nameNode)
-            : base(nameNode)
+        public StructPage(NameOfClassNode nameNode, BaseApiPage parent)
+            : base(nameNode, parent)
         {
             mNameNode = nameNode;
         }
@@ -23,6 +23,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         protected override void GenerateArticle()
         {
+            GenerateNavBar();
+
             AppendLine("<article>");
             AppendLine("</article>");
         }
