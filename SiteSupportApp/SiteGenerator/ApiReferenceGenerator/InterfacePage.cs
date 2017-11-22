@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator.ApiReferenceGenerator
 {
-    public class InterfacePage : BaseStructElementPage
+    public class InterfacePage : BaseClassPage
     {
         public InterfacePage(NameOfClassNode nameNode, BaseApiPage parent)
             : base(nameNode, parent)
@@ -26,6 +26,12 @@ namespace SiteGenerator.ApiReferenceGenerator
             GenerateNavBar();
 
             AppendLine("<article>");
+            AppendLine($"<h1>{mNameNode.Name} Interface</h1>");
+            PrintFirstText();
+            PrintMembers();
+            PrintLastText();
+
+            AppendLine("<p>&nbsp;</p>");
             AppendLine("</article>");
         }
     }

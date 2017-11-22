@@ -69,6 +69,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             AppendLine("<article>");
 
+            AppendLine($"<h1>{mNameNode.Name} Namespace</h1>");
+
             if (mNamespaces.Count > 0)
             {
                 AppendLine("<h3>Namespaces</h3>");

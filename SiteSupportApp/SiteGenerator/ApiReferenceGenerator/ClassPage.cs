@@ -59,6 +59,7 @@ namespace SiteGenerator.ApiReferenceGenerator
             GenerateNavBar();
 
             AppendLine("<article>");
+            AppendLine($"<h1>{mNameNode.Name} Class</h1>");
             PrintFirstText();
             PrintClassesList(mClasses);
             PrintInterfacesList(mInterfaces);
@@ -66,6 +67,9 @@ namespace SiteGenerator.ApiReferenceGenerator
             PrintEnumsList(mEnums);
             PrintDelegates(mNameNode.Delegates);
             PrintMembers();
+            PrintLastText();
+
+            AppendLine("<p>&nbsp;</p>");
 
             AppendLine("</article>");
         }

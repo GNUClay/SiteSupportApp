@@ -74,10 +74,13 @@ namespace SiteGenerator.ApiReferenceGenerator
             GenerateNavBar();
 
             AppendLine("<article>");
-            AppendLine($"<p>{mAsseblyName}</p>");
+            AppendLine($"<h1>{mAsseblyName}.dll Assebly</h1>");
 
-            AppendLine($"<p>{mSimpleRoot.FullName}</p>");
-
+            if(!mSimpleRoot.IsRoot)
+            {
+                AppendLine($"<p>Root namespace: {mSimpleRoot.FullName}</p>");
+            }
+            
             if (mNamespaces.Count > 0)
             {
                 AppendLine("<h3>Namespaces</h3>");

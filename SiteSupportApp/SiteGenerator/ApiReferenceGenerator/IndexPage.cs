@@ -41,6 +41,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             AppendLine("<article>");
 
+            AppendLine("<h1>Api reference</h1>");
+            AppendLine($"<h2>Assemblies:</h2>");
             AppendLine("<ul>");
 
             foreach (var page in mChildren)

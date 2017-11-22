@@ -50,7 +50,7 @@ namespace SiteGenerator.ApiReferenceGenerator
             return info.Summaries.FirstOrDefault()?.Content;
         }
 
-        private int mNameTdWith = 250;
+        protected int mNameTdWith = 250;
 
         protected void PrintClassesList(List<ClassPage> items)
         {
@@ -152,6 +152,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
                 foreach (var item in items)
                 {
+                    NLog.LogManager.GetCurrentClassLogger().Info($"PrintDelegates item = {item}");
                 }
             }
         }
