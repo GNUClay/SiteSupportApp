@@ -16,6 +16,11 @@ namespace SiteGenerator.ApiReferenceGenerator
         private BaseApiPage mParent;
         public string Name { get; protected set; }
 
+        protected override void GenerateText()
+        {
+            base.GenerateText();
+        }
+
         protected List<BaseApiPage> GetNavBarList()
         {
             List<BaseApiPage> result;

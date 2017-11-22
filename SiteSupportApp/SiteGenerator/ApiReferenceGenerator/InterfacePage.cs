@@ -12,6 +12,8 @@ namespace SiteGenerator.ApiReferenceGenerator
             : base(nameNode, parent)
         {
             mNameNode = nameNode;
+
+            Title = $"GNU Clay - {mNameNode.Name} Interface";
         }
 
         private NameOfClassNode mNameNode;

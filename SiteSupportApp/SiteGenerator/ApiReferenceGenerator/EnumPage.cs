@@ -16,6 +16,8 @@ namespace SiteGenerator.ApiReferenceGenerator
             mEnumInfo = new EnumInfo(nameNode.XMLDocWrapper, nameNode.FullName);
             mXMLDocWrapper = nameNode.XMLDocWrapper;
             mMemberInfo = mXMLDocWrapper.LoadMemberInfo($"T:{nameNode.FullName}");
+
+            Title = $"GNU Clay - {mNameNode.Name} Enumeration";
         }
 
         private XMLDocWrapper mXMLDocWrapper;

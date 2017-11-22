@@ -29,22 +29,24 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             mXMLDocWrapper = new XMLDocWrapper(Path.Combine(GeneralSettings.ApiReferenceSourcePath, mApiProject.fileName), targetTypes);
 
-            mAsseblyName = mXMLDocWrapper.AssemblyName();
+            mAssemblyName = mXMLDocWrapper.AssemblyName();
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor mAsseblyName = {mAsseblyName}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"constructor mAsseblyName = {mAssemblyName}");
 
-            Name = $"{mAsseblyName}.dll";
+            Name = $"{mAssemblyName}.dll";
 
-            TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAsseblyName.ToLower()}.dll.html");
+            TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAssemblyName.ToLower()}.dll.html");
 
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
 
             mSimpleRoot = mXMLDocWrapper.LoadTreeOfTypes().GetNotSimpleNamespace();
+
+            Title = $"GNU Clay - {mAssemblyName}.dll Assembly";
         }
 
         private ApiProject mApiProject;
         private XMLDocWrapper mXMLDocWrapper;
-        private string mAsseblyName;
+        private string mAssemblyName;
         private NameOfNamespaceNode mSimpleRoot;
         private List<NamespacePage> mNamespaces = new List<NamespacePage>();
 
@@ -74,7 +76,7 @@ namespace SiteGenerator.ApiReferenceGenerator
             GenerateNavBar();
 
             AppendLine("<article>");
-            AppendLine($"<h1>{mAsseblyName}.dll Assebly</h1>");
+            AppendLine($"<h1>{mAssemblyName}.dll <span style='font-weight:normal;'>Assembly</span></h1>");
 
             if(!mSimpleRoot.IsRoot)
             {

@@ -14,6 +14,8 @@ namespace SiteGenerator.ApiReferenceGenerator
             mNameNode = nameNode;
 
             Name = mNameNode.Name;
+
+            Title = $"GNU Clay - {mNameNode.Name} Namespace";
         }
 
         private NameOfNamespaceNode mNameNode;

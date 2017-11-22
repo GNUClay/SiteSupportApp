@@ -17,6 +17,8 @@ namespace SiteGenerator.ApiReferenceGenerator
             NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
 
             Name = "Api reference";
+
+            Title = $"GNU Clay - {Name}";
         }
 
         protected override void GenerateText()
