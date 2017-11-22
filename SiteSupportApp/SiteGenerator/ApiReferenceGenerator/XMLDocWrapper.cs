@@ -214,16 +214,12 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         private string GetNameByFullName(string key)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetNameByFullName key = {key}");
-
             if(string.IsNullOrWhiteSpace(key))
             {
                 return string.Empty;
             }
 
             key = Regex.Replace(key, @"\w:", "").Trim();
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetNameByFullName key = {key}");
 
             var pointPos = 0;
 
@@ -252,8 +248,6 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         private string GetNameForHref(string key)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetNameForHref key = {key}");
-
             if (string.IsNullOrWhiteSpace(key))
             {
                 return string.Empty;
@@ -275,11 +269,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             result.Name = GetNameByFullName(key);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"LoadMemberInfo result.Name = {result.Name}");
-
             result.NameForHref = GetNameForHref(result.Name);
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"LoadMemberInfo result.NameForHref = {result.NameForHref}");
 
             var summaries = element.Elements().Where(p => p.Name.LocalName.ToLower() == "summary").ToList();
 

@@ -45,8 +45,6 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             foreach (var item in targetList)
             {
-                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateNavBar item.RelativeHref = {item.RelativeHref} item.Name = {item.Name}");
-
                 if(item == lastItem)
                 {
                     AppendLine($"<li class='breadcrumb-item active' aria-current='page'>{item.Name}</li>");
