@@ -175,6 +175,7 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         public string FullName { get; private set; }
         public string Name { get; set; }
+        public string NameForHref { get; set; }
         public List<SummaryInfo> Summaries { get; private set; } = new List<SummaryInfo>();
         public List<RemarksInfo> Remarks { get; private set; } = new List<RemarksInfo>();
         public List<ParamInfo> Params { get; private set; } = new List<ParamInfo>();
