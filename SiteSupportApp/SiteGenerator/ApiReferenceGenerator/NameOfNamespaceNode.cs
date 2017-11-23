@@ -36,8 +36,6 @@ namespace SiteGenerator.ApiReferenceGenerator
             {
                 var fullTypeName = $"{FullName}.{kvpItem.Key}";
 
-                //NLog.LogManager.GetCurrentClassLogger().Info($"FillChildren Process fullTypeName = {fullTypeName}");
-
                 if (mDoc.HasSummary(fullTypeName))
                 {
                     var classNode = new NameOfClassNode(mDoc, this, kvpItem.Key, KindOfClass.Class, kvpItem.Value);

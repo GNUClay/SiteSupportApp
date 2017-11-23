@@ -42,8 +42,6 @@ namespace SiteGenerator.ApiReferenceGenerator
         {
             Kind = kind;
 
-            //NLog.LogManager.GetCurrentClassLogger().Info($"constructor Kind = {Kind}");
-
             if(initList.Count > 0)
             {
                 FillChildren(initList);

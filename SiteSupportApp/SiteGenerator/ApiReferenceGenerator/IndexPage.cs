@@ -14,8 +14,6 @@ namespace SiteGenerator.ApiReferenceGenerator
         {
             TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, "index.html");
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
-
             Name = "Api reference";
 
             Title = $"GNU Clay - {Name}";

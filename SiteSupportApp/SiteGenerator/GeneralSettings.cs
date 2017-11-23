@@ -30,21 +30,10 @@ namespace SiteGenerator
         static GeneralSettings()
         {
             mSourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"mSourcePath = {mSourcePath}");
-
-            mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"mDestPath = {mDestPath}");
-
+            mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);         
             mApiReferenceConfigPath = EVPath.Normalize(ConfigurationManager.AppSettings["apiReferenceConfigPath"]);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferenceConfigPath = {mApiReferenceConfigPath}");
-
             mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"mApiReferencePath = {mApiReferenceSourcePath}");
-
             mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", "");
 
             ReadSiteSettings();

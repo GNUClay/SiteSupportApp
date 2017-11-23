@@ -12,11 +12,7 @@ namespace SiteGenerator.ApiReferenceGenerator
         public DllPage(string configName, BaseApiPage parent)
             : base(parent)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor configName = {configName}");
-
             var configFullPath = Path.Combine(GeneralSettings.ApiReferenceSourcePath, configName);
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor configFullPath = {configFullPath}");
 
             mApiProject = ApiProject.LoadFromFile(configFullPath);
 
@@ -31,14 +27,10 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             mAssemblyName = mXMLDocWrapper.AssemblyName();
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor mAsseblyName = {mAssemblyName}");
-
             Name = $"{mAssemblyName}.dll";
 
             TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAssemblyName.ToLower()}.dll.html");
-
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
-
+           
             mSimpleRoot = mXMLDocWrapper.LoadTreeOfTypes().GetNotSimpleNamespace();
 
             Title = $"GNU Clay - {mAssemblyName}.dll Assembly";
