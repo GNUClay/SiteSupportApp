@@ -57,8 +57,6 @@ namespace SiteGenerator.ApiReferenceGenerator
 
                 foreach(var memberName in mEnumInfo.Items)
                 {
-                    NLog.LogManager.GetCurrentClassLogger().Info($"PrintMembers memberName = {memberName}");
-
                     var memberInfo = mXMLDocWrapper.LoadMemberInfo(memberName);
 
                     var summary = memberInfo.Summaries.FirstOrDefault();

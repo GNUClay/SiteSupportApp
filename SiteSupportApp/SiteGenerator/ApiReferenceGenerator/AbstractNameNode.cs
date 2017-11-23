@@ -21,8 +21,6 @@ namespace SiteGenerator.ApiReferenceGenerator
             mParent = parent;
             Name = name;
 
-            //NLog.LogManager.GetCurrentClassLogger().Info($"constructor Name = {Name}");
-
             if (mParent == null)
             {
                 FullName = Name;
@@ -30,8 +28,6 @@ namespace SiteGenerator.ApiReferenceGenerator
             else
             { 
                 var parentFullName = mParent.FullName;
-
-                //NLog.LogManager.GetCurrentClassLogger().Info($"constructor parentFullName = {parentFullName}");
 
                 if(!string.IsNullOrWhiteSpace(parentFullName))
                 {
@@ -42,8 +38,6 @@ namespace SiteGenerator.ApiReferenceGenerator
                     FullName = Name;
                 }
             }
-
-            //NLog.LogManager.GetCurrentClassLogger().Info($"constructor FullName = {FullName}");
         }
 
         protected XMLDocWrapper mDoc;
@@ -109,15 +103,8 @@ namespace SiteGenerator.ApiReferenceGenerator
         {
             foreach (var typeName in targetNames)
             {
-                //NLog.LogManager.GetCurrentClassLogger().Info($"FillChildren Process typeName = {typeName}");
-
                 var fullTypeName = $"{FullName}.{typeName}";
-
-                //NLog.LogManager.GetCurrentClassLogger().Info($"FillChildren Process fullTypeName = {fullTypeName}");
-
                 var summaryType = mDoc.GetSummaryType(fullTypeName);
-
-                //NLog.LogManager.GetCurrentClassLogger().Info($"FillChildren Process summaryType = {summaryType}");
 
                 if (string.IsNullOrWhiteSpace(summaryType))
                 {

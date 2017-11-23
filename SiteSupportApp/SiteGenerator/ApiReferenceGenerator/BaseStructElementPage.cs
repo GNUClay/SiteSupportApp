@@ -16,8 +16,6 @@ namespace SiteGenerator.ApiReferenceGenerator
 
             TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mNameNode.FullName.ToLower()}.html");
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor TargetFileName = {TargetFileName}");
-
             Name = mNameNode.Name;
         }
 
@@ -33,8 +31,6 @@ namespace SiteGenerator.ApiReferenceGenerator
 
         protected string GetSummary(string typeName)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info($"GetSummary typeName = {typeName}");
-
             if(!typeName.StartsWith("T:"))
             {
                 typeName = $"T:{typeName}";
@@ -152,8 +148,6 @@ namespace SiteGenerator.ApiReferenceGenerator
 
                 foreach (var item in items)
                 {
-                    NLog.LogManager.GetCurrentClassLogger().Info($"PrintDelegates item.FullName = {item.FullName}");
-
                     var memberInfo = mNameNode.XMLDocWrapper.LoadMemberInfo($"T:{item.FullName}");
 
                     AppendLine($"<a name='d-{memberInfo.NameForHref}'></a>");

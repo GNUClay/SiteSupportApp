@@ -13,7 +13,6 @@ namespace SiteGenerator.ApiReferenceGenerator
         {
             mClassInfo = new ClassInfo(nameNode.XMLDocWrapper, nameNode.FullName, nameNode.Kind);
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"constructor nameNode.FullName = {nameNode.FullName}");
             mXMLDocWrapper = nameNode.XMLDocWrapper;
             mMemberInfo = mXMLDocWrapper.LoadMemberInfo($"T:{nameNode.FullName}");
         }

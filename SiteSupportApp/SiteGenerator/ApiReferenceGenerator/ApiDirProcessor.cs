@@ -12,9 +12,6 @@ namespace SiteGenerator.ApiReferenceGenerator
     {
         public static void Run(SiteNodeInfo info)
         {
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run info.SourceDirName = {info.SourceDirName}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run info.TargetDirName = {info.TargetDirName}");
-
             if (!Directory.Exists(info.TargetDirName))
             {
                 Directory.CreateDirectory(info.TargetDirName);
