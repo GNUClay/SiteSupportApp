@@ -227,7 +227,7 @@ namespace SiteGenerator
 
                 tmpSb.Append("<a href ='");
                 tmpSb.Append(item.href);
-                tmpSb.Append("' target='_blank'>");
+                tmpSb.Append("'>");
                 tmpSb.Append(item.label);
                 tmpSb.Append("</a>");
 
@@ -258,11 +258,11 @@ namespace SiteGenerator
                 {
                     if (isChild)
                     {
-                        AppendLine($"<ul class='my-second-menu-item'><li><a href='{item.href}' target='_blank'>{item.label}</a></li></ul>");
+                        AppendLine($"<ul class='my-second-menu-item'><li><a href='{item.href}'>{item.label}</a></li></ul>");
                     }
                     else
                     {
-                        AppendLine($"<p class='my-root-menu-item'><a href='{item.href}' target='_blank'>{item.label}</a></p>");
+                        AppendLine($"<p class='my-root-menu-item'><a href='{item.href}'>{item.label}</a></p>");
                     }
                 }
                 else
