@@ -28,6 +28,7 @@ namespace SiteGenerator
         public string title = string.Empty;
         public string description = string.Empty;
         public string additionalMenu = null;
+        public bool enableMathML;
 
         public static sitePage LoadFromFile(string path)
         {

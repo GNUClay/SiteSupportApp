@@ -72,6 +72,7 @@ namespace SiteGenerator
             }
 
             tmpPage.TargetFileName = Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) + "." + tmpSitePage.extension);
+            tmpPage.EnableMathML = tmpSitePage.enableMathML;
 
             tmpPage.Run();
         }
