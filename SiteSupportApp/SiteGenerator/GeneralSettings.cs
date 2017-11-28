@@ -101,16 +101,6 @@ namespace SiteGenerator
             }
         }
 
-        private static ApiSolution mApiSolution;
-
-        public static ApiSolution ApiSolution
-        {
-            get
-            {
-                return mApiSolution;
-            }
-        }
-
         private static void ReadSiteSettings()
         {
             var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
