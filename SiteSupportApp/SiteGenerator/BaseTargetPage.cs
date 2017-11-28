@@ -42,7 +42,7 @@ namespace SiteGenerator
             mResult = new StringBuilder();
             GenerateText();
 
-            using (var tmpTextWriter = new StreamWriter(TargetFileName))
+            using (var tmpTextWriter = new StreamWriter(TargetFileName, false, new UTF8Encoding(true)))
             {
                 tmpTextWriter.Write(Result);
                 tmpTextWriter.Flush();
