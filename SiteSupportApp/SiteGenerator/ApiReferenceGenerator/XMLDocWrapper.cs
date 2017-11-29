@@ -253,7 +253,7 @@ namespace SiteGenerator.ApiReferenceGenerator
                 return string.Empty;
             }
 
-            return key.Replace("(", "-").Replace(")", "").Replace(".", "-").Replace("[", "-").Replace("]", "").ToLower().Trim();
+            return key.Replace("(", "-").Replace(")", "").Replace(".", "-").Replace("[", "-").Replace("]", "").Replace("{", "-").Replace("}", "").ToLower().Trim();
         }
 
         public MemberInfo LoadMemberInfo(string key)
