@@ -12,7 +12,7 @@ namespace SiteGenerator
         public string Description { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
-        public System.DateTime LastUpdateDate { get; set; } = System.DateTime.Now;
+        public System.DateTime LastUpdateDate { get; set; } = DateTime.Now;
         public menu AdditionalMenu { get; set; }
         public bool UseMinification { get; set; } = false;
         public bool EnableMathML { get; set; }

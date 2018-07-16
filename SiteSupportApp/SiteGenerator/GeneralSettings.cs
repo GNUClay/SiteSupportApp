@@ -34,7 +34,7 @@ namespace SiteGenerator
             mApiReferenceConfigPath = EVPath.Normalize(ConfigurationManager.AppSettings["apiReferenceConfigPath"]);
 
             mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);
-            mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", "");
+            mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", string.Empty);
 
             ReadSiteSettings();
         }

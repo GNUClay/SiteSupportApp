@@ -116,6 +116,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonSiteGeneratorLib\CommonSiteGeneratorLib.csproj">
+      <Project>{2f61281e-91a2-418f-83ab-f302aadbb66b}</Project>
+      <Name>CommonSiteGeneratorLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
       <Project>{4e73ad09-7a17-455b-bd21-e155216b3007}</Project>
       <Name>CommonUtils</Name>

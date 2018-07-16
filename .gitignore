@@ -35,4 +35,8 @@
 /SiteSupportApp/NPackageCreator/obj/Debug/CoreCompileInputs.cache
 /SiteSupportApp/NPackageCreator/obj/Debug
 /SiteSupportApp/CommonUtils/bin/Debug
-/SiteSupportApp/NPackagePublisher/bin/Debug
+/SiteSupportApp/NPackagePublisher/bin
+SiteSupportApp/MetatypemanSiteSupport/obj
+SiteSupportApp/MetatypemanSiteSupport/bin
+SiteSupportApp/CommonSiteGeneratorLib/obj
+SiteSupportApp/CommonSiteGeneratorLib/bin
