@@ -19,7 +19,7 @@
 using Newtonsoft.Json;
 using System.IO;
 
-namespace SiteGenerator
+namespace CommonSiteGeneratorLib
 {
     public class sitePage
     {

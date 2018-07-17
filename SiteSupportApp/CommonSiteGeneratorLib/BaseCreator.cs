@@ -19,16 +19,27 @@
 using CommonSiteGeneratorLib;
 using System.IO;
 
-namespace SiteGenerator
+namespace CommonSiteGeneratorLib
 {
-    public class Creator
+    public abstract class BaseCreator
     {
-        public Creator()
+        protected BaseCreator()
         {
         }
 
+        protected virtual BaseSiteItemsFactory GetsiteItemsFactory()
+        {
+            var factory = new BaseSiteItemsFactory();
+            return factory;
+        }
+
+        private BaseSiteItemsFactory mSiteItemsFactory;
+        private BaseDirProcesor mDirProcesor;
+
         public void Run()
         {
+            mSiteItemsFactory = GetsiteItemsFactory();
+            mDirProcesor = mSiteItemsFactory.CreateDirProcessor();
             ClearDir();
             ProcessDir(GeneralSettings.SourcePath);
         }
@@ -64,13 +75,13 @@ namespace SiteGenerator
 
         private void ProcessDir(string dir)
         {
-            var tmpInfo = new DirProcesor.SiteNodeInfo();
+            var tmpInfo = new SiteNodeInfo();
 
             tmpInfo.SourceDirName = dir;
             tmpInfo.RelativeDirName = dir.Substring(GeneralSettings.SourcePath.Length);
             tmpInfo.TargetDirName = Path.Combine(GeneralSettings.DestPath, tmpInfo.RelativeDirName);
 
-            DirProcesor.Run(tmpInfo);
+            mDirProcesor.Run(tmpInfo);
 
             var tmpDirs = Directory.GetDirectories(dir);
 

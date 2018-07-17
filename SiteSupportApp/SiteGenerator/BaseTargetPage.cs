@@ -8,69 +8,29 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator
 {
-    public class BaseTargetPage
+    public abstract class BaseTargetPage: BasePage
     {
-        public string Description { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
-        public System.DateTime LastUpdateDate { get; set; } = DateTime.Now;
-        public menu AdditionalMenu { get; set; }
-        public bool UseMinification { get; set; } = false;
-        public bool EnableMathML { get; set; }
-
-        private StringBuilder mResult;
-
         private string mTargetFileName;
 
-        public string TargetFileName
+        public override string TargetFileName
         {
             get
             {
                 return mTargetFileName;
             }
+
             set
             {
                 mTargetFileName = value;
 
                 var pos = mTargetFileName.IndexOf("gnuclay.github.io");
-                RelativeHref = mTargetFileName.Substring(pos).Replace("gnuclay.github.io", "").ToLower();
+                RelativeHref = mTargetFileName.Substring(pos).Replace("gnuclay.github.io", string.Empty).ToLower();
             }
         }
+
         public string RelativeHref { get; private set; }
 
-        public virtual void Run()
-        {
-            mResult = new StringBuilder();
-            GenerateText();
-
-            using (var tmpTextWriter = new StreamWriter(TargetFileName, false, new UTF8Encoding(true)))
-            {
-                tmpTextWriter.Write(Result);
-                tmpTextWriter.Flush();
-            }
-        }
-
-        protected void Append(string val)
-        {
-            if (UseMinification)
-            {
-                val = val.Trim();
-            }
-            mResult.Append(val);
-        }
-
-        protected void AppendLine(string val)
-        {
-            if (UseMinification)
-            {
-                Append(val);
-                return;
-            }
-
-            mResult.AppendLine(val);
-        }
-
-        protected virtual void GenerateText()
+        protected override void GenerateText()
         {
             var tmpFormat = new System.Globalization.CultureInfo("en-GB");
 
@@ -301,26 +261,6 @@ namespace SiteGenerator
                         AppendLine("</div>");
                     }
                 }
-            }
-        }
-
-        public string Result
-        {
-            get
-            {
-                if (mResult == null)
-                {
-                    return string.Empty;
-                }
-
-                var result = mResult.ToString();
-
-                if(UseMinification)
-                {
-                    //result = result.Replace(Environment.NewLine, string.Empty);
-                }
-               
-                return result.Trim();
             }
         }
     }

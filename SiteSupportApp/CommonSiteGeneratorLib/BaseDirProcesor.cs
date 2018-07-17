@@ -16,31 +16,14 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using CommonSiteGeneratorLib;
-using SiteGenerator.ApiReferenceGenerator;
 using System.IO;
 
-namespace SiteGenerator
+namespace CommonSiteGeneratorLib
 {
-    public class DirProcesor
+    public class BaseDirProcesor
     {
-        public class SiteNodeInfo
+        public virtual void Run(SiteNodeInfo info)
         {
-            public string RelativeDirName = string.Empty;
-
-            public string SourceDirName = string.Empty;
-
-            public string TargetDirName = string.Empty;
-        }
-
-        public static void Run(SiteNodeInfo info)
-        {
-            if(info.SourceDirName == GeneralSettings.ApiReferenceSourcePath)
-            {
-                ApiDirProcessor.Run(info);
-                return;
-            }
-
             if (!Directory.Exists(info.TargetDirName))
             {
                 Directory.CreateDirectory(info.TargetDirName);
@@ -50,7 +33,7 @@ namespace SiteGenerator
 
             foreach (var file in tmpFiles)
             {
-                var tmpInfo = new PageProcessor.PageNodeInfo();
+                var tmpInfo = new PageNodeInfo();
 
                 tmpInfo.SourceName = file;
                 tmpInfo.FileNameWithOutExtension = Path.GetFileNameWithoutExtension(file);

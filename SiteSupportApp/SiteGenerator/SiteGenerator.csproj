@@ -89,12 +89,12 @@
     <Compile Include="ApiReferenceGenerator\StructPage.cs" />
     <Compile Include="ApiReferenceGenerator\XMLDocWrapper.cs" />
     <Compile Include="BaseTargetPage.cs" />
-    <Compile Include="Creator.cs" />
-    <Compile Include="DirProcesor.cs" />
     <Compile Include="PageProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sitePage.cs" />
+    <Compile Include="SiteCreator.cs" />
+    <Compile Include="SiteDirProcesor.cs" />
+    <Compile Include="SiteItemsFactory.cs" />
     <Compile Include="TargetPage.cs" />
   </ItemGroup>
   <ItemGroup>

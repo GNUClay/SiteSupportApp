@@ -44,10 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseCreator.cs" />
+    <Compile Include="BaseDirProcesor.cs" />
+    <Compile Include="BasePage.cs" />
+    <Compile Include="BaseSiteItemsFactory.cs" />
     <Compile Include="GeneralSettings.cs" />
     <Compile Include="menu.cs" />
+    <Compile Include="PageNodeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="site.cs" />
+    <Compile Include="SiteNodeInfo.cs" />
+    <Compile Include="sitePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">

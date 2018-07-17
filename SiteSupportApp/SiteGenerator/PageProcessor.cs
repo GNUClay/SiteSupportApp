@@ -22,13 +22,6 @@ namespace SiteGenerator
 {
     public class PageProcessor
     {
-        public class PageNodeInfo
-        {
-            public string SourceName = string.Empty;
-            public string TargetDirName = string.Empty;
-            public string FileNameWithOutExtension = string.Empty;
-        }
-
         public static void Run(PageNodeInfo info)
         {         
             var tmpSitePage = sitePage.LoadFromFile(info.SourceName);
