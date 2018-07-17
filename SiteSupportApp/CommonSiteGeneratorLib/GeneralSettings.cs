@@ -16,21 +16,18 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using CommonUtils;
-using SiteGenerator.ApiReferenceGenerator;
 
-namespace SiteGenerator
+namespace CommonSiteGeneratorLib
 {
     public static class GeneralSettings
     {
         static GeneralSettings()
         {
             mSourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
-            mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);         
+            mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
             mApiReferenceConfigPath = EVPath.Normalize(ConfigurationManager.AppSettings["apiReferenceConfigPath"]);
 
             mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);

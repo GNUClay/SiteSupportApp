@@ -91,12 +91,9 @@
     <Compile Include="BaseTargetPage.cs" />
     <Compile Include="Creator.cs" />
     <Compile Include="DirProcesor.cs" />
-    <Compile Include="GeneralSettings.cs" />
-    <Compile Include="menu.cs" />
     <Compile Include="PageProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="site.cs" />
     <Compile Include="sitePage.cs" />
     <Compile Include="TargetPage.cs" />
   </ItemGroup>
