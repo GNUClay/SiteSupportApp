@@ -16,14 +16,14 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using CommonSiteGeneratorLib;
 using System.IO;
-namespace SiteGenerator
+
+namespace CommonSiteGeneratorLib
 {
     public class PageProcessor
     {
-        public static void Run(PageNodeInfo info)
-        {         
+        public void Run(PageNodeInfo info)
+        {
             var tmpSitePage = sitePage.LoadFromFile(info.SourceName);
 
             if (string.IsNullOrWhiteSpace(tmpSitePage.contentPath))

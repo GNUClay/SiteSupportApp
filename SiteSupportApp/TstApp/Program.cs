@@ -16,6 +16,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using CommonSiteGeneratorLib;
 using CommonUtils;
 using HtmlAgilityPack;
 using SiteGenerator;
