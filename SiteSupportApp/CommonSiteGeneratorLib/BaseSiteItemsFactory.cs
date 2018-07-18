@@ -10,8 +10,18 @@ namespace CommonSiteGeneratorLib
     {
         public virtual BaseDirProcesor CreateDirProcessor()
         {
-            var result = new BaseDirProcesor();
+            var result = new BaseDirProcesor(this);
             return result;
+        }
+
+        public virtual BasePage CreatePage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual BasePage CreatePageForSpecialProcessing(string specialProcessing)
+        {
+            throw new NotImplementedException();
         }
     }
 }

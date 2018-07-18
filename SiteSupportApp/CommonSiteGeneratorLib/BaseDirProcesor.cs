@@ -22,6 +22,13 @@ namespace CommonSiteGeneratorLib
 {
     public class BaseDirProcesor
     {
+        public BaseDirProcesor(BaseSiteItemsFactory siteItemsFactory)
+        {
+            mPageProcessor = new PageProcessor(siteItemsFactory);
+        }
+
+        private PageProcessor mPageProcessor;
+
         public virtual void Run(SiteNodeInfo info)
         {
             if (!Directory.Exists(info.TargetDirName))
@@ -39,7 +46,7 @@ namespace CommonSiteGeneratorLib
                 tmpInfo.FileNameWithOutExtension = Path.GetFileNameWithoutExtension(file);
                 tmpInfo.TargetDirName = info.TargetDirName;
 
-                PageProcessor.Run(tmpInfo);
+                mPageProcessor.Run(tmpInfo);
             }
 
             tmpFiles = Directory.GetFiles(info.SourceDirName);

@@ -16,12 +16,21 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.IO;
+using System.Text;
 
 namespace CommonSiteGeneratorLib
 {
     public class PageProcessor
     {
+        public PageProcessor(BaseSiteItemsFactory siteItemsFactory)
+        {
+            mSiteItemsFactory = siteItemsFactory;
+        }
+
+        private BaseSiteItemsFactory mSiteItemsFactory;
+
         public void Run(PageNodeInfo info)
         {
             var tmpSitePage = sitePage.LoadFromFile(info.SourceName);
@@ -31,16 +40,43 @@ namespace CommonSiteGeneratorLib
                 tmpSitePage.contentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + ".thtml");
             }
 
-            if (string.IsNullOrWhiteSpace(tmpSitePage.title))
+            var sb = new StringBuilder();
+
+            if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.mainTitle))
             {
-                tmpSitePage.title = GeneralSettings.SiteSettings.title;
+                sb.Append(GeneralSettings.SiteSettings.mainTitle);
+
+                if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.titlesDelimiter))
+                {
+                    sb.Append(GeneralSettings.SiteSettings.titlesDelimiter);
+                }
             }
 
-            tmpSitePage.title = GeneralSettings.SiteSettings.mainTitle + tmpSitePage.title;
+            if (string.IsNullOrWhiteSpace(tmpSitePage.title))
+            {
+                sb.Append(GeneralSettings.SiteSettings.title);
+            }
+            else
+            {
+                sb.Append(tmpSitePage.title);
+            }
 
-            tmpSitePage.title = tmpSitePage.title.Trim();
+            tmpSitePage.title = sb.ToString().Trim();
 
-            var tmpPage = new TargetPage();
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpSitePage.specialProcessing = {tmpSitePage.specialProcessing}");
+#endif
+
+            BasePage tmpPage = null;
+
+            if(string.IsNullOrWhiteSpace(tmpSitePage.specialProcessing))
+            {
+                tmpPage = mSiteItemsFactory.CreatePage();
+            }
+            else
+            {
+                tmpPage = mSiteItemsFactory.CreatePageForSpecialProcessing(tmpSitePage.specialProcessing.Trim());
+            }
 
             tmpPage.Title = tmpSitePage.title;
 
@@ -49,10 +85,6 @@ namespace CommonSiteGeneratorLib
                 tmpPage.AdditionalMenu = menu.GetMenu(tmpSitePage.additionalMenu);
             }
 
-            var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
-
-            tmpPage.LastUpdateDate = tmpFileInfo.LastWriteTime;
-
             if (!string.IsNullOrWhiteSpace(tmpSitePage.description))
             {
                 tmpSitePage.description = tmpSitePage.description.Trim();
@@ -60,13 +92,29 @@ namespace CommonSiteGeneratorLib
 
             tmpPage.Description = tmpSitePage.description;
 
-            using (var tmpTextReader = new StreamReader(tmpSitePage.contentPath))
+            if(string.IsNullOrWhiteSpace(tmpSitePage.specialProcessing))
             {
-                tmpPage.Content = tmpTextReader.ReadToEnd();
+                var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
+
+                tmpPage.LastUpdateDate = tmpFileInfo.LastWriteTime;
+
+                using (var tmpTextReader = new StreamReader(tmpSitePage.contentPath))
+                {
+                    tmpPage.Content = tmpTextReader.ReadToEnd();
+                }
             }
+            else
+            {
+                tmpPage.LastUpdateDate = DateTime.Now;
+            }
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpPage.LastUpdateDate = {tmpPage.LastUpdateDate}");
+#endif
 
             tmpPage.TargetFileName = Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) + "." + tmpSitePage.extension);
             tmpPage.EnableMathML = tmpSitePage.enableMathML;
+            tmpPage.UseMarkdown = tmpSitePage.useMarkdown;
 
             tmpPage.Run();
         }

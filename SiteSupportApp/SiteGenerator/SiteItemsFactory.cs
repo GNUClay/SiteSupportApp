@@ -11,7 +11,13 @@ namespace SiteGenerator
     {
         public override BaseDirProcesor CreateDirProcessor()
         {
-            var result = new SiteDirProcesor();
+            var result = new SiteDirProcesor(this);
+            return result;
+        }
+
+        public override BasePage CreatePage()
+        {
+            var result = new TargetPage();
             return result;
         }
     }

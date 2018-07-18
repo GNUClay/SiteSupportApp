@@ -29,6 +29,8 @@ namespace CommonSiteGeneratorLib
         public string description = string.Empty;
         public string additionalMenu = null;
         public bool enableMathML;
+        public bool useMarkdown;
+        public string specialProcessing = string.Empty;
 
         public static sitePage LoadFromFile(string path)
         {

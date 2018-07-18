@@ -26,12 +26,19 @@ namespace CommonSiteGeneratorLib
     {
         static GeneralSettings()
         {
+            mSiteName = ConfigurationManager.AppSettings["siteName"];
             mSourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
             mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
-            mApiReferenceConfigPath = EVPath.Normalize(ConfigurationManager.AppSettings["apiReferenceConfigPath"]);
 
-            mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);
-            mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", string.Empty);
+            var initApiReferenceConfigPath = ConfigurationManager.AppSettings["apiReferenceConfigPath"];
+
+            if(!string.IsNullOrWhiteSpace(initApiReferenceConfigPath))
+            {
+                mApiReferenceConfigPath = EVPath.Normalize(initApiReferenceConfigPath);
+
+                mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);
+                mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", string.Empty);
+            }
 
             ReadSiteSettings();
         }
@@ -40,11 +47,20 @@ namespace CommonSiteGeneratorLib
 
         public const string IgnoreGitDir = ".git";
 
+        private static string mSiteName = string.Empty;
         private static string mSourcePath = string.Empty;
 
         private static string mApiReferenceConfigPath;
         private static string mApiReferenceSourcePath;
         private static string mApiReferenceTargetPath;
+
+        public static string SiteName
+        {
+            get
+            {
+                return mSiteName;
+            }
+        }
 
         public static string SourcePath
         {
@@ -103,8 +119,6 @@ namespace CommonSiteGeneratorLib
             var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
 
             mSiteSettings = site.LoadFromFile(tmpSiteSettingsPath);
-
-
         }
     }
 }

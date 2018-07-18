@@ -10,34 +10,12 @@ namespace SiteGenerator
 {
     public abstract class BaseTargetPage: BasePage
     {
-        private string mTargetFileName;
-
-        public override string TargetFileName
-        {
-            get
-            {
-                return mTargetFileName;
-            }
-
-            set
-            {
-                mTargetFileName = value;
-
-                var pos = mTargetFileName.IndexOf("gnuclay.github.io");
-                RelativeHref = mTargetFileName.Substring(pos).Replace("gnuclay.github.io", string.Empty).ToLower();
-            }
-        }
-
-        public string RelativeHref { get; private set; }
-
         protected override void GenerateText()
         {
-            var tmpFormat = new System.Globalization.CultureInfo("en-GB");
-
             AppendLine("<!DOCTYPE html>");
-            AppendLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
+            AppendLine("<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>");
             AppendLine("<head>");
-            AppendLine("<meta charset=\"utf-8\" />");
+            AppendLine("<meta charset='utf-8' />");
             AppendLine("<meta name='generator' content='GNUClay/SiteSupportApp'>");
 
             if (!string.IsNullOrWhiteSpace(Description))
@@ -135,7 +113,7 @@ namespace SiteGenerator
             AppendLine("<footer class='container'>");
             AppendLine("<div class='row justify-content-center'>");
             AppendLine("<div class='col col-md-10'>");
-            AppendLine($"This page was last modified on {LastUpdateDate.ToString("dd MMMM yyyy", tmpFormat)}</br>");
+            AppendLine($"This page was last modified on {LastUpdateDate.ToString("dd MMMM yyyy", TargetCulture)}</br>");
             //Append(", at ");
             //Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
 

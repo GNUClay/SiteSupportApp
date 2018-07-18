@@ -46,6 +46,10 @@ namespace CommonSiteGeneratorLib
 
         private void ClearDir()
         {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
+#endif
+
             var tmpDirs = Directory.GetDirectories(GeneralSettings.DestPath);
 
             foreach (var subDir in tmpDirs)
@@ -75,6 +79,10 @@ namespace CommonSiteGeneratorLib
 
         private void ProcessDir(string dir)
         {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessDir dir = {dir}");
+#endif
+
             var tmpInfo = new SiteNodeInfo();
 
             tmpInfo.SourceDirName = dir;

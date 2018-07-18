@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CommonMark;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,14 +11,47 @@ namespace CommonSiteGeneratorLib
 {
     public abstract class BasePage
     {
+        protected readonly CultureInfo TargetCulture = new CultureInfo("en-GB");
         public string Description { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
-        public System.DateTime LastUpdateDate { get; set; } = DateTime.Now;
+        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
         public menu AdditionalMenu { get; set; }
         public bool UseMinification { get; set; } = false;
         public bool EnableMathML { get; set; }
-        public abstract string TargetFileName { get; set; }
+        public bool UseMarkdown { get; set; }
+        private string mTargetFileName;
+
+        public string TargetFileName
+        {
+            get
+            {
+                return mTargetFileName;
+            }
+
+            set
+            {
+                mTargetFileName = value;
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName mTargetFileName = {mTargetFileName}");
+#endif
+
+                var pos = mTargetFileName.IndexOf(GeneralSettings.SiteName);
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName pos = {pos}");
+#endif
+
+                RelativeHref = mTargetFileName.Substring(pos).Replace(GeneralSettings.SiteName, string.Empty).ToLower();
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName RelativeHref = {RelativeHref}");
+#endif
+            }
+        }
+
+        public string RelativeHref { get; private set; }
 
         private StringBuilder mResult;
 
@@ -24,7 +59,7 @@ namespace CommonSiteGeneratorLib
         {
             mResult = new StringBuilder();
             GenerateText();
-
+            
             using (var tmpTextWriter = new StreamWriter(TargetFileName, false, new UTF8Encoding(true)))
             {
                 tmpTextWriter.Write(Result);
@@ -50,6 +85,20 @@ namespace CommonSiteGeneratorLib
             }
 
             mResult.AppendLine(val);
+        }
+
+        protected void AppendContent(string val)
+        {
+#if DEBUG
+            //NLog.LogManager.GetCurrentClassLogger().Info($"AppendContent val = {val}");
+#endif
+
+            if(UseMarkdown)
+            {
+                val = CommonMarkConverter.Convert(val);
+            }
+
+            AppendLine(val);
         }
 
         protected abstract void GenerateText();

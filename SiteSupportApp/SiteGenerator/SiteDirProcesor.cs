@@ -10,6 +10,11 @@ namespace SiteGenerator
 {
     public class SiteDirProcesor: BaseDirProcesor
     {
+        public SiteDirProcesor(BaseSiteItemsFactory siteItemsFactory)
+            : base(siteItemsFactory)
+        {
+        }
+
         public override void Run(SiteNodeInfo info)
         {
             if (info.SourceDirName == GeneralSettings.ApiReferenceSourcePath)

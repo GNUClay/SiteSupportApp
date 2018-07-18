@@ -26,6 +26,7 @@ namespace CommonSiteGeneratorLib
         public menu menu = null;
         public string mainTitle = string.Empty;
         public string title = string.Empty;
+        public string titlesDelimiter = string.Empty;
         public bool enabledFavicon = false;
         public string logo = string.Empty;
 

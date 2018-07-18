@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SiteGenerator
+namespace MetatypemanSiteSupport
 {
     public class SiteCreator: BaseCreator
     {
