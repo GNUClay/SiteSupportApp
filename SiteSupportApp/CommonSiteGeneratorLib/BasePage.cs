@@ -11,6 +11,12 @@ namespace CommonSiteGeneratorLib
 {
     public abstract class BasePage
     {
+        protected BasePage(BaseSiteItemsFactory factory)
+        {
+            SiteItemsFactory = factory;
+        }
+
+        protected BaseSiteItemsFactory SiteItemsFactory { get; private set;}
         protected readonly CultureInfo TargetCulture = new CultureInfo("en-GB");
         public string Description { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
@@ -34,7 +40,7 @@ namespace CommonSiteGeneratorLib
                 mTargetFileName = value;
 
 #if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName mTargetFileName = {mTargetFileName}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName mTargetFileName = {mTargetFileName}");
 #endif
 
 #if DEBUG
@@ -48,7 +54,7 @@ namespace CommonSiteGeneratorLib
 #endif
             }
         }
-
+        public string SourceName { get; set; }
         public string RelativeHref { get; private set; }
 
         private StringBuilder mResult;

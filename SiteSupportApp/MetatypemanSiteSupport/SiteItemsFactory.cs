@@ -17,13 +17,13 @@ namespace MetatypemanSiteSupport
 
             if(specialProcessing == "index")
             {
-                var result = new IndexPage();
+                var result = new IndexPage(this);
                 return result;
             }
 
             if(specialProcessing == "index_of_articles")
             {
-                var result = new ArticleIndexPage();
+                var result = new ArticleIndexPage(this);
                 return result;
             }
 
@@ -32,7 +32,7 @@ namespace MetatypemanSiteSupport
 
         public override BasePage CreatePage()
         {
-            var result = new ContentPage();
+            var result = new ContentPage(this);
             return result;
         }
     }

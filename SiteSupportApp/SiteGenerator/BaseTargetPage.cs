@@ -10,6 +10,11 @@ namespace SiteGenerator
 {
     public abstract class BaseTargetPage: BasePage
     {
+        protected BaseTargetPage(BaseSiteItemsFactory factory)
+            : base(factory)
+        {
+        }
+
         protected override void GenerateText()
         {
             AppendLine("<!DOCTYPE html>");

@@ -64,6 +64,7 @@ namespace CommonSiteGeneratorLib
             tmpSitePage.title = sb.ToString().Trim();
 
 #if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run info.SourceName = {info.SourceName}");
             NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpSitePage.specialProcessing = {tmpSitePage.specialProcessing}");
 #endif
 
@@ -111,7 +112,7 @@ namespace CommonSiteGeneratorLib
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpPage.LastUpdateDate = {tmpPage.LastUpdateDate}");
 #endif
-
+            tmpPage.SourceName = info.SourceName;
             tmpPage.TargetFileName = Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) + "." + tmpSitePage.extension);
             tmpPage.EnableMathML = tmpSitePage.enableMathML;
             tmpPage.UseMarkdown = tmpSitePage.useMarkdown;

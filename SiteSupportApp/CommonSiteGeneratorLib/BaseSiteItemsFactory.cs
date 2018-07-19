@@ -23,5 +23,22 @@ namespace CommonSiteGeneratorLib
         {
             throw new NotImplementedException();
         }
+
+        private Dictionary<string, BreadcrumbsPageNode> mBreadcrumbsPageNodesDict = new Dictionary<string, BreadcrumbsPageNode>();
+
+        public void SetBreadcrumbsPageNodes(List<BreadcrumbsPageNode> pagesList)
+        {
+            mBreadcrumbsPageNodesDict = pagesList.GroupBy(p => p.Path).ToDictionary(p =>p.Key, p => p.First());
+        }
+
+        public BreadcrumbsPageNode GetBreadcrumbsPageNode(string path)
+        {
+            if(mBreadcrumbsPageNodesDict.ContainsKey(path))
+            {
+                return mBreadcrumbsPageNodesDict[path];
+            }
+
+            return null;
+        }
     }
 }

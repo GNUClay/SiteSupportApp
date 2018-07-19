@@ -9,6 +9,11 @@ namespace MetatypemanSiteSupport
 {
     public abstract class BasePageTemplate : BasePage
     {
+        protected BasePageTemplate(BaseSiteItemsFactory factory)
+            : base(factory)
+        {
+        }
+
         protected override void GenerateText()
         {
             AppendLine("<!DOCTYPE html>");
@@ -116,7 +121,18 @@ namespace MetatypemanSiteSupport
 
         private void GenerateBreadcrumbs()
         {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs SourceName = {SourceName}");
+#endif
+            var breadcrumbsItem = SiteItemsFactory.GetBreadcrumbsPageNode(SourceName);
 
+            do
+            {
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs breadcrumbsItem = {breadcrumbsItem}");
+#endif
+            }
+            while ((breadcrumbsItem = breadcrumbsItem.Parent) != null);
         }
     }
 }

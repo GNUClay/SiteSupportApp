@@ -8,5 +8,6 @@ namespace CommonSiteGeneratorLib
 {
     public class ContextOfPredictionDirProcessing
     {
+        public List<BreadcrumbsPageNode> Pages { get; set; } = new List<BreadcrumbsPageNode>();
     }
 }
