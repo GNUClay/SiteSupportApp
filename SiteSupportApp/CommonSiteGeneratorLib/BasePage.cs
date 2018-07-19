@@ -37,13 +37,11 @@ namespace CommonSiteGeneratorLib
                 //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName mTargetFileName = {mTargetFileName}");
 #endif
 
-                var pos = mTargetFileName.IndexOf(GeneralSettings.SiteName);
-
 #if DEBUG
                 //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName pos = {pos}");
 #endif
 
-                RelativeHref = mTargetFileName.Substring(pos).Replace(GeneralSettings.SiteName, string.Empty).ToLower();
+                RelativeHref = PagesPathsHelper.PathToRelativeHref(mTargetFileName);
 
 #if DEBUG
                 //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName RelativeHref = {RelativeHref}");

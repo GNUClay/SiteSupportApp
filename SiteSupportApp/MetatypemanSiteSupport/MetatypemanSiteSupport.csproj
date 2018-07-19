@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleIndexPage.cs" />
     <Compile Include="BasePageTemplate.cs" />
+    <Compile Include="ContentPage.cs" />
     <Compile Include="IndexPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

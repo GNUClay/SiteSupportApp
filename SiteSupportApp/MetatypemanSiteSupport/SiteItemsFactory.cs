@@ -21,7 +21,19 @@ namespace MetatypemanSiteSupport
                 return result;
             }
 
+            if(specialProcessing == "index_of_articles")
+            {
+                var result = new ArticleIndexPage();
+                return result;
+            }
+
             throw new NotImplementedException();
+        }
+
+        public override BasePage CreatePage()
+        {
+            var result = new ContentPage();
+            return result;
         }
     }
 }

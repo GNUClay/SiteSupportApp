@@ -41,13 +41,14 @@ namespace CommonSiteGeneratorLib
             mSiteItemsFactory = GetsiteItemsFactory();
             mDirProcesor = mSiteItemsFactory.CreateDirProcessor();
             ClearDir();
+            PredictionDirProcessing();
             ProcessDir(GeneralSettings.SourcePath);
         }
 
         private void ClearDir()
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
 #endif
 
             var tmpDirs = Directory.GetDirectories(GeneralSettings.DestPath);
@@ -97,6 +98,55 @@ namespace CommonSiteGeneratorLib
             {
                 ProcessDir(subDir);
             }
+        }
+
+        private void PredictionDirProcessing()
+        {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info("Begin PredictionDirProcessing");
+#endif
+
+            var context = new ContextOfPredictionDirProcessing();
+            PredictionProcessingOfConcreteDir(GeneralSettings.SourcePath, context);
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info("End PredictionDirProcessing");
+#endif
+        }
+
+        private void PredictionProcessingOfConcreteDir(string dirName, ContextOfPredictionDirProcessing context)
+        {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Begin PredictionProcessingOfConcreteDir dirName = {dirName}");
+#endif
+
+            var tmpFilesNamesList = Directory.GetFiles(dirName, "*.sp");
+
+            foreach (var fileName in tmpFilesNamesList)
+            {
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir fileName = {fileName}");
+#endif
+
+                var newFileName = fileName.Replace(".sp", ".html");
+
+                var relativeHref = PagesPathsHelper.PathToRelativeHref(newFileName);
+                relativeHref = relativeHref.Replace(@"\sitesource", string.Empty);
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir relativeHref = {relativeHref}");
+#endif
+            }
+
+            var tmpDirsList = Directory.GetDirectories(dirName);
+
+            foreach (var subDirName in tmpDirsList)
+            {
+                PredictionProcessingOfConcreteDir(subDirName, context);
+            }
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"End PredictionProcessingOfConcreteDir dirName = {dirName}");
+#endif
         }
     }
 }

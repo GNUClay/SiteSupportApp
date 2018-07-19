@@ -33,16 +33,20 @@ namespace MetatypemanSiteSupport
             {
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
-
+            AppendLine("<link rel='stylesheet' href='/site.css'>");
             AppendLine("</head>");
             AppendLine("<body>");
             AppendLine("<header>");
             GenerateHeader();
             AppendLine("</header>");
             AppendLine("<nav>");
+            GenerateMainMenu();
             AppendLine("</nav>");
             AppendLine("<hr>");
-            AppendLine("<article>");
+            AppendLine("<nav>");
+            GenerateBreadcrumbs();
+            AppendLine("</nav>");
+            AppendLine("<article>"); 
             GenerateArticle();
             AppendLine("<p>&nbsp;</p>");
             AppendLine("</article>");
@@ -82,6 +86,37 @@ namespace MetatypemanSiteSupport
             Append("Personal Page of Tolkachov Sergiy");
             Append("</span>");
             AppendLine("</p>");
+        }
+
+        private void GenerateMainMenu()
+        {
+            var tmpItems = new List<string>();
+
+            foreach (var item in GeneralSettings.SiteSettings.menu.items)
+            {
+                var tmpSb = new StringBuilder();
+
+                tmpSb.Append("<a href ='");
+                tmpSb.Append(item.href);
+                tmpSb.Append("'>");
+                tmpSb.Append(item.label);
+                tmpSb.Append("</a>");
+
+                tmpItems.Add(tmpSb.ToString());
+                tmpItems.Add("&nbsp;|&nbsp;");
+            }
+
+            tmpItems.RemoveAt(tmpItems.Count - 1);
+
+            foreach (var item in tmpItems)
+            {
+                Append(item);
+            }
+        }
+
+        private void GenerateBreadcrumbs()
+        {
+
         }
     }
 }
