@@ -75,6 +75,11 @@ namespace CommonSiteGeneratorLib
                     continue;
                 }
 
+                if (tmpFileExtension == ".md")
+                {
+                    continue;
+                }
+
                 var tmpTargetFileName = Path.Combine(info.TargetDirName, Path.GetFileName(file));
 
                 File.Copy(file, tmpTargetFileName, true);
