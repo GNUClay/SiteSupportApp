@@ -37,7 +37,18 @@ namespace CommonSiteGeneratorLib
 
             if (string.IsNullOrWhiteSpace(tmpSitePage.contentPath))
             {
-                tmpSitePage.contentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + ".thtml");
+                var tmpExtension = string.Empty;
+
+                if(tmpSitePage.useMarkdown)
+                {
+                    tmpExtension = ".md";
+                }
+                else
+                {
+                    tmpExtension = ".thtml";
+                }
+
+                tmpSitePage.contentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + tmpExtension);
             }
 
             var sb = new StringBuilder();

@@ -12,6 +12,7 @@ namespace CommonSiteGeneratorLib
         public bool IsIndex { get; set; }
         public string Path { get; set; }
         public string RelativeHref { get; set; }
+        public string Title { get; set; }
 
         public override string ToString()
         {
@@ -20,6 +21,7 @@ namespace CommonSiteGeneratorLib
             sb.AppendLine($"{nameof(IsIndex)} = {IsIndex}");
             sb.AppendLine($"{nameof(Path)} = {Path}");
             sb.AppendLine($"{nameof(RelativeHref)} = {RelativeHref}");
+            sb.AppendLine($"{nameof(Title)} = {Title}");
             return sb.ToString();
         }
     }

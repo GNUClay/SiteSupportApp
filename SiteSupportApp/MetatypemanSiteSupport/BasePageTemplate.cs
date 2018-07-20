@@ -48,7 +48,7 @@ namespace MetatypemanSiteSupport
             GenerateMainMenu();
             AppendLine("</nav>");
             AppendLine("<hr>");
-            AppendLine("<nav>");
+            AppendLine("<nav class='bread-crumb-nav'>");
             GenerateBreadcrumbs();
             AppendLine("</nav>");
             AppendLine("<article>"); 
@@ -119,6 +119,20 @@ namespace MetatypemanSiteSupport
             }
         }
 
+        private class BreadcrumbInThePage
+        {
+            public string Title { get; set; }
+            public string Href { get; set; }
+
+            public override string ToString()
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine($"{nameof(Title)} = {Title}");
+                sb.AppendLine($"{nameof(Href)} = {Href}");
+                return sb.ToString();
+            }
+        }
+
         private void GenerateBreadcrumbs()
         {
 #if DEBUG
@@ -126,13 +140,56 @@ namespace MetatypemanSiteSupport
 #endif
             var breadcrumbsItem = SiteItemsFactory.GetBreadcrumbsPageNode(SourceName);
 
+            var isFirst = true;
+
+            var itemsList = new List<BreadcrumbInThePage>();
+
             do
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs breadcrumbsItem = {breadcrumbsItem}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs isFirst = {isFirst} breadcrumbsItem = {breadcrumbsItem}");
 #endif
+
+                var item = new BreadcrumbInThePage();
+                item.Title = breadcrumbsItem.Title;
+
+                if(isFirst)
+                {
+                    isFirst = false;
+                }
+                else
+                {
+                    item.Href = breadcrumbsItem.RelativeHref;
+                }
+
+                itemsList.Add(item);
             }
             while ((breadcrumbsItem = breadcrumbsItem.Parent) != null);
+
+            itemsList.Reverse();
+
+            var n = 0;
+
+            foreach(var item in itemsList)
+            {
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs item = {item}");
+#endif
+                n++;
+                Append("<a");
+                if(!string.IsNullOrWhiteSpace(item.Href))
+                {
+                    Append($" href = '{item.Href}'");
+                }
+                Append(">");
+                Append(item.Title);
+                Append("</a>");
+
+                if(n < itemsList.Count)
+                {
+                    Append("&nbsp;/&nbsp;");
+                }
+            }
         }
     }
 }

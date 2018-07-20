@@ -18,6 +18,7 @@
 
 using Newtonsoft.Json;
 using System.IO;
+using System.Text;
 
 namespace CommonSiteGeneratorLib
 {
@@ -26,11 +27,27 @@ namespace CommonSiteGeneratorLib
         public string extension = "html";
         public string contentPath = string.Empty;
         public string title = string.Empty;
+        public string breadcrumbTitle = string.Empty;
         public string description = string.Empty;
         public string additionalMenu = null;
         public bool enableMathML;
         public bool useMarkdown;
         public string specialProcessing = string.Empty;
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"{nameof(extension)} = {extension}");
+            sb.AppendLine($"{nameof(contentPath)} = {contentPath}");
+            sb.AppendLine($"{nameof(title)} = {title}");
+            sb.AppendLine($"{nameof(breadcrumbTitle)} = {breadcrumbTitle}");
+            sb.AppendLine($"{nameof(description)} = {description}");
+            sb.AppendLine($"{nameof(additionalMenu)} = {additionalMenu}");
+            sb.AppendLine($"{nameof(enableMathML)} = {enableMathML}");
+            sb.AppendLine($"{nameof(useMarkdown)} = {useMarkdown}");
+            sb.AppendLine($"{nameof(specialProcessing)} = {specialProcessing}");
+            return sb.ToString();
+        }
 
         public static sitePage LoadFromFile(string path)
         {

@@ -13,5 +13,10 @@ namespace MetatypemanSiteSupport
             : base(factory)
         {
         }
+
+        protected override void GenerateArticle()
+        {
+            AppendContent(Content);
+        }
     }
 }
