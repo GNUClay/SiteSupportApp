@@ -47,7 +47,7 @@ namespace MetatypemanSiteSupport
             AppendLine("<nav>");
             GenerateMainMenu();
             AppendLine("</nav>");
-            AppendLine("<hr>");
+            AppendLine("<hr style='border-bottom-color: #e2e2e2;'>");
             AppendLine("<nav class='bread-crumb-nav'>");
             GenerateBreadcrumbs();
             AppendLine("</nav>");
@@ -103,12 +103,12 @@ namespace MetatypemanSiteSupport
 
                 tmpSb.Append("<a href ='");
                 tmpSb.Append(item.href);
-                tmpSb.Append("'>");
+                tmpSb.Append("' class='main-menu-link'>");
                 tmpSb.Append(item.label);
                 tmpSb.Append("</a>");
 
                 tmpItems.Add(tmpSb.ToString());
-                tmpItems.Add("&nbsp;|&nbsp;");
+                tmpItems.Add("&nbsp;<span style='color: #e2e2e2;'>|<span>&nbsp;");
             }
 
             tmpItems.RemoveAt(tmpItems.Count - 1);
@@ -136,7 +136,7 @@ namespace MetatypemanSiteSupport
         private void GenerateBreadcrumbs()
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs SourceName = {SourceName}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs SourceName = {SourceName}");
 #endif
             var breadcrumbsItem = SiteItemsFactory.GetBreadcrumbsPageNode(SourceName);
 
@@ -147,7 +147,7 @@ namespace MetatypemanSiteSupport
             do
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs isFirst = {isFirst} breadcrumbsItem = {breadcrumbsItem}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs isFirst = {isFirst} breadcrumbsItem = {breadcrumbsItem}");
 #endif
 
                 var item = new BreadcrumbInThePage();
@@ -173,7 +173,7 @@ namespace MetatypemanSiteSupport
             foreach(var item in itemsList)
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs item = {item}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs item = {item}");
 #endif
                 n++;
                 Append("<a");
@@ -181,7 +181,7 @@ namespace MetatypemanSiteSupport
                 {
                     Append($" href = '{item.Href}'");
                 }
-                Append(">");
+                Append(" style='color: #e2e2e2;'>");
                 Append(item.Title);
                 Append("</a>");
 

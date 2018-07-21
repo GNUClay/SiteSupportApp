@@ -40,7 +40,7 @@ namespace CommonSiteGeneratorLib
                 mTargetFileName = value;
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName mTargetFileName = {mTargetFileName}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName mTargetFileName = {mTargetFileName}");
 #endif
 
 #if DEBUG

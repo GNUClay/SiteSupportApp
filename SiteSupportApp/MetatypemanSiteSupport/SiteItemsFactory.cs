@@ -12,7 +12,7 @@ namespace MetatypemanSiteSupport
         public override BasePage CreatePageForSpecialProcessing(string specialProcessing)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"CreatePageForSpecialProcessing specialProcessing = {specialProcessing}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"CreatePageForSpecialProcessing specialProcessing = {specialProcessing}");
 #endif
 
             if(specialProcessing == "index")

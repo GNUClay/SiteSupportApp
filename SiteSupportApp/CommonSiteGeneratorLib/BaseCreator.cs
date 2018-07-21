@@ -85,7 +85,7 @@ namespace CommonSiteGeneratorLib
         private void ProcessDir(string dir)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessDir dir = {dir}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"ProcessDir dir = {dir}");
 #endif
 
             var tmpInfo = new SiteNodeInfo();
@@ -107,7 +107,7 @@ namespace CommonSiteGeneratorLib
         private void PredictionDirProcessing()
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin PredictionDirProcessing");
+            //NLog.LogManager.GetCurrentClassLogger().Info("Begin PredictionDirProcessing");
 #endif
 
             var context = new ContextOfPredictionDirProcessing();
@@ -115,14 +115,14 @@ namespace CommonSiteGeneratorLib
             GenerateSiteMap(context.Pages);
             mSiteItemsFactory.SetBreadcrumbsPageNodes(context.Pages);
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("End PredictionDirProcessing");
+            //NLog.LogManager.GetCurrentClassLogger().Info("End PredictionDirProcessing");
 #endif
         }
 
         private void PredictionProcessingOfConcreteDir(string dirName, BreadcrumbsPageNode parent, ContextOfPredictionDirProcessing context)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Begin PredictionProcessingOfConcreteDir dirName = {dirName}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Begin PredictionProcessingOfConcreteDir dirName = {dirName}");
 #endif
 
             var tmpFilesNamesList = Directory.GetFiles(dirName, "*.sp");
@@ -130,7 +130,7 @@ namespace CommonSiteGeneratorLib
             var indexFileName = tmpFilesNamesList.ToList().FirstOrDefault(p => p.EndsWith("index.sp"));
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Begin PredictionProcessingOfConcreteDir indexFileName = {indexFileName}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Begin PredictionProcessingOfConcreteDir indexFileName = {indexFileName}");
 #endif
 
             BreadcrumbsPageNode newParent = null;
@@ -158,15 +158,15 @@ namespace CommonSiteGeneratorLib
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"End PredictionProcessingOfConcreteDir dirName = {dirName}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"End PredictionProcessingOfConcreteDir dirName = {dirName}");
 #endif
         }
 
         private BreadcrumbsPageNode PredictionProcessingOfConcreteFile(string fileName, bool isIndex, BreadcrumbsPageNode parent, ContextOfPredictionDirProcessing context)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteFile fileName = {fileName} isIndex = {isIndex}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir parent = {parent}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteFile fileName = {fileName} isIndex = {isIndex}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir parent = {parent}");
 #endif
 
             var newFileName = fileName.Replace(".sp", ".html");
@@ -174,13 +174,13 @@ namespace CommonSiteGeneratorLib
             var relativeHref = PagesPathsHelper.PathToRelativeHref(newFileName);
             relativeHref = relativeHref.Replace(@"\sitesource", string.Empty);
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir relativeHref = {relativeHref}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir relativeHref = {relativeHref}");
 #endif
 
             var tmpSitePage = sitePage.LoadFromFile(fileName);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir tmpSitePage = {tmpSitePage}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir tmpSitePage = {tmpSitePage}");
 #endif
 
             var result = new BreadcrumbsPageNode();
@@ -196,7 +196,7 @@ namespace CommonSiteGeneratorLib
                 result.Title = tmpSitePage.title;
             }
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir result = {result}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir result = {result}");
 #endif
 
             return result;
@@ -226,13 +226,13 @@ namespace CommonSiteGeneratorLib
             sb.AppendLine("</urlset>");
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir sb.ToString() = {sb.ToString()}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir sb.ToString() = {sb.ToString()}");
 #endif
 
             var newPath = Path.Combine(GeneralSettings.DestPath, "sitemap.xml");
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir newPath = {newPath}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir newPath = {newPath}");
 #endif
 
             using (var tmpTextWriter = new StreamWriter(newPath, false, new UTF8Encoding(true)))
