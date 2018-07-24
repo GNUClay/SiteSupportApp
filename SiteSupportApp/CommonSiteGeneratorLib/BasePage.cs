@@ -27,6 +27,9 @@ namespace CommonSiteGeneratorLib
         public bool EnableMathML { get; set; }
         public bool UseMarkdown { get; set; }
         private string mTargetFileName;
+        public string ImageUrl { get; set; }
+        public string ImageAlt { get; set; }
+        public string MicrodataTitle { get; set; }
 
         public string TargetFileName
         {

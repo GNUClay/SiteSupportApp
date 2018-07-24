@@ -32,6 +32,7 @@ namespace CommonSiteGeneratorLib
         public bool enableMathML;
         public bool useMarkdown;
         public string specialProcessing = string.Empty;
+        public bool isReady;
         public sitePageMicroData microdata;
 
         public override string ToString()
@@ -45,6 +46,7 @@ namespace CommonSiteGeneratorLib
             sb.AppendLine($"{nameof(enableMathML)} = {enableMathML}");
             sb.AppendLine($"{nameof(useMarkdown)} = {useMarkdown}");
             sb.AppendLine($"{nameof(specialProcessing)} = {specialProcessing}");
+            sb.AppendLine($"{nameof(isReady)} = {isReady}");
             sb.AppendLine($"{nameof(microdata)} = {microdata}");
             return sb.ToString();
         }

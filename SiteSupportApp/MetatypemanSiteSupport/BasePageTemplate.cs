@@ -21,12 +21,28 @@ namespace MetatypemanSiteSupport
             AppendLine("<head>");
             AppendLine("<meta charset='utf-8' />");
 
-            if (!string.IsNullOrWhiteSpace(Description))
+            AppendLine("<meta property='og:type' content='article' />");
+
+            if (!string.IsNullOrWhiteSpace(MicrodataTitle))
             {
-                Append("<meta name='description' content='");
-                Append(Description);
-                AppendLine("'>");
+                AppendLine($"<meta property='og:title' content='{MicrodataTitle}' />");
+                //AppendLine($"<meta itemprop='name' content='{MicrodataTitle}' />");
             }
+
+            if (!string.IsNullOrWhiteSpace(ImageUrl))
+            {
+                AppendLine($"<meta property='og:image:secure_url' content='{ImageUrl}' />");
+
+                if(!string.IsNullOrWhiteSpace(ImageAlt))
+                {
+                    AppendLine($"<meta property='og:image:alt' content='{ImageAlt}' />");
+                }               
+            }
+
+            //if (!string.IsNullOrWhiteSpace())
+            //{
+            //og:url
+            //}
 
             if (!string.IsNullOrWhiteSpace(Title))
             {
@@ -34,6 +50,13 @@ namespace MetatypemanSiteSupport
                 Append(Title);
                 AppendLine("</title>");
             }
+
+            if (!string.IsNullOrWhiteSpace(Description))
+            {
+                AppendLine($"<meta name='description' content='{Description}'>");
+                //AppendLine($"<meta itemprop='description' content='{Description}' />");
+            }
+
             if (GeneralSettings.SiteSettings.enabledFavicon)
             {
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");

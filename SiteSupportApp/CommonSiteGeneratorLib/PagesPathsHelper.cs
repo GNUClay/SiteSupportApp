@@ -13,5 +13,12 @@ namespace CommonSiteGeneratorLib
             var pos = path.IndexOf(GeneralSettings.SiteName);
             return path.Substring(pos).Replace(GeneralSettings.SiteName, string.Empty).ToLower();
         }
+
+        public static string RelativeHrefToAbsolute(string relativeHref)
+        {
+
+
+            return string.Empty;
+        }
     }
 }

@@ -35,6 +35,11 @@ namespace CommonSiteGeneratorLib
         {
             var tmpSitePage = sitePage.LoadFromFile(info.SourceName);
 
+            if(!tmpSitePage.isReady)
+            {
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(tmpSitePage.contentPath))
             {
                 var tmpExtension = string.Empty;
@@ -97,14 +102,50 @@ namespace CommonSiteGeneratorLib
                 tmpPage.AdditionalMenu = menu.GetMenu(tmpSitePage.additionalMenu);
             }
 
-            if (!string.IsNullOrWhiteSpace(tmpSitePage.description))
+            var sitePageMicroData = tmpSitePage.microdata;
+
+            if (sitePageMicroData != null)
             {
-                tmpSitePage.description = tmpSitePage.description.Trim();
+                if (!string.IsNullOrWhiteSpace(sitePageMicroData.description))
+                {
+                    sitePageMicroData.description = sitePageMicroData.description.Trim();
+                }
+
+                tmpPage.Description = sitePageMicroData.description;
+
+                if(string.IsNullOrWhiteSpace(sitePageMicroData.title))
+                {
+                    sitePageMicroData.title = tmpSitePage.title;
+                }
+                else
+                {
+                    sitePageMicroData.title = sitePageMicroData.title.Trim();
+                }
+
+                tmpPage.MicrodataTitle = sitePageMicroData.title;
+
+                if (!string.IsNullOrWhiteSpace(sitePageMicroData.imageUrl))
+                {
+                    sitePageMicroData.imageUrl = sitePageMicroData.imageUrl.Trim();
+                }
+
+                tmpPage.ImageUrl = sitePageMicroData.imageUrl;
+
+                if (!string.IsNullOrWhiteSpace(sitePageMicroData.imageAlt))
+                {
+                    sitePageMicroData.imageAlt = sitePageMicroData.imageAlt.Trim();
+                }
+
+                tmpPage.ImageAlt = sitePageMicroData.imageAlt;
+
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.title = {sitePageMicroData.title}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.imageUrl = {sitePageMicroData.imageUrl}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.imageAlt = {sitePageMicroData.imageAlt}");
+#endif
             }
 
-            tmpPage.Description = tmpSitePage.description;
-
-            if(string.IsNullOrWhiteSpace(tmpSitePage.specialProcessing))
+            if (string.IsNullOrWhiteSpace(tmpSitePage.specialProcessing))
             {
                 var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
 
