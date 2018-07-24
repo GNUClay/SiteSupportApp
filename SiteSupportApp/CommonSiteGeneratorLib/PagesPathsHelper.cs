@@ -16,9 +16,19 @@ namespace CommonSiteGeneratorLib
 
         public static string RelativeHrefToAbsolute(string relativeHref)
         {
+            var domainHref = $"https://{GeneralSettings.SiteName}";
 
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"RelativeHrefToAbsolute relativeHref = {relativeHref}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"RelativeHrefToAbsolute domainHref = {domainHref}");
+#endif
 
-            return string.Empty;
+            if(relativeHref.StartsWith(domainHref))
+            {
+                return domainHref;
+            }
+
+            return $"{domainHref}{relativeHref}";
         }
     }
 }

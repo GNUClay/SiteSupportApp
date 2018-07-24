@@ -173,6 +173,7 @@ namespace CommonSiteGeneratorLib
 
             var relativeHref = PagesPathsHelper.PathToRelativeHref(newFileName);
             relativeHref = relativeHref.Replace(@"\sitesource", string.Empty);
+            var absoluteHref = PagesPathsHelper.RelativeHrefToAbsolute(relativeHref);
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir relativeHref = {relativeHref}");
 #endif
@@ -183,12 +184,18 @@ namespace CommonSiteGeneratorLib
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir tmpSitePage = {tmpSitePage}");
 #endif
 
+            if(!tmpSitePage.isReady)
+            {
+                return null;
+            }
+
             var result = new BreadcrumbsPageNode();
             context.Pages.Add(result);
             result.Parent = parent;
             result.IsIndex = isIndex;
             result.Path = fileName;
             result.RelativeHref = relativeHref;
+            result.AbsoluteHref = absoluteHref;
             result.Title = tmpSitePage.breadcrumbTitle;
 
             if(string.IsNullOrWhiteSpace(result.Title))
@@ -209,15 +216,15 @@ namespace CommonSiteGeneratorLib
             sb.AppendLine("<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>");
             foreach(var page in pagesList)
             {
-                var uriBuilder = new UriBuilder();
-                uriBuilder.Scheme = "https";
-                uriBuilder.Host = GeneralSettings.SiteName;
-                uriBuilder.Path = page.RelativeHref;
+                //var uriBuilder = new UriBuilder();
+                //uriBuilder.Scheme = "https";
+                //uriBuilder.Host = GeneralSettings.SiteName;
+                //uriBuilder.Path = page.RelativeHref;
 
                 //var lastMod = DateTime.Now;
 
                 sb.AppendLine("<url>");
-                sb.AppendLine($"<loc>{uriBuilder.ToString()}</loc>");
+                sb.AppendLine($"<loc>{page.AbsoluteHref}</loc>");
                 //sb.AppendLine($"<lastmod>{lastMod.ToString("yyyy-MM-dd")}</lastmod>");
                 //sb.AppendLine("<changefreq>always</changefreq>");
                 //sb.AppendLine("<priority>0.8</priority>");

@@ -31,7 +31,7 @@ namespace MetatypemanSiteSupport
 
             if (!string.IsNullOrWhiteSpace(ImageUrl))
             {
-                AppendLine($"<meta property='og:image:secure_url' content='{ImageUrl}' />");
+                AppendLine($"<meta property='og:image:secure_url' content='{PagesPathsHelper.RelativeHrefToAbsolute(ImageUrl)}' />");
 
                 if(!string.IsNullOrWhiteSpace(ImageAlt))
                 {
@@ -59,9 +59,9 @@ namespace MetatypemanSiteSupport
 
             if (GeneralSettings.SiteSettings.enabledFavicon)
             {
-                AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
+                AppendLine($"<link rel='icon' href='{PagesPathsHelper.RelativeHrefToAbsolute("/favicon.png")}' type='image/png'>");
             }
-            AppendLine("<link rel='stylesheet' href='/site.css'>");
+            AppendLine($"<link rel='stylesheet' href='{PagesPathsHelper.RelativeHrefToAbsolute("/site.css")}'>");
             AppendLine("</head>");
             AppendLine("<body>");
             AppendLine("<header>");
@@ -102,9 +102,9 @@ namespace MetatypemanSiteSupport
 
             if (!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.logo))
             {
-                Append("<a href = '/'>");
+                Append($"<a href = 'https://{GeneralSettings.SiteName}'>");
                 Append("<img src='");
-                Append(GeneralSettings.SiteSettings.logo);
+                Append(PagesPathsHelper.RelativeHrefToAbsolute(GeneralSettings.SiteSettings.logo));
                 Append("' style='margin-top: -12px;'>");
                 Append("</a>");
                 Append("&nbsp;");
@@ -125,7 +125,7 @@ namespace MetatypemanSiteSupport
                 var tmpSb = new StringBuilder();
 
                 tmpSb.Append("<a href ='");
-                tmpSb.Append(item.href);
+                tmpSb.Append(PagesPathsHelper.RelativeHrefToAbsolute(item.href));
                 tmpSb.Append("' class='main-menu-link'>");
                 tmpSb.Append(item.label);
                 tmpSb.Append("</a>");
@@ -182,7 +182,7 @@ namespace MetatypemanSiteSupport
                 }
                 else
                 {
-                    item.Href = breadcrumbsItem.RelativeHref;
+                    item.Href = breadcrumbsItem.AbsoluteHref;
                 }
 
                 itemsList.Add(item);

@@ -55,10 +55,17 @@ namespace CommonSiteGeneratorLib
 #if DEBUG
                 //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName RelativeHref = {RelativeHref}");
 #endif
+
+                AbsoluteHref = PagesPathsHelper.RelativeHrefToAbsolute(RelativeHref);
+
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName AbsoluteHref = {AbsoluteHref}");
+#endif
             }
         }
         public string SourceName { get; set; }
         public string RelativeHref { get; private set; }
+        public string AbsoluteHref { get; private set; }
 
         private StringBuilder mResult;
 
