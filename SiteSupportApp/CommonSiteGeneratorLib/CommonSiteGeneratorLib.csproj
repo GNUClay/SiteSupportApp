@@ -63,6 +63,7 @@
     <Compile Include="PagesPathsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="site.cs" />
+    <Compile Include="sitePageMicroData.cs" />
     <Compile Include="SiteNodeInfo.cs" />
     <Compile Include="sitePage.cs" />
   </ItemGroup>

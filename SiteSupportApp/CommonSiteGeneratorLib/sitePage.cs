@@ -28,11 +28,11 @@ namespace CommonSiteGeneratorLib
         public string contentPath = string.Empty;
         public string title = string.Empty;
         public string breadcrumbTitle = string.Empty;
-        public string description = string.Empty;
         public string additionalMenu = null;
         public bool enableMathML;
         public bool useMarkdown;
         public string specialProcessing = string.Empty;
+        public sitePageMicroData microdata;
 
         public override string ToString()
         {
@@ -41,11 +41,11 @@ namespace CommonSiteGeneratorLib
             sb.AppendLine($"{nameof(contentPath)} = {contentPath}");
             sb.AppendLine($"{nameof(title)} = {title}");
             sb.AppendLine($"{nameof(breadcrumbTitle)} = {breadcrumbTitle}");
-            sb.AppendLine($"{nameof(description)} = {description}");
             sb.AppendLine($"{nameof(additionalMenu)} = {additionalMenu}");
             sb.AppendLine($"{nameof(enableMathML)} = {enableMathML}");
             sb.AppendLine($"{nameof(useMarkdown)} = {useMarkdown}");
             sb.AppendLine($"{nameof(specialProcessing)} = {specialProcessing}");
+            sb.AppendLine($"{nameof(microdata)} = {microdata}");
             return sb.ToString();
         }
 
