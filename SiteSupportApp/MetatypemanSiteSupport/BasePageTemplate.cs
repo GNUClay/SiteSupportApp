@@ -31,18 +31,18 @@ namespace MetatypemanSiteSupport
 
             if (!string.IsNullOrWhiteSpace(ImageUrl))
             {
-                AppendLine($"<meta property='og:image:secure_url' content='{PagesPathsHelper.RelativeHrefToAbsolute(ImageUrl)}' />");
-
-                if(!string.IsNullOrWhiteSpace(ImageAlt))
+                AppendLine($"<meta property='og:image' content='{PagesPathsHelper.RelativeHrefToAbsolute(ImageUrl)}' />");
+                //AppendLine($"<link rel='\"image_src\" href=\"{PagesPathsHelper.RelativeHrefToAbsolute(ImageUrl)}\" />");
+                //AppendLine("<meta property='og:image:type' content='image/png'>");
+                //AppendLine("<meta property='og:image:width' content='300'>");
+                //AppendLine("<meta property='og:image:height' content='300'>");
+                if (!string.IsNullOrWhiteSpace(ImageAlt))
                 {
-                    AppendLine($"<meta property='og:image:alt' content='{ImageAlt}' />");
+                    //AppendLine($"<meta property='og:image:alt' content='{ImageAlt}' />");
                 }               
             }
 
-            //if (!string.IsNullOrWhiteSpace())
-            //{
-            //og:url
-            //}
+            AppendLine($"<meta property='og:url' content='{AbsoluteHref}' />");
 
             if (!string.IsNullOrWhiteSpace(Title))
             {
@@ -54,7 +54,7 @@ namespace MetatypemanSiteSupport
             if (!string.IsNullOrWhiteSpace(Description))
             {
                 AppendLine($"<meta name='description' content='{Description}'>");
-                //AppendLine($"<meta itemprop='description' content='{Description}' />");
+                AppendLine($"<meta itemprop='og:description' content='{Description}' />");
             }
 
             if (GeneralSettings.SiteSettings.enabledFavicon)

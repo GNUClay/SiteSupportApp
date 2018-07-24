@@ -31,6 +31,14 @@ namespace CommonSiteGeneratorLib
         public string ImageAlt { get; set; }
         public string MicrodataTitle { get; set; }
 
+        //public bool CanGenerateJsonLD
+        //{
+        //    get
+        //    {
+        //        //return 
+        //    }
+        //}
+
         public string TargetFileName
         {
             get
