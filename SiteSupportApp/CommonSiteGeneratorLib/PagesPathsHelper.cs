@@ -25,10 +25,10 @@ namespace CommonSiteGeneratorLib
 
             if(relativeHref.StartsWith(domainHref))
             {
-                return domainHref;
+                return domainHref.Replace("\\", "/");
             }
 
-            return $"{domainHref}{relativeHref}";
+            return $"{domainHref}{relativeHref}".Replace("\\", "/");
         }
     }
 }
