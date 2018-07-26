@@ -61,6 +61,7 @@ namespace MetatypemanSiteSupport
             {
                 AppendLine($"<link rel='icon' href='{PagesPathsHelper.RelativeHrefToAbsolute("/favicon.png")}' type='image/png'>");
             }
+            AppendLine($"<link href='{PagesPathsHelper.RelativeHrefToAbsolute("/fontawesome-free-5.2.0-web/css/all.css")}' rel='stylesheet'>");///css/all.css
             AppendLine($"<link rel='stylesheet' href='{PagesPathsHelper.RelativeHrefToAbsolute("/site.css")}'>");
             AppendLine("</head>");
             AppendLine("<body>");
