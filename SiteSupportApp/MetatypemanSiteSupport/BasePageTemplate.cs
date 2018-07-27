@@ -81,7 +81,7 @@ namespace MetatypemanSiteSupport
             AppendLine("</article>");
             AppendLine("<footer>");
             AppendLine($"This page was last modified on {LastUpdateDate.ToString("dd MMMM yyyy", TargetCulture)}</br>");
-            AppendLine($"&copy;&nbsp; Tolkachov Sergiy(<a href='https://github.com/metatypeman'>metatypeman</a>) 2018</br>");
+            AppendLine($"&copy;&nbsp; Tolkachov Sergiy 2018</br>");
             AppendLine("The text is available under the <a href='https://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike BY SA 3.0 Unported License</a>");
             AppendLine("</footer>");
             AppendLine("</body>");
@@ -132,7 +132,7 @@ namespace MetatypemanSiteSupport
                 tmpSb.Append("</a>");
 
                 tmpItems.Add(tmpSb.ToString());
-                tmpItems.Add("&nbsp;<span style='color: #e2e2e2;'>|<span>&nbsp;");
+                tmpItems.Add("&nbsp;<span style='color: gray;'>|<span>&nbsp;");
             }
 
             tmpItems.RemoveAt(tmpItems.Count - 1);
@@ -205,7 +205,7 @@ namespace MetatypemanSiteSupport
                 {
                     Append($" href = '{item.Href}'");
                 }
-                Append(" style='color: #e2e2e2;'>");
+                Append(" style='color: #C0C0C0;'>");
                 Append(item.Title);
                 Append("</a>");
 
