@@ -10,8 +10,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class DllPage : BaseApiPage
     {
-        public DllPage(string configName, BaseApiPage parent)
-            : base(parent)
+        public DllPage(string configName, BaseApiPage parent, BaseSiteItemsFactory factory)
+            : base(parent, factory)
         {
             var configFullPath = Path.Combine(GeneralSettings.ApiReferenceSourcePath, configName);
 

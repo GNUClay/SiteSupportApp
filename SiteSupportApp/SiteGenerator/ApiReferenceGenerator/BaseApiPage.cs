@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonSiteGeneratorLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class BaseApiPage : BaseTargetPage
     {
-        protected BaseApiPage(BaseApiPage parent)
+        protected BaseApiPage(BaseApiPage parent, BaseSiteItemsFactory factory)
+            : base(factory)
         {
             mParent = parent;
         }

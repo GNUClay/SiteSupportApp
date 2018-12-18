@@ -10,8 +10,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class BaseStructElementPage : BaseApiPage
     {
-        public BaseStructElementPage(AbstractNameNode nameNode, BaseApiPage parent)
-            : base(parent)
+        public BaseStructElementPage(AbstractNameNode nameNode, BaseApiPage parent, BaseSiteItemsFactory factory)
+            : base(parent, factory)
         {
             mNameNode = nameNode;
 

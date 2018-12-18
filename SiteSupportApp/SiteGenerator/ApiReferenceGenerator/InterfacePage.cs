@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonSiteGeneratorLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class InterfacePage : BaseClassPage
     {
-        public InterfacePage(NameOfClassNode nameNode, BaseApiPage parent)
-            : base(nameNode, parent)
+        public InterfacePage(NameOfClassNode nameNode, BaseApiPage parent, BaseSiteItemsFactory factory)
+            : base(nameNode, parent, factory)
         {
             mNameNode = nameNode;
 

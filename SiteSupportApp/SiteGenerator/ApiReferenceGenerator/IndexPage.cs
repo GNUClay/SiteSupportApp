@@ -10,9 +10,11 @@ namespace SiteGenerator.ApiReferenceGenerator
 {
     public class IndexPage : BaseApiPage
     {
-        public IndexPage()
-            : base(null)
+        public IndexPage(BaseSiteItemsFactory factory)
+            : base(null, factory)
         {
+            mFactory = factory;
+
             TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, "index.html");
 
             Name = "Api reference";
@@ -20,12 +22,14 @@ namespace SiteGenerator.ApiReferenceGenerator
             Title = $"GNU Clay - {Name}";
         }
 
+        private BaseSiteItemsFactory mFactory;
+
         protected override void GenerateText()
         {
             mApiSolution = ApiSolution.LoadFromFile(GeneralSettings.ApiReferenceConfigPath);
             foreach (var item in mApiSolution.items)
             {
-                var tmpDllPage = new DllPage(item, this);
+                var tmpDllPage = new DllPage(item, this, mFactory);
                 tmpDllPage.Run();
                 mChildren.Add(tmpDllPage);
             }
