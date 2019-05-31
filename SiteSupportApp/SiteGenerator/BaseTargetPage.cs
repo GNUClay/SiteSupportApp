@@ -22,6 +22,28 @@ namespace SiteGenerator
             AppendLine("<head>");
             AppendLine("<meta charset='utf-8' />");
             AppendLine("<meta name='generator' content='GNUClay/SiteSupportApp'>");
+            AppendLine("<meta property='og:type' content='article' />");
+
+            if (!string.IsNullOrWhiteSpace(MicrodataTitle))
+            {
+                AppendLine($"<meta property='og:title' content='{MicrodataTitle}' />");
+                //AppendLine($"<meta itemprop='name' content='{MicrodataTitle}' />");
+            }
+
+            if (!string.IsNullOrWhiteSpace(ImageUrl))
+            {
+                AppendLine($"<meta property='og:image' content='{PagesPathsHelper.RelativeHrefToAbsolute(ImageUrl)}' />");
+                //AppendLine($"<link rel='\"image_src\" href=\"{PagesPathsHelper.RelativeHrefToAbsolute(ImageUrl)}\" />");
+                //AppendLine("<meta property='og:image:type' content='image/png'>");
+                //AppendLine("<meta property='og:image:width' content='300'>");
+                //AppendLine("<meta property='og:image:height' content='300'>");
+                if (!string.IsNullOrWhiteSpace(ImageAlt))
+                {
+                    //AppendLine($"<meta property='og:image:alt' content='{ImageAlt}' />");
+                }
+            }
+
+            AppendLine($"<meta property='og:url' content='{AbsoluteHref}' />");
 
             if (!string.IsNullOrWhiteSpace(Description))
             {
@@ -80,13 +102,16 @@ namespace SiteGenerator
             AppendLine("<div class='row justify-content-center'>");
             AppendLine("<div class='col col-md-10'>");
             AppendLine("<header>");
-            GenerateMainWarning();
+            //GenerateMainWarning();
             GenerateHeader();
             AppendLine("</header>");
             AppendLine("<nav>");
             GenerateMainMenu();
             AppendLine("</nav>");
-            AppendLine("<hr>");
+            AppendLine("<hr style='border-bottom-color: #e2e2e2;'>");
+            AppendLine("<nav class='bread-crumb-nav'>");
+            GenerateBreadcrumbs();
+            AppendLine("</nav>");
             AppendLine("</div>");
             AppendLine("</div>");
 
@@ -243,6 +268,65 @@ namespace SiteGenerator
                         AppendLine("</div>");
                         AppendLine("</div>");
                     }
+                }
+            }
+        }
+
+        private void GenerateBreadcrumbs()
+        {
+#if DEBUG
+            //NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs SourceName = {SourceName}");
+#endif
+            var breadcrumbsItem = SiteItemsFactory.GetBreadcrumbsPageNode(SourceName);
+
+            var isFirst = true;
+
+            var itemsList = new List<BreadcrumbInThePage>();
+
+            do
+            {
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs isFirst = {isFirst} breadcrumbsItem = {breadcrumbsItem}");
+#endif
+
+                var item = new BreadcrumbInThePage();
+                item.Title = breadcrumbsItem.Title;
+
+                if (isFirst)
+                {
+                    isFirst = false;
+                }
+                else
+                {
+                    item.Href = breadcrumbsItem.AbsoluteHref;
+                }
+
+                itemsList.Add(item);
+            }
+            while ((breadcrumbsItem = breadcrumbsItem.Parent) != null);
+
+            itemsList.Reverse();
+
+            var n = 0;
+
+            foreach (var item in itemsList)
+            {
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"GenerateBreadcrumbs item = {item}");
+#endif
+                n++;
+                Append("<a");
+                if (!string.IsNullOrWhiteSpace(item.Href))
+                {
+                    Append($" href = '{item.Href}'");
+                }
+                Append(" style='color: #C0C0C0;'>");
+                Append(item.Title);
+                Append("</a>");
+
+                if (n < itemsList.Count)
+                {
+                    Append("&nbsp;/&nbsp;");
                 }
             }
         }

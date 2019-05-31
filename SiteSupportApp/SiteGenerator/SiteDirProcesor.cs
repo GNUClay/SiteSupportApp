@@ -19,7 +19,7 @@ namespace SiteGenerator
         {
             if (info.SourceDirName == GeneralSettings.ApiReferenceSourcePath)
             {
-                ApiDirProcessor.Run(info);
+                //ApiDirProcessor.Run(info);
                 return;
             }
 

@@ -143,20 +143,6 @@ namespace MetatypemanSiteSupport
             }
         }
 
-        private class BreadcrumbInThePage
-        {
-            public string Title { get; set; }
-            public string Href { get; set; }
-
-            public override string ToString()
-            {
-                var sb = new StringBuilder();
-                sb.AppendLine($"{nameof(Title)} = {Title}");
-                sb.AppendLine($"{nameof(Href)} = {Href}");
-                return sb.ToString();
-            }
-        }
-
         private void GenerateBreadcrumbs()
         {
 #if DEBUG

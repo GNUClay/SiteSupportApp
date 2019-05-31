@@ -15,9 +15,24 @@ namespace SiteGenerator
             return result;
         }
 
+        public override BasePage CreatePageForSpecialProcessing(string specialProcessing)
+        {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"CreatePageForSpecialProcessing specialProcessing = {specialProcessing}");
+#endif
+
+            if (specialProcessing == "index")
+            {
+                var result = new IndexPage(this);
+                return result;
+            }
+
+            throw new NotImplementedException();
+        }
+
         public override BasePage CreatePage()
         {
-            var result = new TargetPage();
+            var result = new TargetPage(this);
             return result;
         }
     }

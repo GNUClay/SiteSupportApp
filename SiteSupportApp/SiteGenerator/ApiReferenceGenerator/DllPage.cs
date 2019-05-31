@@ -8,87 +8,87 @@ using System.Threading.Tasks;
 
 namespace SiteGenerator.ApiReferenceGenerator
 {
-    public class DllPage : BaseApiPage
-    {
-        public DllPage(string configName, BaseApiPage parent, BaseSiteItemsFactory factory)
-            : base(parent, factory)
-        {
-            var configFullPath = Path.Combine(GeneralSettings.ApiReferenceSourcePath, configName);
+    //public class DllPage : BaseApiPage
+    //{
+    //    public DllPage(string configName, BaseApiPage parent, BaseSiteItemsFactory factory)
+    //        : base(parent, factory)
+    //    {
+    //        var configFullPath = Path.Combine(GeneralSettings.ApiReferenceSourcePath, configName);
 
-            mApiProject = ApiProject.LoadFromFile(configFullPath);
+    //        mApiProject = ApiProject.LoadFromFile(configFullPath);
 
-            var targetTypes = mApiProject.targetItems;
+    //        var targetTypes = mApiProject.targetItems;
 
-            if(mApiProject.useAllItems)
-            {
-                targetTypes = new List<string>();
-            }
+    //        if(mApiProject.useAllItems)
+    //        {
+    //            targetTypes = new List<string>();
+    //        }
 
-            mXMLDocWrapper = new XMLDocWrapper(Path.Combine(GeneralSettings.ApiReferenceSourcePath, mApiProject.fileName), targetTypes);
+    //        mXMLDocWrapper = new XMLDocWrapper(Path.Combine(GeneralSettings.ApiReferenceSourcePath, mApiProject.fileName), targetTypes);
 
-            mAssemblyName = mXMLDocWrapper.AssemblyName();
+    //        mAssemblyName = mXMLDocWrapper.AssemblyName();
 
-            Name = $"{mAssemblyName}.dll";
+    //        Name = $"{mAssemblyName}.dll";
 
-            TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAssemblyName.ToLower()}.dll.html");
+    //        TargetFileName = Path.Combine(GeneralSettings.ApiReferenceTargetPath, $"{mAssemblyName.ToLower()}.dll.html");
            
-            mSimpleRoot = mXMLDocWrapper.LoadTreeOfTypes().GetNotSimpleNamespace();
+    //        mSimpleRoot = mXMLDocWrapper.LoadTreeOfTypes().GetNotSimpleNamespace();
 
-            Title = $"GNU Clay - {mAssemblyName}.dll Assembly";
-        }
+    //        Title = $"GNU Clay - {mAssemblyName}.dll Assembly";
+    //    }
 
-        private ApiProject mApiProject;
-        private XMLDocWrapper mXMLDocWrapper;
-        private string mAssemblyName;
-        private NameOfNamespaceNode mSimpleRoot;
-        private List<NamespacePage> mNamespaces = new List<NamespacePage>();
+    //    private ApiProject mApiProject;
+    //    private XMLDocWrapper mXMLDocWrapper;
+    //    private string mAssemblyName;
+    //    private NameOfNamespaceNode mSimpleRoot;
+    //    private List<NamespacePage> mNamespaces = new List<NamespacePage>();
 
-        protected override void GenerateText()
-        {
-            if(mSimpleRoot.IsRoot)
-            {
-                foreach (var item in mSimpleRoot.Namespaces)
-                {
-                    var tmpPage = new NamespacePage(item, this);
-                    tmpPage.Run();
-                    mNamespaces.Add(tmpPage);
-                }
-            }
-            else
-            {
-                var tmpPage = new NamespacePage(mSimpleRoot, this);
-                tmpPage.Run();
-                mNamespaces.Add(tmpPage);
-            }
+    //    protected override void GenerateText()
+    //    {
+    //        if(mSimpleRoot.IsRoot)
+    //        {
+    //            foreach (var item in mSimpleRoot.Namespaces)
+    //            {
+    //                var tmpPage = new NamespacePage(item, this);
+    //                tmpPage.Run();
+    //                mNamespaces.Add(tmpPage);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            var tmpPage = new NamespacePage(mSimpleRoot, this);
+    //            tmpPage.Run();
+    //            mNamespaces.Add(tmpPage);
+    //        }
 
-            base.GenerateText();
-        }
+    //        base.GenerateText();
+    //    }
 
-        protected override void GenerateArticle()
-        {
-            GenerateNavBar();
+    //    protected override void GenerateArticle()
+    //    {
+    //        GenerateNavBar();
 
-            AppendLine("<article>");
-            AppendLine($"<h1>{mAssemblyName}.dll <span style='font-weight:normal;'>Assembly</span></h1>");
+    //        AppendLine("<article>");
+    //        AppendLine($"<h1>{mAssemblyName}.dll <span style='font-weight:normal;'>Assembly</span></h1>");
 
-            if(!mSimpleRoot.IsRoot)
-            {
-                AppendLine($"<p>Root namespace: {mSimpleRoot.FullName}</p>");
-            }
+    //        if(!mSimpleRoot.IsRoot)
+    //        {
+    //            AppendLine($"<p>Root namespace: {mSimpleRoot.FullName}</p>");
+    //        }
             
-            if (mNamespaces.Count > 0)
-            {
-                AppendLine("<h3>Namespaces</h3>");
+    //        if (mNamespaces.Count > 0)
+    //        {
+    //            AppendLine("<h3>Namespaces</h3>");
 
-                AppendLine("<ul>");
-                foreach (var item in mNamespaces)
-                {
-                    AppendLine($"<li><a href='{item.RelativeHref}'>{item.Name}</a></li>");
-                }
-                AppendLine("</ul>");
-            }
+    //            AppendLine("<ul>");
+    //            foreach (var item in mNamespaces)
+    //            {
+    //                AppendLine($"<li><a href='{item.RelativeHref}'>{item.Name}</a></li>");
+    //            }
+    //            AppendLine("</ul>");
+    //        }
 
-            AppendLine("</article>");
-        }
-    }
+    //        AppendLine("</article>");
+    //    }
+    //}
 }

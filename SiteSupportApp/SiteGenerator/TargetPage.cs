@@ -20,11 +20,17 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using System;
+using CommonSiteGeneratorLib;
 
 namespace SiteGenerator
 {
     public class TargetPage : BaseTargetPage
     {
+        public TargetPage(BaseSiteItemsFactory factory)
+            : base(factory)
+        {
+        }
+
         protected override void GenerateArticle()
         {
             AppendLine("<article>");

@@ -54,6 +54,7 @@
     <Compile Include="BaseDirProcesor.cs" />
     <Compile Include="BasePage.cs" />
     <Compile Include="BaseSiteItemsFactory.cs" />
+    <Compile Include="BreadcrumbInThePage.cs" />
     <Compile Include="BreadcrumbsPageNode.cs" />
     <Compile Include="ContextOfPredictionDirProcessing.cs" />
     <Compile Include="GeneralSettings.cs" />

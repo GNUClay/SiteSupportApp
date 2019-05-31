@@ -89,6 +89,7 @@
     <Compile Include="ApiReferenceGenerator\StructPage.cs" />
     <Compile Include="ApiReferenceGenerator\XMLDocWrapper.cs" />
     <Compile Include="BaseTargetPage.cs" />
+    <Compile Include="IndexPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteCreator.cs" />

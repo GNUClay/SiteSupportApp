@@ -19,8 +19,8 @@ namespace CommonSiteGeneratorLib
             var domainHref = $"https://{GeneralSettings.SiteName}";
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"RelativeHrefToAbsolute relativeHref = {relativeHref}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"RelativeHrefToAbsolute domainHref = {domainHref}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"RelativeHrefToAbsolute relativeHref = {relativeHref}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"RelativeHrefToAbsolute domainHref = {domainHref}");
 #endif
 
             if(relativeHref.StartsWith(domainHref))

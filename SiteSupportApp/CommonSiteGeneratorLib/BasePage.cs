@@ -67,7 +67,7 @@ namespace CommonSiteGeneratorLib
                 AbsoluteHref = PagesPathsHelper.RelativeHrefToAbsolute(RelativeHref);
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName AbsoluteHref = {AbsoluteHref}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"TargetFileName AbsoluteHref = {AbsoluteHref}");
 #endif
             }
         }
