@@ -80,6 +80,16 @@ namespace CommonSiteGeneratorLib
                     continue;
                 }
 
+                if (tmpFileExtension == ".dia")
+                {
+                    continue;
+                }
+
+                if (tmpFileExtension == ".dia~")
+                {
+                    continue;
+                }
+
                 var tmpTargetFileName = Path.Combine(info.TargetDirName, Path.GetFileName(file));
 
                 File.Copy(file, tmpTargetFileName, true);
