@@ -178,29 +178,34 @@ namespace CommonSiteGeneratorLib
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir relativeHref = {relativeHref}");
 #endif
 
-            var tmpSitePage = sitePage.LoadFromFile(fileName);
+            var sitePage = CommonSiteGeneratorLib.sitePage.LoadFromFile(fileName);
 
 #if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir tmpSitePage = {tmpSitePage}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir sitePage = {sitePage}");
 #endif
 
-            if(!tmpSitePage.isReady)
+            if(!sitePage.isReady)
             {
                 return null;
             }
 
             var result = new BreadcrumbsPageNode();
             context.Pages.Add(result);
-            result.Parent = parent;
+
+            if (!sitePage.isBreadcrumbRoot)
+            {
+                result.Parent = parent;
+            }
+            
             result.IsIndex = isIndex;
             result.Path = fileName;
             result.RelativeHref = relativeHref;
             result.AbsoluteHref = absoluteHref;
-            result.Title = tmpSitePage.breadcrumbTitle;
+            result.Title = sitePage.breadcrumbTitle;
 
             if(string.IsNullOrWhiteSpace(result.Title))
             {
-                result.Title = tmpSitePage.title;
+                result.Title = sitePage.title;
             }
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir result = {result}");

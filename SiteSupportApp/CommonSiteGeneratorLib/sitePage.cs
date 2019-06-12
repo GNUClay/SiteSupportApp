@@ -24,16 +24,17 @@ namespace CommonSiteGeneratorLib
 {
     public class sitePage
     {
-        public string extension = "html";
-        public string contentPath = string.Empty;
-        public string title = string.Empty;
-        public string breadcrumbTitle = string.Empty;
-        public string additionalMenu = null;
-        public bool enableMathML;
-        public bool useMarkdown;
-        public string specialProcessing = string.Empty;
-        public bool isReady;
-        public sitePageMicroData microdata;
+        public string extension { get; set; } = "html";
+        public string contentPath { get; set; } = string.Empty;
+        public string title { get; set; } = string.Empty;
+        public string breadcrumbTitle { get; set; } = string.Empty;
+        public bool isBreadcrumbRoot { get; set; }
+        public string additionalMenu { get; set; } = null;
+        public bool enableMathML { get; set; }
+        public bool useMarkdown { get; set; }
+        public string specialProcessing { get; set; } = string.Empty;
+        public bool isReady { get; set; }
+        public sitePageMicroData microdata { get; set; }
 
         public override string ToString()
         {
@@ -42,6 +43,7 @@ namespace CommonSiteGeneratorLib
             sb.AppendLine($"{nameof(contentPath)} = {contentPath}");
             sb.AppendLine($"{nameof(title)} = {title}");
             sb.AppendLine($"{nameof(breadcrumbTitle)} = {breadcrumbTitle}");
+            sb.AppendLine($"{nameof(isBreadcrumbRoot)} = {isBreadcrumbRoot}");
             sb.AppendLine($"{nameof(additionalMenu)} = {additionalMenu}");
             sb.AppendLine($"{nameof(enableMathML)} = {enableMathML}");
             sb.AppendLine($"{nameof(useMarkdown)} = {useMarkdown}");
