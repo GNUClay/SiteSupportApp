@@ -57,7 +57,7 @@ namespace MetatypemanSiteSupport
                 AppendLine($"<meta itemprop='og:description' content='{Description}' />");
             }
 
-            if (GeneralSettings.SiteSettings.EnabledFavicon)
+            if (GeneralSettings.SiteSettings.EnableFavicon)
             {
                 AppendLine($"<link rel='icon' href='{PagesPathsHelper.RelativeHrefToAbsolute("/favicon.png")}' type='image/png'>");
             }

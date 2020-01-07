@@ -16,6 +16,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using CommonUtils;
 using Newtonsoft.Json;
 using System.IO;
 
@@ -27,8 +28,17 @@ namespace CommonSiteGeneratorLib.SiteData
         public string MainTitle { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string TitlesDelimiter { get; set; } = string.Empty;
-        public bool EnabledFavicon { get; set; }
+        public bool EnableFavicon { get; set; }
         public string Logo { get; set; } = string.Empty;
+        public string RoadMapJsonPath { get; set; } = string.Empty;
+
+        private void Init()
+        {
+            if(!string.IsNullOrWhiteSpace(RoadMapJsonPath))
+            {
+                RoadMapJsonPath = EVPath.Normalize(RoadMapJsonPath);
+            }
+        }
 
         public override string ToString()
         {
@@ -37,7 +47,9 @@ namespace CommonSiteGeneratorLib.SiteData
 
         public static SiteInfo LoadFromFile(string path)
         {
-            return JsonConvert.DeserializeObject<SiteInfo>(File.ReadAllText(path));
+            var result = JsonConvert.DeserializeObject<SiteInfo>(File.ReadAllText(path));
+            result.Init();
+            return result;
         }
     }
 }

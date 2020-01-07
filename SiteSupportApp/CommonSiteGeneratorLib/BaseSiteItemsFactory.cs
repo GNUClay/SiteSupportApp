@@ -1,6 +1,7 @@
 ﻿using CommonSiteGeneratorLib.Pipeline;
 using CommonSiteGeneratorLib.Pipeline.EBNFPreparation;
 using CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator;
+using CommonSiteGeneratorLib.Pipeline.RoadMapGenerator;
 using CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace CommonSiteGeneratorLib
             RegisterPlugin(new EBNFPreparationPipelineItemFactory());
             RegisterPlugin(new ShortTagsPreparationPipelineItemFactory());
             RegisterPlugin(new InThePageContentGeneratorPipelineItemFactory());
+            RegisterPlugin(new RoadMapGeneratorPipelineItemFactory());
         }
 
         public virtual BaseDirProcesor CreateDirProcessor()

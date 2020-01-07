@@ -29,13 +29,30 @@ namespace CommonSiteGeneratorLib
         {
             SiteName = ConfigurationManager.AppSettings["siteName"];
 
+            var tmpRootPath = EVPath.Normalize(ConfigurationManager.AppSettings["rootPath"]);
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() tmpRootPath = {tmpRootPath}");
+#endif
+
+            EVPath.RegVar("SITE_ROOT_PATH", tmpRootPath);
+
             SourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() SourcePath = {SourcePath}");
+#endif
+
+            EVPath.RegVar("SITE_SOURCE_PATH", SourcePath);
+
             DestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
 
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() DestPath = {DestPath}");
             NLog.LogManager.GetCurrentClassLogger().Info($"ConfigurationManager.AppSettings['tempPath'] = {ConfigurationManager.AppSettings["tempPath"]}");
 #endif
+
+            EVPath.RegVar("SITE_DEST_PATH", DestPath);
 
             var initTempPath = ConfigurationManager.AppSettings["tempPath"];
 
@@ -50,6 +67,9 @@ namespace CommonSiteGeneratorLib
 #if DEBUG
                 NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() TempPath = {TempPath}");
 #endif
+
+                EVPath.RegVar("SITE_TEMP_PATH", TempPath);
+
                 if (!Directory.Exists(TempPath))
                 {
                     Directory.CreateDirectory(TempPath);
@@ -65,6 +85,10 @@ namespace CommonSiteGeneratorLib
                 ApiReferenceSourcePath = Path.GetDirectoryName(ApiReferenceConfigPath);
                 ApiReferenceTargetPath = ApiReferenceSourcePath.Replace(@"siteSource\", string.Empty);
             }
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"ApiReferenceConfigPath = {ApiReferenceConfigPath}");
+#endif
 
             ReadSiteSettings();
         }
@@ -94,6 +118,10 @@ namespace CommonSiteGeneratorLib
             var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
 
             SiteSettings = SiteInfo.LoadFromFile(tmpSiteSettingsPath);
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"SiteSettings = {SiteSettings}");
+#endif
         }
     }
 }

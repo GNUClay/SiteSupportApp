@@ -27,7 +27,16 @@ namespace CommonUtils
                 {
                     var variableName = match2.Value;
 
-                    var variableValue = Environment.GetEnvironmentVariable(variableName);
+                    var variableValue = string.Empty;
+
+                    if(mAdditionalVariablesDict.ContainsKey(variableName))
+                    {
+                        variableValue = mAdditionalVariablesDict[variableName];
+                    }
+                    else
+                    {
+                        variableValue = Environment.GetEnvironmentVariable(variableName);
+                    }
 
                     if (!string.IsNullOrWhiteSpace(variableValue))
                     {
@@ -38,5 +47,12 @@ namespace CommonUtils
 
             return Path.GetFullPath(sourcePath);
         }
+
+        public static void RegVar(string varName, string varValue)
+        {
+            mAdditionalVariablesDict[varName] = varValue;
+        }
+
+        private static readonly Dictionary<string, string> mAdditionalVariablesDict = new Dictionary<string, string>();
     }
 }
