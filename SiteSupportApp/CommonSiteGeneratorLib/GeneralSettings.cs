@@ -26,18 +26,19 @@ namespace CommonSiteGeneratorLib
     {
         static GeneralSettings()
         {
-            mSiteName = ConfigurationManager.AppSettings["siteName"];
-            mSourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
-            mDestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
+            SiteName = ConfigurationManager.AppSettings["siteName"];
+            SourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
+            DestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
+            TempPath = EVPath.Normalize(ConfigurationManager.AppSettings["tempPath"]);
 
             var initApiReferenceConfigPath = ConfigurationManager.AppSettings["apiReferenceConfigPath"];
 
             if(!string.IsNullOrWhiteSpace(initApiReferenceConfigPath))
             {
-                mApiReferenceConfigPath = EVPath.Normalize(initApiReferenceConfigPath);
+                ApiReferenceConfigPath = EVPath.Normalize(initApiReferenceConfigPath);
 
-                mApiReferenceSourcePath = Path.GetDirectoryName(mApiReferenceConfigPath);
-                mApiReferenceTargetPath = mApiReferenceSourcePath.Replace(@"siteSource\", string.Empty);
+                ApiReferenceSourcePath = Path.GetDirectoryName(ApiReferenceConfigPath);
+                ApiReferenceTargetPath = ApiReferenceSourcePath.Replace(@"siteSource\", string.Empty);
             }
 
             ReadSiteSettings();
@@ -47,78 +48,27 @@ namespace CommonSiteGeneratorLib
 
         public const string IgnoreGitDir = ".git";
 
-        private static string mSiteName = string.Empty;
-        private static string mSourcePath = string.Empty;
+        public static string SiteName { get; private set; } = string.Empty;
 
-        private static string mApiReferenceConfigPath;
-        private static string mApiReferenceSourcePath;
-        private static string mApiReferenceTargetPath;
+        public static string SourcePath { get; private set; } = string.Empty;
 
-        public static string SiteName
-        {
-            get
-            {
-                return mSiteName;
-            }
-        }
+        public static string DestPath { get; private set; } = string.Empty;
 
-        public static string SourcePath
-        {
-            get
-            {
-                return mSourcePath;
-            }
-        }
+        public static string TempPath { get; private set; } = string.Empty;
 
-        private static string mDestPath = string.Empty;
+        public static string ApiReferenceConfigPath { get; private set; }
 
-        public static string DestPath
-        {
-            get
-            {
-                return mDestPath;
-            }
-        }
+        public static string ApiReferenceSourcePath { get; private set; }
 
-        public static string ApiReferenceConfigPath
-        {
-            get
-            {
-                return mApiReferenceConfigPath;
-            }
-        }
+        public static string ApiReferenceTargetPath { get; private set; }
 
-        public static string ApiReferenceSourcePath
-        {
-            get
-            {
-                return mApiReferenceSourcePath;
-            }
-        }
-
-        public static string ApiReferenceTargetPath
-        {
-            get
-            {
-                return mApiReferenceTargetPath;
-            }
-        }
-
-        private static site mSiteSettings;
-
-        public static site SiteSettings
-        {
-            get
-            {
-                return mSiteSettings;
-            }
-        }
+        public static site SiteSettings { get; private set; }
 
         private static void ReadSiteSettings()
         {
             var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
 
-            mSiteSettings = site.LoadFromFile(tmpSiteSettingsPath);
+            SiteSettings = site.LoadFromFile(tmpSiteSettingsPath);
         }
     }
 }
