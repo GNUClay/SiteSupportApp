@@ -1,4 +1,5 @@
 ﻿using CommonSiteGeneratorLib;
+using CommonSiteGeneratorLib.SiteData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +60,7 @@ namespace SiteGenerator
                 AppendLine("</title>");
             }
 
-            if (GeneralSettings.SiteSettings.enabledFavicon)
+            if (GeneralSettings.SiteSettings.EnabledFavicon)
             {
                 //AppendLine("<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'>");
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
@@ -165,11 +166,11 @@ namespace SiteGenerator
         {
             Append("<p>");
 
-            if (!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.logo))
+            if (!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.Logo))
             {
                 Append("<a href = '/'>");
                 Append("<img src='");
-                Append(GeneralSettings.SiteSettings.logo);
+                Append(GeneralSettings.SiteSettings.Logo);
                 Append("' style='margin-top: -12px;'>");
                 Append("</a>");
                 Append("&nbsp;");
@@ -196,14 +197,14 @@ namespace SiteGenerator
         {
             var tmpItems = new List<string>();
 
-            foreach (var item in GeneralSettings.SiteSettings.menu.items)
+            foreach (var item in GeneralSettings.SiteSettings.Menu.Items)
             {
                 var tmpSb = new StringBuilder();
 
                 tmpSb.Append("<a href ='");
-                tmpSb.Append(item.href);
+                tmpSb.Append(item.Href);
                 tmpSb.Append("'>");
-                tmpSb.Append(item.label);
+                tmpSb.Append(item.Label);
                 tmpSb.Append("</a>");
 
                 tmpItems.Add(tmpSb.ToString());
@@ -220,24 +221,24 @@ namespace SiteGenerator
 
         private void GenerateAdditionalMenu()
         {
-            GenerateAdditionalMenuRunItems(AdditionalMenu.items, false);
+            GenerateAdditionalMenuRunItems(AdditionalMenu.Items, false);
         }
 
         private int mN = 0;
 
-        private void GenerateAdditionalMenuRunItems(List<item> items, bool isChild)
+        private void GenerateAdditionalMenuRunItems(List<MenuItem> items, bool isChild)
         {
             foreach (var item in items)
             {
-                if (item.items == null || item.items.Count == 0)
+                if (item.Items == null || item.Items.Count == 0)
                 {
                     if (isChild)
                     {
-                        AppendLine($"<ul class='my-second-menu-item'><li><a href='{item.href}'>{item.label}</a></li></ul>");
+                        AppendLine($"<ul class='my-second-menu-item'><li><a href='{item.Href}'>{item.Label}</a></li></ul>");
                     }
                     else
                     {
-                        AppendLine($"<p class='my-root-menu-item'><a href='{item.href}'>{item.label}</a></p>");
+                        AppendLine($"<p class='my-root-menu-item'><a href='{item.Href}'>{item.Label}</a></p>");
                     }
                 }
                 else
@@ -245,8 +246,8 @@ namespace SiteGenerator
                     if (isChild)
                     {
                         AppendLine("<ul class='my-second-menu-item'><li>");
-                        AppendLine($"<p class='my-second-menu-label'>{item.label}</p>");
-                        GenerateAdditionalMenuRunItems(item.items, true);
+                        AppendLine($"<p class='my-second-menu-label'>{item.Label}</p>");
+                        GenerateAdditionalMenuRunItems(item.Items, true);
                         AppendLine("</li></ul>");
                     }
                     else
@@ -257,12 +258,12 @@ namespace SiteGenerator
                         AppendLine("<div class='panel panel-default' style='margin-bottom: 5px;'>");
                         AppendLine($"<div class='panel-heading myslim-panel-heading' role='tab' id='headingOne_{mN}'>");
                         AppendLine($"<a class='myslim-panel-button' role='button' data-toggle='collapse' data-parent='#accordion_{mN}' href='#collapseOne_{mN}' aria-expanded='false' aria-controls='collapseOne_{mN}'>");
-                        AppendLine($"&#9660;&nbsp;<span style='font-weight: bold;'>{item.label}</span>");
+                        AppendLine($"&#9660;&nbsp;<span style='font-weight: bold;'>{item.Label}</span>");
                         AppendLine("</a>");
                         AppendLine("</div>");
                         AppendLine($"<div id='collapseOne_{mN}' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingOne_{mN}'>");
                         AppendLine("<div class='panel-body myslim-panel-body'>");
-                        GenerateAdditionalMenuRunItems(item.items, true);
+                        GenerateAdditionalMenuRunItems(item.Items, true);
                         AppendLine("</div>");
                         AppendLine("</div>");
                         AppendLine("</div>");

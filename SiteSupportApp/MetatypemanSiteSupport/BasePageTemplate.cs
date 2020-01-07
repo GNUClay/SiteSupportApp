@@ -57,7 +57,7 @@ namespace MetatypemanSiteSupport
                 AppendLine($"<meta itemprop='og:description' content='{Description}' />");
             }
 
-            if (GeneralSettings.SiteSettings.enabledFavicon)
+            if (GeneralSettings.SiteSettings.EnabledFavicon)
             {
                 AppendLine($"<link rel='icon' href='{PagesPathsHelper.RelativeHrefToAbsolute("/favicon.png")}' type='image/png'>");
             }
@@ -101,11 +101,11 @@ namespace MetatypemanSiteSupport
         {
             Append("<p>");
 
-            if (!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.logo))
+            if (!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.Logo))
             {
                 Append($"<a href = 'https://{GeneralSettings.SiteName}'>");
                 Append("<img src='");
-                Append(PagesPathsHelper.RelativeHrefToAbsolute(GeneralSettings.SiteSettings.logo));
+                Append(PagesPathsHelper.RelativeHrefToAbsolute(GeneralSettings.SiteSettings.Logo));
                 Append("' style='margin-top: -12px;'>");
                 Append("</a>");
                 Append("&nbsp;");
@@ -121,14 +121,14 @@ namespace MetatypemanSiteSupport
         {
             var tmpItems = new List<string>();
 
-            foreach (var item in GeneralSettings.SiteSettings.menu.items)
+            foreach (var item in GeneralSettings.SiteSettings.Menu.Items)
             {
                 var tmpSb = new StringBuilder();
 
                 tmpSb.Append("<a href ='");
-                tmpSb.Append(PagesPathsHelper.RelativeHrefToAbsolute(item.href));
+                tmpSb.Append(PagesPathsHelper.RelativeHrefToAbsolute(item.Href));
                 tmpSb.Append("' class='main-menu-link'>");
-                tmpSb.Append(item.label);
+                tmpSb.Append(item.Label);
                 tmpSb.Append("</a>");
 
                 tmpItems.Add(tmpSb.ToString());

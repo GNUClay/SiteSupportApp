@@ -18,6 +18,7 @@
 
 using System.Configuration;
 using System.IO;
+using CommonSiteGeneratorLib.SiteData;
 using CommonUtils;
 
 namespace CommonSiteGeneratorLib
@@ -27,9 +28,33 @@ namespace CommonSiteGeneratorLib
         static GeneralSettings()
         {
             SiteName = ConfigurationManager.AppSettings["siteName"];
+
             SourcePath = EVPath.Normalize(ConfigurationManager.AppSettings["sourcePath"]);
             DestPath = EVPath.Normalize(ConfigurationManager.AppSettings["destPath"]);
-            TempPath = EVPath.Normalize(ConfigurationManager.AppSettings["tempPath"]);
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() DestPath = {DestPath}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"ConfigurationManager.AppSettings['tempPath'] = {ConfigurationManager.AppSettings["tempPath"]}");
+#endif
+
+            var initTempPath = ConfigurationManager.AppSettings["tempPath"];
+
+            if(!string.IsNullOrWhiteSpace(initTempPath))
+            {
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() initTempPath = {initTempPath}");
+#endif
+
+                TempPath = EVPath.Normalize(initTempPath);
+
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() TempPath = {TempPath}");
+#endif
+                if (!Directory.Exists(TempPath))
+                {
+                    Directory.CreateDirectory(TempPath);
+                }
+            }
 
             var initApiReferenceConfigPath = ConfigurationManager.AppSettings["apiReferenceConfigPath"];
 
@@ -62,13 +87,13 @@ namespace CommonSiteGeneratorLib
 
         public static string ApiReferenceTargetPath { get; private set; }
 
-        public static site SiteSettings { get; private set; }
+        public static SiteInfo SiteSettings { get; private set; }
 
         private static void ReadSiteSettings()
         {
             var tmpSiteSettingsPath = Path.Combine(SourcePath, "site.site");
 
-            SiteSettings = site.LoadFromFile(tmpSiteSettingsPath);
+            SiteSettings = SiteInfo.LoadFromFile(tmpSiteSettingsPath);
         }
     }
 }

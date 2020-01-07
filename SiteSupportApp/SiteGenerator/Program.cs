@@ -17,12 +17,21 @@
 */
 
 
+using System;
+
 namespace SiteGenerator
 {
     class Program
     {
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"CurrentDomain_UnhandledException e.ExceptionObject = {e.ExceptionObject}");
+        }
+
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             var tmpCreator = new SiteCreator();
             tmpCreator.Run();
         }

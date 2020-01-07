@@ -16,8 +16,10 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using CommonSiteGeneratorLib.SiteData;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CommonSiteGeneratorLib
@@ -33,18 +35,22 @@ namespace CommonSiteGeneratorLib
 
         public void Run(PageNodeInfo info)
         {
-            var tmpSitePage = sitePage.LoadFromFile(info.SourceName);
+            var tmpSitePageInfo = SitePageInfo.LoadFromFile(info.SourceName);
 
-            if(!tmpSitePage.isReady)
+            if(!tmpSitePageInfo.IsReady)
             {
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(tmpSitePage.contentPath))
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpSitePage = {tmpSitePageInfo}");
+#endif
+
+            if (string.IsNullOrWhiteSpace(tmpSitePageInfo.ContentPath))
             {
                 var tmpExtension = string.Empty;
 
-                if(tmpSitePage.useMarkdown)
+                if(tmpSitePageInfo.UseMarkdown)
                 {
                     tmpExtension = ".md";
                 }
@@ -53,31 +59,31 @@ namespace CommonSiteGeneratorLib
                     tmpExtension = ".thtml";
                 }
 
-                tmpSitePage.contentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + tmpExtension);
+                tmpSitePageInfo.ContentPath = Path.Combine(Path.GetDirectoryName(info.SourceName), Path.GetFileNameWithoutExtension(info.SourceName) + tmpExtension);
             }
 
             var sb = new StringBuilder();
 
-            if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.mainTitle))
+            if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.MainTitle))
             {
-                sb.Append(GeneralSettings.SiteSettings.mainTitle);
+                sb.Append(GeneralSettings.SiteSettings.MainTitle);
 
-                if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.titlesDelimiter))
+                if(!string.IsNullOrWhiteSpace(GeneralSettings.SiteSettings.TitlesDelimiter))
                 {
-                    sb.Append(GeneralSettings.SiteSettings.titlesDelimiter);
+                    sb.Append(GeneralSettings.SiteSettings.TitlesDelimiter);
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(tmpSitePage.title))
+            if (string.IsNullOrWhiteSpace(tmpSitePageInfo.Title))
             {
-                sb.Append(GeneralSettings.SiteSettings.title);
+                sb.Append(GeneralSettings.SiteSettings.Title);
             }
             else
             {
-                sb.Append(tmpSitePage.title);
+                sb.Append(tmpSitePageInfo.Title);
             }
 
-            tmpSitePage.title = sb.ToString().Trim();
+            tmpSitePageInfo.Title = sb.ToString().Trim();
 
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"Run info.SourceName = {info.SourceName}");
@@ -86,74 +92,81 @@ namespace CommonSiteGeneratorLib
 
             BasePage tmpPage = null;
 
-            if(string.IsNullOrWhiteSpace(tmpSitePage.specialProcessing))
+            if(string.IsNullOrWhiteSpace(tmpSitePageInfo.SpecialProcessing))
             {
                 tmpPage = mSiteItemsFactory.CreatePage();
             }
             else
             {
-                tmpPage = mSiteItemsFactory.CreatePageForSpecialProcessing(tmpSitePage.specialProcessing.Trim());
+                tmpPage = mSiteItemsFactory.CreatePageForSpecialProcessing(tmpSitePageInfo.SpecialProcessing.Trim());
             }
 
-            tmpPage.Title = tmpSitePage.title;
+            tmpPage.Title = tmpSitePageInfo.Title;
 
-            if (!string.IsNullOrWhiteSpace(tmpSitePage.additionalMenu))
+            if (!string.IsNullOrWhiteSpace(tmpSitePageInfo.AdditionalMenu))
             {
-                tmpPage.AdditionalMenu = menu.GetMenu(tmpSitePage.additionalMenu);
+                tmpPage.AdditionalMenu = MenuInfo.GetMenu(tmpSitePageInfo.AdditionalMenu);
             }
 
-            var sitePageMicroData = tmpSitePage.microdata;
+            var sitePageMicroData = tmpSitePageInfo.Microdata;
 
             if (sitePageMicroData != null)
             {
-                if (!string.IsNullOrWhiteSpace(sitePageMicroData.description))
+                if (!string.IsNullOrWhiteSpace(sitePageMicroData.Description))
                 {
-                    sitePageMicroData.description = sitePageMicroData.description.Trim();
+                    sitePageMicroData.Description = sitePageMicroData.Description.Trim();
                 }
 
-                tmpPage.Description = sitePageMicroData.description;
+                tmpPage.Description = sitePageMicroData.Description;
 
-                if(string.IsNullOrWhiteSpace(sitePageMicroData.title))
+                if(string.IsNullOrWhiteSpace(sitePageMicroData.Title))
                 {
-                    sitePageMicroData.title = tmpSitePage.title;
+                    sitePageMicroData.Title = tmpSitePageInfo.Title;
                 }
                 else
                 {
-                    sitePageMicroData.title = sitePageMicroData.title.Trim();
+                    sitePageMicroData.Title = sitePageMicroData.Title.Trim();
                 }
 
-                tmpPage.MicrodataTitle = sitePageMicroData.title;
+                tmpPage.MicrodataTitle = sitePageMicroData.Title;
 
-                if (!string.IsNullOrWhiteSpace(sitePageMicroData.imageUrl))
+                if (!string.IsNullOrWhiteSpace(sitePageMicroData.ImageUrl))
                 {
-                    sitePageMicroData.imageUrl = sitePageMicroData.imageUrl.Trim();
+                    sitePageMicroData.ImageUrl = sitePageMicroData.ImageUrl.Trim();
                 }
 
-                tmpPage.ImageUrl = sitePageMicroData.imageUrl;
+                tmpPage.ImageUrl = sitePageMicroData.ImageUrl;
 
-                if (!string.IsNullOrWhiteSpace(sitePageMicroData.imageAlt))
+                if (!string.IsNullOrWhiteSpace(sitePageMicroData.ImageAlt))
                 {
-                    sitePageMicroData.imageAlt = sitePageMicroData.imageAlt.Trim();
+                    sitePageMicroData.ImageAlt = sitePageMicroData.ImageAlt.Trim();
                 }
 
-                tmpPage.ImageAlt = sitePageMicroData.imageAlt;
+                tmpPage.ImageAlt = sitePageMicroData.ImageAlt;
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.title = {sitePageMicroData.title}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.imageUrl = {sitePageMicroData.imageUrl}");
-                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.imageAlt = {sitePageMicroData.imageAlt}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.title = {sitePageMicroData.Title}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.imageUrl = {sitePageMicroData.ImageUrl}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageMicroData.imageAlt = {sitePageMicroData.ImageAlt}");
 #endif
             }
 
-            if (string.IsNullOrWhiteSpace(tmpSitePage.specialProcessing))
+            if (string.IsNullOrWhiteSpace(tmpSitePageInfo.SpecialProcessing))
             {
-                var tmpFileInfo = new FileInfo(tmpSitePage.contentPath);
+                var tmpFileInfo = new FileInfo(tmpSitePageInfo.ContentPath);
 
                 tmpPage.LastUpdateDate = tmpFileInfo.LastWriteTime;
 
-                using (var tmpTextReader = new StreamReader(tmpSitePage.contentPath))
+                if(tmpSitePageInfo.PluginsPipeline.Any())
                 {
-                    tmpPage.Content = tmpTextReader.ReadToEnd();
+                    RunContentPreprocessingPipeline(tmpPage, tmpSitePageInfo, tmpSitePageInfo.ContentPath);
+                }
+                else
+                {
+                    using (var tmpTextReader = new StreamReader(tmpSitePageInfo.ContentPath))
+                    {
+                        tmpPage.Content = tmpTextReader.ReadToEnd();
+                    }
                 }
             }
             else
@@ -165,11 +178,44 @@ namespace CommonSiteGeneratorLib
             //NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpPage.LastUpdateDate = {tmpPage.LastUpdateDate}");
 #endif
             tmpPage.SourceName = info.SourceName;
-            tmpPage.TargetFileName = Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) + "." + tmpSitePage.extension);
-            tmpPage.EnableMathML = tmpSitePage.enableMathML;
-            tmpPage.UseMarkdown = tmpSitePage.useMarkdown;
+            tmpPage.TargetFileName = Path.Combine(info.TargetDirName, Path.GetFileNameWithoutExtension(info.SourceName) + "." + tmpSitePageInfo.Extension);
+            tmpPage.EnableMathML = tmpSitePageInfo.EnableMathML;
+            tmpPage.UseMarkdown = tmpSitePageInfo.UseMarkdown;
 
             tmpPage.Run();
+        }
+
+        private void RunContentPreprocessingPipeline(BasePage page, SitePageInfo sitePageInfo, string sourceFileName)
+        {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run sourceFileName = {sourceFileName}");
+#endif
+
+            var targetSourceFileName = sourceFileName;
+
+            foreach(var pluginInfo in sitePageInfo.PluginsPipeline)
+            {
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run pluginInfo = {pluginInfo}");
+                NLog.LogManager.GetCurrentClassLogger().Info($"Run targetSourceFileName = {targetSourceFileName}");
+#endif
+
+                var pluginInstance = mSiteItemsFactory.GetPipelineItem(pluginInfo.Name);
+                targetSourceFileName = pluginInstance.Run(targetSourceFileName, sitePageInfo, pluginInfo);
+            }
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run targetSourceFileName = {targetSourceFileName}");
+#endif
+
+            var content = File.ReadAllText(targetSourceFileName);
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"Run content = {content}");
+#endif
+
+            page.Content = content;
         }
     }
 }

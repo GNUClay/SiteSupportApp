@@ -1,4 +1,5 @@
 ﻿using CommonMark;
+using CommonSiteGeneratorLib.SiteData;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,7 +23,7 @@ namespace CommonSiteGeneratorLib
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public DateTime LastUpdateDate { get; set; } = DateTime.Now;
-        public menu AdditionalMenu { get; set; }
+        public MenuInfo AdditionalMenu { get; set; }
         public bool UseMinification { get; set; } = false;
         public bool EnableMathML { get; set; }
         public bool UseMarkdown { get; set; }

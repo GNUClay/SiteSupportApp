@@ -19,31 +19,25 @@
 using Newtonsoft.Json;
 using System.IO;
 
-namespace CommonSiteGeneratorLib
+namespace CommonSiteGeneratorLib.SiteData
 {
-    public class site
+    public class SiteInfo
     {
-        public menu menu = null;
-        public string mainTitle = string.Empty;
-        public string title = string.Empty;
-        public string titlesDelimiter = string.Empty;
-        public bool enabledFavicon = false;
-        public string logo = string.Empty;
+        public MenuInfo Menu { get; set; }
+        public string MainTitle { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string TitlesDelimiter { get; set; } = string.Empty;
+        public bool EnabledFavicon { get; set; }
+        public string Logo { get; set; } = string.Empty;
 
-        public static site LoadFromFile(string path)
+        public override string ToString()
         {
-            using (var tmpfile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                if (tmpfile.Length == 0)
-                {
-                    return new site();
-                }
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
 
-                using (var reader = new StreamReader(tmpfile))
-                {
-                    return JsonConvert.DeserializeObject<site>(reader.ReadToEnd());
-                }
-            }
+        public static SiteInfo LoadFromFile(string path)
+        {
+            return JsonConvert.DeserializeObject<SiteInfo>(File.ReadAllText(path));
         }
     }
 }

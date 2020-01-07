@@ -20,21 +20,21 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
-namespace CommonSiteGeneratorLib
+namespace CommonSiteGeneratorLib.SiteData
 {
-    public class item
+    public class MenuItem
     {
-        public string href = string.Empty;
-        public string label = string.Empty;
-        public List<item> items { get; set; } = new List<item>();
+        public string Href { get; set; } = string.Empty;
+        public string Label { get; set; } = string.Empty;
+        public List<MenuItem> Items { get; set; } = new List<MenuItem>();
 
     }
 
-    public class menu
+    public class MenuInfo
     {
-        public List<item> items = new List<item>();
+        public List<MenuItem> Items { get; set; } = new List<MenuItem>();
 
-        public static menu GetMenu(string menuName)
+        public static MenuInfo GetMenu(string menuName)
         {
             if (mMenuDict.ContainsKey(menuName))
             {
@@ -46,22 +46,11 @@ namespace CommonSiteGeneratorLib
             return menu;
         }
 
-        private static Dictionary<string, menu> mMenuDict = new Dictionary<string, menu>();
+        private static Dictionary<string, MenuInfo> mMenuDict = new Dictionary<string, MenuInfo>();
 
-        public static menu LoadFromFile(string path)
+        public static MenuInfo LoadFromFile(string path)
         {
-            using (var tmpfile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                if (tmpfile.Length == 0)
-                {
-                    return null;
-                }
-
-                using (var reader = new StreamReader(tmpfile))
-                {
-                    return JsonConvert.DeserializeObject<menu>(reader.ReadToEnd());
-                }
-            }
+            return JsonConvert.DeserializeObject<MenuInfo>(File.ReadAllText(path));
         }
     }
 }

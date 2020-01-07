@@ -17,6 +17,7 @@
 */
 
 using CommonSiteGeneratorLib;
+using CommonSiteGeneratorLib.SiteData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,9 +52,9 @@ namespace CommonSiteGeneratorLib
 
         private void ClearDir()
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
-#endif
+//#if DEBUG
+//            NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
+//#endif
 
             var tmpDirs = Directory.GetDirectories(GeneralSettings.DestPath);
 
@@ -84,9 +85,14 @@ namespace CommonSiteGeneratorLib
 
         private void ProcessDir(string dir)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"ProcessDir dir = {dir}");
-#endif
+            if(IsIgnoredDir(dir))
+            {
+                return;
+            }
+
+//#if DEBUG
+//            NLog.LogManager.GetCurrentClassLogger().Info($"ProcessDir dir = {dir}");
+//#endif
 
             var tmpInfo = new SiteNodeInfo();
 
@@ -102,6 +108,19 @@ namespace CommonSiteGeneratorLib
             {
                 ProcessDir(subDir);
             }
+        }
+
+        private bool IsIgnoredDir(string dir)
+        {
+            if(!string.IsNullOrWhiteSpace(GeneralSettings.TempPath))
+            {
+                if(dir == GeneralSettings.TempPath)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void PredictionDirProcessing()
@@ -178,13 +197,13 @@ namespace CommonSiteGeneratorLib
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir relativeHref = {relativeHref}");
 #endif
 
-            var sitePage = CommonSiteGeneratorLib.sitePage.LoadFromFile(fileName);
+            var sitePage = SitePageInfo.LoadFromFile(fileName);
 
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir sitePage = {sitePage}");
 #endif
 
-            if(!sitePage.isReady)
+            if(!sitePage.IsReady)
             {
                 return null;
             }
@@ -192,7 +211,7 @@ namespace CommonSiteGeneratorLib
             var result = new BreadcrumbsPageNode();
             context.Pages.Add(result);
 
-            if (!sitePage.isBreadcrumbRoot)
+            if (!sitePage.IsBreadcrumbRoot)
             {
                 result.Parent = parent;
             }
@@ -201,11 +220,11 @@ namespace CommonSiteGeneratorLib
             result.Path = fileName;
             result.RelativeHref = relativeHref;
             result.AbsoluteHref = absoluteHref;
-            result.Title = sitePage.breadcrumbTitle;
+            result.Title = sitePage.BreadcrumbTitle;
 
             if(string.IsNullOrWhiteSpace(result.Title))
             {
-                result.Title = sitePage.title;
+                result.Title = sitePage.Title;
             }
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"PredictionProcessingOfConcreteDir result = {result}");
