@@ -71,6 +71,7 @@ namespace CommonSiteGeneratorLib
 #endif
             }
         }
+
         public string SourceName { get; set; }
         public string RelativeHref { get; private set; }
         public string AbsoluteHref { get; private set; }
