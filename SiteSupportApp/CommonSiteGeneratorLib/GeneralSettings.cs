@@ -29,7 +29,8 @@ namespace CommonSiteGeneratorLib
         {
             SiteName = ConfigurationManager.AppSettings["siteName"];
 
-            var tmpRootPath = EVPath.Normalize(ConfigurationManager.AppSettings["rootPath"]);
+            //var tmpRootPath = EVPath.Normalize(ConfigurationManager.AppSettings["rootPath"]);
+            var tmpRootPath = ConfigAppSettingsHelper.GetExistingDirectoryName("rootPath");
 
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"GeneralSettings() tmpRootPath = {tmpRootPath}");
@@ -96,6 +97,7 @@ namespace CommonSiteGeneratorLib
         public const string IgnoreDestDir = "siteSource";
 
         public const string IgnoreGitDir = ".git";
+        public const string VSDir = ".vs";
 
         public static string SiteName { get; private set; } = string.Empty;
 

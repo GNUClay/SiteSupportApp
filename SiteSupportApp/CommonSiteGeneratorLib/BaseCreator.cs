@@ -52,9 +52,9 @@ namespace CommonSiteGeneratorLib
 
         private void ClearDir()
         {
-//#if DEBUG
-//            NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
-//#endif
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info($"ClearDir GeneralSettings.DestPath = {GeneralSettings.DestPath}");
+#endif
 
             var tmpDirs = Directory.GetDirectories(GeneralSettings.DestPath);
 
@@ -68,6 +68,11 @@ namespace CommonSiteGeneratorLib
                 }
 
                 if (tmpDirInfo.Name == GeneralSettings.IgnoreGitDir)
+                {
+                    continue;
+                }
+
+                if(tmpDirInfo.Name == GeneralSettings.VSDir)
                 {
                     continue;
                 }

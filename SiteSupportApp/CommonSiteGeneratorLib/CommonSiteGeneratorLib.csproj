@@ -59,8 +59,10 @@
     <Compile Include="BaseSiteItemsFactory.cs" />
     <Compile Include="BreadcrumbInThePage.cs" />
     <Compile Include="BreadcrumbsPageNode.cs" />
+    <Compile Include="ConfigAppSettingsHelper.cs" />
     <Compile Include="ContextOfPredictionDirProcessing.cs" />
     <Compile Include="GeneralSettings.cs" />
+    <Compile Include="Pipeline\BasePipelineItem.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItem.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItemFactory.cs" />
     <Compile Include="Pipeline\IContentPipelineItem.cs" />
