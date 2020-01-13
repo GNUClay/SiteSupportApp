@@ -37,7 +37,7 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
             //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
             //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
 #endif
-            if (rootNode.Name == "ltc")
+            if (rootNode.Name == "linktocontent")
             {
                 var parentNode = rootNode.ParentNode;
 
