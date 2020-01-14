@@ -18,10 +18,10 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
             NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
 #endif
 
-            DiscoverNodes(doc.DocumentNode);
+            DiscoverNodes(doc.DocumentNode, doc);
         }
 
-        private void DiscoverNodes(HtmlNode rootNode)
+        private void DiscoverNodes(HtmlNode rootNode, HtmlDocument doc)
         {
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
@@ -29,6 +29,41 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
             //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
             //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
 #endif
+
+            if (rootNode.Name == "ebnfcdecl")
+            {
+                var parentNode = rootNode.ParentNode;
+
+                var name = rootNode.GetAttributeValue("name", string.Empty);
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
+#endif
+                var linkNode = doc.CreateElement("a");
+                parentNode.ReplaceChild(linkNode, rootNode);
+
+                linkNode.SetAttributeValue("href", $"#{name}");
+                linkNode.SetAttributeValue("name", name);
+                linkNode.InnerHtml = name;
+
+                return;
+            }
+
+            if (rootNode.Name == "ebnfc")
+            {
+                var parentNode = rootNode.ParentNode;
+
+                var name = rootNode.GetAttributeValue("name", string.Empty);
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
+#endif
+                var linkNode = doc.CreateElement("a");
+                parentNode.ReplaceChild(linkNode, rootNode);
+
+                linkNode.SetAttributeValue("href", $"#{name}");
+                linkNode.InnerHtml = name;
+
+                return;
+            }
 
             if (rootNode.Name == "a")
             {
@@ -58,7 +93,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
             foreach (var node in rootNode.ChildNodes.ToList())
             {
-                DiscoverNodes(node);
+                DiscoverNodes(node, doc);
             }
         }
     }

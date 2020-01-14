@@ -67,8 +67,12 @@
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItemFactory.cs" />
     <Compile Include="Pipeline\IContentPipelineItem.cs" />
     <Compile Include="Pipeline\IContentPipelineItemFactory.cs" />
+    <Compile Include="Pipeline\InThePageContentGenerator\ContentItem.cs" />
+    <Compile Include="Pipeline\InThePageContentGenerator\ContextReaderOfHtmlContentGenerator.cs" />
     <Compile Include="Pipeline\InThePageContentGenerator\InThePageContentGeneratorPipelineItem.cs" />
     <Compile Include="Pipeline\InThePageContentGenerator\InThePageContentGeneratorPipelineItemFactory.cs" />
+    <Compile Include="Pipeline\InThePageContentGenerator\ReaderOfHtmlContentGenerator.cs" />
+    <Compile Include="Pipeline\InThePageContentGenerator\ReaderResultOfHtmlContentGenerator.cs" />
     <Compile Include="Pipeline\RoadMapGenerator\RoadMapGeneratorPipelineItem.cs" />
     <Compile Include="Pipeline\RoadMapGenerator\RoadMapGeneratorPipelineItemFactory.cs" />
     <Compile Include="Pipeline\ShortTagsPreparation\ShortTagsPreparationPipelineItem.cs" />

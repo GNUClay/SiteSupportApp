@@ -51,7 +51,7 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
                 return;
             }
 
-            if (rootNode.Name == "seemore")
+            if (rootNode.Name == "see")
             {
                 var parentNode = rootNode.ParentNode;
 
@@ -61,7 +61,7 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
                 parentNode.ReplaceChild(linkNode, rootNode);
 
                 linkNode.SetAttributeValue("href", href);
-                linkNode.InnerHtml = "See more details";
+                linkNode.InnerHtml = "See more for details";
 
                 return;
             }
