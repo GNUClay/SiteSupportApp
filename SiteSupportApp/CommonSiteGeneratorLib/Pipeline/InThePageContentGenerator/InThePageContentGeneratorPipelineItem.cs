@@ -41,6 +41,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
 
             var contentsHeaderNode = doc.CreateElement("h1");
             parentOfContent.InsertBefore(contentsHeaderNode, rootContentNode);
+            contentsHeaderNode.AddClass("center-h");
 
             contentsHeaderNode.InnerHtml = @"    Content
     <a href='#Contents' name='Contents' class='permalink' title='The link to the section'>

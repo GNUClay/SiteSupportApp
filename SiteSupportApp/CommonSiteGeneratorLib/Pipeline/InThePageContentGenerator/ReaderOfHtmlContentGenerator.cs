@@ -122,12 +122,21 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
 
             var queue = new Queue<ContentItem>(context.ContentItemsList);
 
-            if (queue.Peek().TagName != "h1")
-            {
-                throw new Exception("Contents should start from H1!");
-            }
+            var topTagName = queue.Peek().TagName;
 
-            ProcessH1Items(item, queue);
+            switch(topTagName)
+            {
+                case "h1":
+                    ProcessH1Items(item, queue);
+                    break;
+
+                case "h2":
+                    ProcessH2Items(item, queue);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(topTagName), topTagName, null);
+            }
 
             return item;
         }
@@ -164,7 +173,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                         break;
 
                     default:
-                        throw new NotSupportedException();
+                        throw new ArgumentOutOfRangeException("TagName", currentSourceItem.TagName, null);
                 }
             }
 
@@ -203,8 +212,105 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                         parentItem.Items.Add(currItem);
                         break;
 
+                    case "h3":
+                        ProcessH3Items(currItem, queue);
+                        break;
+
                     default:
-                        throw new NotSupportedException();
+                        throw new ArgumentOutOfRangeException("TagName", currentSourceItem.TagName, null);
+                }
+            }
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info("End");
+#endif
+        }
+
+        private void ProcessH3Items(ContentItem parentItem, Queue<ContentItem> queue)
+        {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info("Begin");
+#endif
+            ContentItem currItem = null;
+
+            while (queue.Count > 0)
+            {
+                var currentSourceItem = queue.Peek();
+
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
+#endif
+                switch (currentSourceItem.TagName)
+                {
+                    case "h1":
+                        return;
+
+                    case "h2":
+                        return;
+
+                    case "h3":
+                        queue.Dequeue();
+                        currItem = new ContentItem()
+                        {
+                            TagName = currentSourceItem.TagName,
+                            Title = currentSourceItem.Title,
+                            Href = currentSourceItem.Href
+                        };
+                        parentItem.Items.Add(currItem);
+                        break;
+
+                    case "h4":
+                        ProcessH4Items(currItem, queue);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException("TagName", currentSourceItem.TagName, null);
+                }
+            }
+
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info("End");
+#endif
+        }
+
+        private void ProcessH4Items(ContentItem parentItem, Queue<ContentItem> queue)
+        {
+#if DEBUG
+            NLog.LogManager.GetCurrentClassLogger().Info("Begin");
+#endif
+            ContentItem currItem = null;
+
+            while (queue.Count > 0)
+            {
+                var currentSourceItem = queue.Peek();
+
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
+#endif
+                switch (currentSourceItem.TagName)
+                {
+                    case "h1":
+                        return;
+
+                    case "h2":
+                        return;
+
+                    case "h3":
+                        return;
+
+                    case "h4":
+                        queue.Dequeue();
+                        currItem = new ContentItem()
+                        {
+                            TagName = currentSourceItem.TagName,
+                            Title = currentSourceItem.Title,
+                            Href = currentSourceItem.Href
+                        };
+                        parentItem.Items.Add(currItem);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException("TagName", currentSourceItem.TagName, null);
                 }
             }
 
