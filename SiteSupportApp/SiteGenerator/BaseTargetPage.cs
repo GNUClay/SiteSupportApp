@@ -1,5 +1,6 @@
 ﻿using CommonSiteGeneratorLib;
 using CommonSiteGeneratorLib.SiteData;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,8 +67,13 @@ namespace SiteGenerator
                 AppendLine("<link rel='icon' href='/favicon.png' type='image/png'>");
             }
 
-            AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>");
-            AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css' integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp' crossorigin='anonymous'>");
+            AppendLine("<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>");
+            AppendLine("<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>");
+            AppendLine("<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>");
+
+            //AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>");
+            //AppendLine("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css' integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp' crossorigin='anonymous'>");
+            AppendLine("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
             AppendLine("<link rel='stylesheet' href='/site.css'>");
 
             if (AdditionalMenu != null)
@@ -199,13 +205,49 @@ namespace SiteGenerator
 
             foreach (var item in GeneralSettings.SiteSettings.Menu.Items)
             {
+#if DEBUG
+                NLog.LogManager.GetCurrentClassLogger().Info($"item = {JsonConvert.SerializeObject(item, Formatting.Indented)}");
+#endif
+
                 var tmpSb = new StringBuilder();
 
-                tmpSb.Append("<a href ='");
-                tmpSb.Append(item.Href);
-                tmpSb.Append("'>");
-                tmpSb.Append(item.Label);
-                tmpSb.Append("</a>");
+                if (item.Items.Any())
+                {
+                    var tmpId = $"id{Guid.NewGuid().ToString("D")}";
+                    tmpSb.Append("<div class='dropdown' style='display:inline;'>");
+                    tmpSb.Append($"<button class='btn dropdown-toggle' type='button' id='{tmpId}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
+                    tmpSb.Append(item.Label);
+                    tmpSb.Append("</button>");
+                    tmpSb.Append($"<div class='dropdown-menu' aria-labelledby='{tmpId}'>");
+
+                    foreach(var subItem in item.Items)
+                    {
+                        tmpSb.Append($"<a class='dropdown-item a_ddi' href='{subItem.Href}' style='color: #007bff;'>{subItem.Label}</a>");
+                    }
+                            
+                    tmpSb.Append("</div>");
+                    tmpSb.Append("</div>");
+                    /*
+                    
+  
+    Dropdown
+  
+  
+    
+    <button class="dropdown-item" type="button">Another action</button>
+    <button class="dropdown-item" type="button">Something else here</button>
+  
+
+                    */
+                }
+                else
+                {
+                    tmpSb.Append("<a href ='");
+                    tmpSb.Append(item.Href);
+                    tmpSb.Append("'>");
+                    tmpSb.Append(item.Label);
+                    tmpSb.Append("</a>");
+                }
 
                 tmpItems.Add(tmpSb.ToString());
                 tmpItems.Add("&nbsp;|&nbsp;");

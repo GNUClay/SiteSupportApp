@@ -14,8 +14,8 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
         protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
 #endif
 
             DiscoverNodes(doc.DocumentNode, doc);
@@ -36,7 +36,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
                 var name = rootNode.GetAttributeValue("name", string.Empty);
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
 #endif
                 var linkNode = doc.CreateElement("a");
                 parentNode.ReplaceChild(linkNode, rootNode);
@@ -54,7 +54,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
                 var name = rootNode.GetAttributeValue("name", string.Empty);
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
 #endif
                 var linkNode = doc.CreateElement("a");
                 parentNode.ReplaceChild(linkNode, rootNode);
@@ -71,8 +71,8 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
                 var href = rootNode.GetAttributeValue("href", string.Empty);
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
-                NLog.LogManager.GetCurrentClassLogger().Info($"href = '{href}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"href = '{href}'");
 #endif
                 if (string.IsNullOrWhiteSpace(href) && !string.IsNullOrWhiteSpace(name))
                 {
