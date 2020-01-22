@@ -86,6 +86,19 @@ namespace CommonSiteGeneratorLib
             {
                 File.Delete(file);
             }
+
+            if(!string.IsNullOrWhiteSpace(GeneralSettings.TempPath))
+            {
+                if(Directory.Exists(GeneralSettings.TempPath))
+                {
+                    tmpFiles = Directory.GetFiles(GeneralSettings.TempPath);
+
+                    foreach (var file in tmpFiles)
+                    {
+                        File.Delete(file);
+                    }
+                }           
+            }
         }
 
         private void ProcessDir(string dir)

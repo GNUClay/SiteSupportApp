@@ -25,6 +25,7 @@ namespace SiteGenerator
             AppendLine("<meta charset='utf-8' />");
             AppendLine("<meta name='generator' content='GNUClay/SiteSupportApp'>");
             AppendLine("<meta property='og:type' content='article' />");
+            AppendLine("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 
             if (!string.IsNullOrWhiteSpace(MicrodataTitle))
             {
@@ -108,11 +109,11 @@ namespace SiteGenerator
             AppendLine("<div class='container main-container'>");
             AppendLine("<div class='row justify-content-center'>");
             AppendLine("<div class='col col-md-10'>");
-            AppendLine("<header>");
+            AppendLine("<header role='banner'>");
             //GenerateMainWarning();
             GenerateHeader();
             AppendLine("</header>");
-            AppendLine("<nav>");
+            AppendLine("<nav role='navigation'>");
             GenerateMainMenu();
             AppendLine("</nav>");
             AppendLine("<hr style='border-bottom-color: #e2e2e2;'>");
@@ -147,7 +148,7 @@ namespace SiteGenerator
             AppendLine("</div>");
             AppendLine("</div>");
 
-            AppendLine("<footer class='container'>");
+            AppendLine("<footer class='container' role='contentinfo'>");
             AppendLine("<div class='row justify-content-center'>");
             AppendLine("<div class='col col-md-10'>");
             AppendLine($"This page was last modified on {LastUpdateDate.ToString("dd MMMM yyyy", TargetCulture)}</br>");
@@ -206,7 +207,7 @@ namespace SiteGenerator
             foreach (var item in GeneralSettings.SiteSettings.Menu.Items)
             {
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"item = {JsonConvert.SerializeObject(item, Formatting.Indented)}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"item = {JsonConvert.SerializeObject(item, Formatting.Indented)}");
 #endif
 
                 var tmpSb = new StringBuilder();

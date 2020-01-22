@@ -31,12 +31,12 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
             result.ContentPlaceNode = context.ContentPlaceNode;
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"context.ContentItemsList = {JsonConvert.SerializeObject(context.ContentItemsList, Formatting.Indented)}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"context.ContentItemsList = {JsonConvert.SerializeObject(context.ContentItemsList, Formatting.Indented)}");
 #endif
             var item = MakeTree(context);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"item = {JsonConvert.SerializeObject(item, Formatting.Indented)}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"item = {JsonConvert.SerializeObject(item, Formatting.Indented)}");
 #endif
             result.Items = item.Items;
 
@@ -84,15 +84,15 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
             };
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
-            NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
 #endif
             var text = rootNode.InnerText.Trim();
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"text = '{text}'");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"text = '{text}'");
 #endif
             contentItem.Title = text;
 
@@ -103,7 +103,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                 var href = hrefNode.GetAttributeValue("href", string.Empty);
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"href = '{href}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"href = '{href}'");
 #endif
                 contentItem.Href = href;
             }
@@ -144,7 +144,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
         private void ProcessH1Items(ContentItem parentItem, Queue<ContentItem> queue)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin");
+            //NLog.LogManager.GetCurrentClassLogger().Info("Begin");
 #endif
             ContentItem currItem = null;
 
@@ -153,7 +153,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                 var currentSourceItem = queue.Peek();
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
 #endif
                 switch (currentSourceItem.TagName)
                 {
@@ -178,14 +178,14 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("End");
+            //NLog.LogManager.GetCurrentClassLogger().Info("End");
 #endif
         }
 
         private void ProcessH2Items(ContentItem parentItem, Queue<ContentItem> queue)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin");
+            //NLog.LogManager.GetCurrentClassLogger().Info("Begin");
 #endif
             ContentItem currItem = null;
 
@@ -194,7 +194,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                 var currentSourceItem = queue.Peek();
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
 #endif
                 switch (currentSourceItem.TagName)
                 {
@@ -222,14 +222,14 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("End");
+            //NLog.LogManager.GetCurrentClassLogger().Info("End");
 #endif
         }
 
         private void ProcessH3Items(ContentItem parentItem, Queue<ContentItem> queue)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin");
+            //NLog.LogManager.GetCurrentClassLogger().Info("Begin");
 #endif
             ContentItem currItem = null;
 
@@ -238,7 +238,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                 var currentSourceItem = queue.Peek();
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
 #endif
                 switch (currentSourceItem.TagName)
                 {
@@ -269,14 +269,14 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("End");
+            //NLog.LogManager.GetCurrentClassLogger().Info("End");
 #endif
         }
 
         private void ProcessH4Items(ContentItem parentItem, Queue<ContentItem> queue)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("Begin");
+            //NLog.LogManager.GetCurrentClassLogger().Info("Begin");
 #endif
             ContentItem currItem = null;
 
@@ -285,7 +285,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
                 var currentSourceItem = queue.Peek();
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"currentSourceItem = {JsonConvert.SerializeObject(currentSourceItem, Formatting.Indented)}");
 #endif
                 switch (currentSourceItem.TagName)
                 {
@@ -315,7 +315,7 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
             }
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info("End");
+            //NLog.LogManager.GetCurrentClassLogger().Info("End");
 #endif
         }
     }

@@ -22,8 +22,8 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
         protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
 #endif
 
             DiscoverNodes(doc.DocumentNode, doc);
@@ -74,7 +74,7 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
                 var targetValue = rootNode.GetAttributeValue("target", string.Empty);
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"targetValue = '{targetValue}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"targetValue = '{targetValue}'");
 #endif
                 switch (targetValue)
                 {
@@ -100,7 +100,7 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
                 var dataHrefValue = rootNode.GetAttributeValue("data-href", string.Empty);
 
 #if DEBUG
-                NLog.LogManager.GetCurrentClassLogger().Info($"dataHrefValue = '{dataHrefValue}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"dataHrefValue = '{dataHrefValue}'");
 #endif
                 if (!string.IsNullOrWhiteSpace(dataHrefValue))
                 {
@@ -119,8 +119,8 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
                     }
 
 #if DEBUG
-                    NLog.LogManager.GetCurrentClassLogger().Info($"href = '{href}'");
-                    NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"href = '{href}'");
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
 #endif
                     var hrefNode = doc.CreateElement("a");
                     rootNode.ChildNodes.Add(hrefNode);
