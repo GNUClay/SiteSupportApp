@@ -91,18 +91,18 @@ namespace SiteGenerator
                 AppendLine("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>");
             }
 
-            var tmpGAScript = new StringBuilder();
+            //var tmpGAScript = new StringBuilder();
 
-            tmpGAScript.Append("<script>");
-            tmpGAScript.Append("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){");
-            tmpGAScript.Append("(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),");
-            tmpGAScript.Append("m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)");
-            tmpGAScript.Append("})(window,document,'script','//www.google-analytics.com/analytics.js','ga');");
-            tmpGAScript.Append("ga('create', 'UA-73880715-1', 'auto');");
-            tmpGAScript.Append("ga('send', 'pageview');");
-            tmpGAScript.Append("</script>");
+            //tmpGAScript.Append("<script>");
+            //tmpGAScript.Append("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){");
+            //tmpGAScript.Append("(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),");
+            //tmpGAScript.Append("m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)");
+            //tmpGAScript.Append("})(window,document,'script','//www.google-analytics.com/analytics.js','ga');");
+            //tmpGAScript.Append("ga('create', 'UA-73880715-1', 'auto');");
+            //tmpGAScript.Append("ga('send', 'pageview');");
+            //tmpGAScript.Append("</script>");
 
-            AppendLine(tmpGAScript.ToString());
+            //AppendLine(tmpGAScript.ToString());
 
             AppendLine("</head>");
             AppendLine("<body>");
@@ -155,7 +155,7 @@ namespace SiteGenerator
             //Append(", at ");
             //Append(LastUpdateDate.ToString("HH:mm", tmpFormat));
 
-            AppendLine($"&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> 2016 - {DateTime.Today.Year}</br>");
+            AppendLine($"&copy;&nbsp; <a href='https://github.com/metatypeman'>metatypeman</a> {GetCopyRightDate()}</br>");
             AppendLine("The text is available under the <a href='https://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>");
             AppendLine("</div>");
             AppendLine("</div>");
@@ -163,6 +163,19 @@ namespace SiteGenerator
 
             AppendLine("</body>");
             AppendLine("</html>");
+        }
+
+        private string GetCopyRightDate()
+        {
+            var initYear = 2020;
+            var currentYear = DateTime.Today.Year;
+
+            if(currentYear == initYear)
+            {
+                return initYear.ToString();
+            }
+
+            return $"{initYear} - {currentYear}";
         }
 
         protected virtual void GenerateArticle()
@@ -184,11 +197,11 @@ namespace SiteGenerator
             }
 
             Append("<span style='font-size: 30px; font-weight: bold;'>");
-            Append("GNU Clay");
+            Append("SymOntoClay");
             Append("</span>");
             Append("&nbsp;");
             Append("<span>");
-            Append("The small and simple game AI");
+            Append("An open source experimental domain-specific language for game NPC.");
             Append("</span>");
             AppendLine("</p>");
         }
