@@ -23,7 +23,7 @@ namespace SiteGenerator
             AppendLine("<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>");
             AppendLine("<head>");
             AppendLine("<meta charset='utf-8' />");
-            AppendLine("<meta name='generator' content='GNUClay/SiteSupportApp'>");
+            AppendLine("<meta name='generator' content='SymOntoClay/SiteSupportApp'>");
             AppendLine("<meta property='og:type' content='article' />");
             AppendLine("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 
