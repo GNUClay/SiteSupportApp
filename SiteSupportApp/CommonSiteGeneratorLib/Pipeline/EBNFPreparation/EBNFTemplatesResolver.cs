@@ -106,7 +106,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
                 var itemsList = gEBNFCStorage.GetGroup(name);
 
-                _logger.Info($"ExploreTemplateNodesitemsList = {JsonConvert.SerializeObject(itemsList, Formatting.Indented)}");
+                //_logger.Info($"ExploreTemplateNodesitemsList = {JsonConvert.SerializeObject(itemsList, Formatting.Indented)}");
 
                 if (!itemsList.Any())
                 {
@@ -119,7 +119,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
                 foreach (var item in itemsList)
                 {
-                    _logger.Info($"item = '{item}'");
+                    //_logger.Info($"item = '{item}'");
 
                     if (kind == "op_and")
                     {
