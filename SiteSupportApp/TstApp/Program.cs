@@ -23,6 +23,7 @@ using SiteGenerator;
 using SiteGenerator.ApiReferenceGenerator;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using TstApp.AddEBNFGroupsProcessing;
 
 namespace TstApp
 {
@@ -37,9 +39,30 @@ namespace TstApp
     {
         static void Main(string[] args)
         {
-            TSTLoadDocumentation();
+            TstAddEBNFGroups();
+            //TSTLoadDocumentation();
             //GetPath();
             //TstVersion();
+        }
+
+        private static void TstAddEBNFGroups()
+        {
+            var sourceFile = @"c:\Users\Sergey\Documents\GitHub\index.thtml";
+
+            var handler = new AddEBNFGroupsProcessor();
+
+            var targetGroupingEBNFNamesList = new List<string>()
+            {
+                "TypeIdentifier",
+                "SourceCodeFileContent"
+            };
+
+            foreach(var groupingEBNFName in targetGroupingEBNFNamesList)
+            {
+                handler.Run(sourceFile, groupingEBNFName);
+            }
+                    
+            handler.NormalizeTags(sourceFile);
         }
 
         private static void TSTLoadDocumentation()
