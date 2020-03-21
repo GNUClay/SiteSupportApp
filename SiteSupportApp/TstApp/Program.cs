@@ -39,7 +39,7 @@ namespace TstApp
     {
         static void Main(string[] args)
         {
-            TstAddEBNFGroups();
+            //TstAddEBNFGroups();
             //TSTLoadDocumentation();
             //GetPath();
             //TstVersion();
@@ -53,7 +53,13 @@ namespace TstApp
 
             var targetGroupingEBNFNamesList = new List<string>()
             {
+                "DateTimeLiteral",
                 "TypeIdentifier",
+                "ClassContent",
+                "OrderedTypeDecl",
+                "Modality",
+                "Expr",
+                "Statement",
                 "SourceCodeFileContent"
             };
 

@@ -65,6 +65,9 @@
     <Compile Include="Pipeline\BasePipelineItem.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItem.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItemFactory.cs" />
+    <Compile Include="Pipeline\EBNFPreparation\EBNFTemplatesResolver.cs" />
+    <Compile Include="Pipeline\EBNFPreparation\GEBNFCStorage.cs" />
+    <Compile Include="Pipeline\EBNFPreparation\TEBNFCDECLStorage.cs" />
     <Compile Include="Pipeline\IContentPipelineItem.cs" />
     <Compile Include="Pipeline\IContentPipelineItemFactory.cs" />
     <Compile Include="Pipeline\InThePageContentGenerator\ContentItem.cs" />

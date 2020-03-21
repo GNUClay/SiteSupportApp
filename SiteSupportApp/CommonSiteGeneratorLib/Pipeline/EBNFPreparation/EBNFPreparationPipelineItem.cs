@@ -11,6 +11,20 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 {
     public class EBNFPreparationPipelineItem : BasePipelineItem
     {
+        protected override HtmlDocument OnPrepareDoc(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
+        {
+            EBNFTemplatesResolver.Run(doc);
+
+            var resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}.html");
+
+            doc.Save(resultFileName);
+
+            var newDoc = new HtmlDocument();
+            newDoc.Load(resultFileName);
+
+            return newDoc;
+        }
+
         protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG

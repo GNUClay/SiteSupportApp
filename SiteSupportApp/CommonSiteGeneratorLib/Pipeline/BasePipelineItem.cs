@@ -22,10 +22,17 @@ namespace CommonSiteGeneratorLib.Pipeline
             var doc = new HtmlDocument();
             doc.Load(sourceFileName);
 
+            var newDoc = OnPrepareDoc(doc, sitePageInfo, pagePluginInfo);
+
+            if(newDoc != null)
+            {
+                doc = newDoc;
+            }
+
             OnRun(doc, sitePageInfo, pagePluginInfo);
 
             var fileInfo = new FileInfo(sourceFileName);
-
+            
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"Run fileInfo.Extension = {fileInfo.Extension}");
 #endif
@@ -39,6 +46,11 @@ namespace CommonSiteGeneratorLib.Pipeline
             doc.Save(resultFileName);
 
             return resultFileName;
+        }
+
+        protected virtual HtmlDocument OnPrepareDoc(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
+        {
+            return null;
         }
 
         protected abstract void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo);
