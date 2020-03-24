@@ -34,6 +34,11 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
         {
             var contentNodePlace = contentsInfo.ContentPlaceNode;
 
+            if(contentNodePlace == null)
+            {
+                return;
+            }
+
             var parentOfContent = contentNodePlace.ParentNode;
 
             var rootContentNode = doc.CreateElement("p");
