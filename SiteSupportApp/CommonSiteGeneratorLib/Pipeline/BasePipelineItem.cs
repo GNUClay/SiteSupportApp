@@ -14,9 +14,9 @@ namespace CommonSiteGeneratorLib.Pipeline
         public virtual string Run(string sourceFileName, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run sourceFileName = {sourceFileName}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run sourceFileName = {sourceFileName}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
 #endif
 
             var doc = new HtmlDocument();
@@ -26,21 +26,29 @@ namespace CommonSiteGeneratorLib.Pipeline
 
             if(newDoc != null)
             {
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info("Run newDoc != null");
+#endif
+
                 doc = newDoc;
             }
+
+#if DEBUG
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run doc.Text = {doc.Text}");
+#endif
 
             OnRun(doc, sitePageInfo, pagePluginInfo);
 
             var fileInfo = new FileInfo(sourceFileName);
             
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run fileInfo.Extension = {fileInfo.Extension}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run fileInfo.Extension = {fileInfo.Extension}");
 #endif
 
             var resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}{fileInfo.Extension}");
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run resultFileName = {resultFileName}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run resultFileName = {resultFileName}");
 #endif
 
             doc.Save(resultFileName);

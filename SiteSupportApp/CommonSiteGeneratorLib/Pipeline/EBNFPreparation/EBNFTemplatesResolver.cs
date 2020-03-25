@@ -15,7 +15,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
         public static void Run(HtmlDocument doc)
         {
-            _logger.Info("Begin");
+            //_logger.Info("Begin");
 
             var n = 0;
 
@@ -25,7 +25,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
             {
                 n++;
 
-                _logger.Info($"n = {n}");
+                //_logger.Info($"n = {n}");
 
                 if(n > 100)
                 {
@@ -33,7 +33,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
                 }
             };
 
-            _logger.Info("End");
+            //_logger.Info("End");
         }
 
         private static bool RunIteration(HtmlDocument doc, TEBNFCDECLStorage tEBNFCDECLStorage)
@@ -48,13 +48,13 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
         private static bool DiscoverTemplateNodes(HtmlNode rootNode, GEBNFCStorage gEBNFCStorage, TEBNFCDECLStorage tEBNFCDECLStorage)
         {
-            if (rootNode.Name != "#document")
-            {
+            //if (rootNode.Name != "#document")
+            //{
                 //_logger.Info($"rootNode.Name = '{rootNode.Name}'");
                 //_logger.Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
                 //_logger.Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
                 //_logger.Info($"rootNode.InnerText = {rootNode.InnerText}");
-            }
+            //}
 
             if (rootNode.Name == "ebnfcdecl")
             {

@@ -19,6 +19,10 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
             doc.Save(resultFileName);
 
+#if DEBUG
+            //NLog.LogManager.GetCurrentClassLogger().Info($"resultFileName = '{resultFileName}'");
+#endif
+
             var newDoc = new HtmlDocument();
             newDoc.Load(resultFileName);
 
@@ -28,20 +32,28 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
         protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun sitePageInfo = {sitePageInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun pagePluginInfo = {pagePluginInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun rootNode.OuterHtml = {doc.DocumentNode.OuterHtml}");
 #endif
 
             DiscoverNodes(doc.DocumentNode, doc);
+
+#if DEBUG
+            //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun rootNode.OuterHtml (after) = {doc.DocumentNode.OuterHtml}");
+#endif
         }
 
         private void DiscoverNodes(HtmlNode rootNode, HtmlDocument doc)
         {
 #if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
-            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
-            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
-            //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
+            //if(rootNode.Name != "#document")
+            //{
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
+            //}
 #endif
 
             if (rootNode.Name == "ebnfcdecl")
