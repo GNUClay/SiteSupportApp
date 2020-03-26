@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,15 +14,24 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public static void Run(HtmlDocument doc)
+        public static HtmlDocument Run(HtmlDocument doc)
         {
             //_logger.Info("Begin");
 
             var n = 0;
 
+            var resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}.html");
+
+            //_logger.Info($"EBNFTemplatesResolver Run resultFileName (1) = {resultFileName}");
+
+            doc.Save(resultFileName);
+
+            var modifiedDoc = new HtmlDocument();
+            modifiedDoc.Load(resultFileName);
+
             var tEBNFCDECLStorage = new TEBNFCDECLStorage();
 
-            while (RunIteration(doc, tEBNFCDECLStorage))
+            while (RunIteration(modifiedDoc, tEBNFCDECLStorage))
             {
                 n++;
 
@@ -31,9 +41,20 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
                 {
                     throw new NotSupportedException($"Too much iterations!!!");
                 }
+
+                resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}.html");
+
+                //_logger.Info($"EBNFTemplatesResolver Run resultFileName (2) = {resultFileName}");
+
+                modifiedDoc.Save(resultFileName);
+
+                modifiedDoc = new HtmlDocument();
+                modifiedDoc.Load(resultFileName);
             };
 
             //_logger.Info("End");
+
+            return modifiedDoc;
         }
 
         private static bool RunIteration(HtmlDocument doc, TEBNFCDECLStorage tEBNFCDECLStorage)

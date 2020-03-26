@@ -13,11 +13,11 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
     {
         protected override HtmlDocument OnPrepareDoc(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
-            EBNFTemplatesResolver.Run(doc);
+            var newDoc2 = EBNFTemplatesResolver.Run(doc);
 
             var resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}.html");
 
-            doc.Save(resultFileName);
+            newDoc2.Save(resultFileName);
 
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"resultFileName = '{resultFileName}'");
