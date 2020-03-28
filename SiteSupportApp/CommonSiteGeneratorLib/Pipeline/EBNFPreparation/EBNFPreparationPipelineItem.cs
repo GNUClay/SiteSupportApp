@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonSiteGeneratorLib.SiteData;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 
 namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 {
@@ -47,7 +48,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
         private void DiscoverNodes(HtmlNode rootNode, HtmlDocument doc)
         {
 #if DEBUG
-            //if(rootNode.Name != "#document")
+            //if (rootNode.Name != "#document")
             //{
             //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
             //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
@@ -87,6 +88,51 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
                 linkNode.SetAttributeValue("href", $"#{name}");
                 linkNode.InnerHtml = name;
+
+                return;
+            }
+
+            if(rootNode.Name == "gr")
+            {
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
+#endif
+                var itemsList = EBNFHelpers.ParseGrammarBlock(rootNode.InnerHtml);
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"itemsList = {JsonConvert.SerializeObject(itemsList, Formatting.Indented)}");
+#endif
+                var newNode = doc.CreateElement("div");
+
+                var parentNode = rootNode.ParentNode;
+                parentNode.ReplaceChild(newNode, rootNode);
+
+                newNode.AddClass("ebnf-code");
+
+                foreach(var item in itemsList)
+                {
+#if DEBUG
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"item = '{item}'");
+#endif
+
+                    var itemNode = doc.CreateElement("div");
+                    newNode.AppendChild(itemNode);
+                    itemNode.AddClass("ebnf-code-item");
+
+                    var tmpDoc = new HtmlDocument();
+                    tmpDoc.LoadHtml(item);
+
+                    DiscoverNodes(tmpDoc.DocumentNode, tmpDoc);
+
+#if DEBUG
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"tmpDoc.DocumentNode.OuterHtml = '{tmpDoc.DocumentNode.OuterHtml}'");
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"tmpDoc.DocumentNode.InnerHtml = '{tmpDoc.DocumentNode.InnerHtml}'");
+#endif
+
+                    itemNode.InnerHtml = tmpDoc.DocumentNode.InnerHtml;
+                }
 
                 return;
             }

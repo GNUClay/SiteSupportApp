@@ -212,7 +212,7 @@ namespace CommonSiteGeneratorLib
             var content = File.ReadAllText(targetSourceFileName);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run content = {content}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run content = {content}");
 #endif
 
             page.Content = content;

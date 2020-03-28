@@ -16,16 +16,16 @@ namespace CommonSiteGeneratorLib.Pipeline.InThePageContentGenerator
         protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
 #endif
 
             var contentsInfo = mReader.Read(doc);
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"contentsInfo.Items = {JsonConvert.SerializeObject(contentsInfo.Items, Formatting.Indented)}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"contentsInfo.Items = {JsonConvert.SerializeObject(contentsInfo.Items, Formatting.Indented)}");
 
-            NLog.LogManager.GetCurrentClassLogger().Info($"contentsInfo.ContentPlaceNode = {contentsInfo.ContentPlaceNode?.OuterHtml}");
+            //NLog.LogManager.GetCurrentClassLogger().Info($"contentsInfo.ContentPlaceNode = {contentsInfo.ContentPlaceNode?.OuterHtml}");
 #endif
             CreateContents(contentsInfo, doc);
         }

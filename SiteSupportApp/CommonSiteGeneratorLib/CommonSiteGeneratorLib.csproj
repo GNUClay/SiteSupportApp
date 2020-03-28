@@ -63,6 +63,7 @@
     <Compile Include="ContextOfPredictionDirProcessing.cs" />
     <Compile Include="GeneralSettings.cs" />
     <Compile Include="Pipeline\BasePipelineItem.cs" />
+    <Compile Include="Pipeline\EBNFPreparation\EBNFHelpers.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItem.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFPreparationPipelineItemFactory.cs" />
     <Compile Include="Pipeline\EBNFPreparation\EBNFTemplatesResolver.cs" />
