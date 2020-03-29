@@ -14,7 +14,7 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
         public static List<string> ParseGrammarBlock(string html)
         {
-            var itemsStrList = html.Split('.').Where(p => !string.IsNullOrWhiteSpace(p));
+            var itemsStrList = html.Split(new string[1] { $".{Environment.NewLine}"  }, StringSplitOptions.RemoveEmptyEntries).Where(p => !string.IsNullOrWhiteSpace(p));
 
             var result = new List<string>();
             var buffer = new List<string>();
