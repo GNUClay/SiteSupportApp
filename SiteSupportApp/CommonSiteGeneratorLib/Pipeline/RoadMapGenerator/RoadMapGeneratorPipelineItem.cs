@@ -10,7 +10,7 @@ namespace CommonSiteGeneratorLib.Pipeline.RoadMapGenerator
 {
     public class RoadMapGeneratorPipelineItem : BasePipelineItem
     {
-        protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
+        protected override void OnRun(ref HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"Run sitePageInfo = {sitePageInfo}");

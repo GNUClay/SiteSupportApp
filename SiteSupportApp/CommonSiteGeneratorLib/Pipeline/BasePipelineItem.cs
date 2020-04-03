@@ -22,22 +22,11 @@ namespace CommonSiteGeneratorLib.Pipeline
             var doc = new HtmlDocument();
             doc.Load(sourceFileName);
 
-            var newDoc = OnPrepareDoc(doc, sitePageInfo, pagePluginInfo);
-
-            if(newDoc != null)
-            {
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info("Run newDoc != null");
-#endif
-
-                doc = newDoc;
-            }
-
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"Run doc.Text = {doc.Text}");
 #endif
 
-            OnRun(doc, sitePageInfo, pagePluginInfo);
+            OnRun(ref doc, sitePageInfo, pagePluginInfo);
 
             var fileInfo = new FileInfo(sourceFileName);
             
@@ -56,11 +45,11 @@ namespace CommonSiteGeneratorLib.Pipeline
             return resultFileName;
         }
 
-        protected virtual HtmlDocument OnPrepareDoc(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
-        {
-            return null;
-        }
+        //protected virtual HtmlDocument OnPrepareDoc(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
+        //{
+        //    return null;
+        //}
 
-        protected abstract void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo);
+        protected abstract void OnRun(ref HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo);
     }
 }

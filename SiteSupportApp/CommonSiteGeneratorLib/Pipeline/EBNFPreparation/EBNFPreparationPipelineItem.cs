@@ -12,31 +12,22 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 {
     public class EBNFPreparationPipelineItem : BasePipelineItem
     {
-        protected override HtmlDocument OnPrepareDoc(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
-        {
-            var newDoc2 = EBNFTemplatesResolver.Run(doc);
-
-            var resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}.html");
-
-            newDoc2.Save(resultFileName);
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"resultFileName = '{resultFileName}'");
-#endif
-
-            var newDoc = new HtmlDocument();
-            newDoc.Load(resultFileName);
-
-            return newDoc;
-        }
-
-        protected override void OnRun(HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
+        protected override void OnRun(ref HtmlDocument doc, SitePageInfo sitePageInfo, PagePluginInfo pagePluginInfo)
         {
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun sitePageInfo = {sitePageInfo}");
             //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun pagePluginInfo = {pagePluginInfo}");
             //NLog.LogManager.GetCurrentClassLogger().Info($"EBNFPreparationPipelineItem OnRun rootNode.OuterHtml = {doc.DocumentNode.OuterHtml}");
 #endif
+
+            doc = EBNFTemplatesResolver.Run(doc);
+
+            var resultFileName = Path.Combine(GeneralSettings.TempPath, $"{Guid.NewGuid().ToString("D")}.html");
+
+            doc.Save(resultFileName);
+
+            doc = new HtmlDocument();
+            doc.Load(resultFileName);
 
             DiscoverNodes(doc.DocumentNode, doc);
 
