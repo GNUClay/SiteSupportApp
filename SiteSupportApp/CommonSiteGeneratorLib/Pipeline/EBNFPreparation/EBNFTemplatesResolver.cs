@@ -107,13 +107,13 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
         private static bool ExploreTemplateNodes(HtmlNode rootNode, HtmlDocument doc, GEBNFCStorage gEBNFCStorage, TEBNFCDECLStorage tEBNFCDECLStorage)
         {
-            if (rootNode.Name != "#document")
-            {
-                //_logger.Info($"ExploreTemplateNodes rootNode.Name = '{rootNode.Name}'");
-                //_logger.Info($"ExploreTemplateNodes rootNode.OuterHtml = {rootNode.OuterHtml}");
-                //_logger.Info($"ExploreTemplateNodes rootNode.InnerHtml = {rootNode.InnerHtml}");
-                //_logger.Info($"rootNode.InnerText = {rootNode.InnerText}");
-            }
+            //if (rootNode.Name != "#document")
+            //{
+            //    _logger.Info($"ExploreTemplateNodes rootNode.Name = '{rootNode.Name}'");
+            //    _logger.Info($"ExploreTemplateNodes rootNode.OuterHtml = {rootNode.OuterHtml}");
+            //    _logger.Info($"ExploreTemplateNodes rootNode.InnerHtml = {rootNode.InnerHtml}");
+            //    _logger.Info($"rootNode.InnerText = {rootNode.InnerText}");
+            //}
 
             if (rootNode.Name == "gebnfc")
             {
