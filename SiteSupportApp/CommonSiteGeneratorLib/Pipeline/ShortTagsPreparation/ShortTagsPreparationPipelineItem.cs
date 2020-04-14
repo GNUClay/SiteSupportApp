@@ -26,10 +26,51 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
             //NLog.LogManager.GetCurrentClassLogger().Info($"Run pagePluginInfo = {pagePluginInfo}");
 #endif
 
-            DiscoverNodes(doc.DocumentNode, doc);
+            var hrefsDict = new Dictionary<string, string>();
+
+            DiscoverHrefNodes(doc.DocumentNode, hrefsDict);
+            DiscoverNodes(doc.DocumentNode, doc, hrefsDict);
         }
 
-        private void DiscoverNodes(HtmlNode rootNode, HtmlDocument doc)
+        private void DiscoverHrefNodes(HtmlNode rootNode, Dictionary<string, string> hrefsDict)
+        {
+#if DEBUG
+            //if(rootNode.Name != "#document")
+            //{
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
+            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
+            //}
+#endif
+
+            if(mTargetTags.Contains(rootNode.Name))
+            {
+                var dataHref = rootNode.GetAttributeValue("data-href", string.Empty);
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"dataHref = '{dataHref}'");
+#endif
+
+                if(!string.IsNullOrWhiteSpace(dataHref))
+                {
+                    var title = rootNode.InnerText.Trim();
+
+#if DEBUG
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"title = '{title}'");
+#endif
+
+                    hrefsDict[dataHref] = title;
+                }
+            }
+
+            foreach (var node in rootNode.ChildNodes.ToList())
+            {
+                DiscoverHrefNodes(node, hrefsDict);
+            }
+        }
+
+        private void DiscoverNodes(HtmlNode rootNode, HtmlDocument doc, Dictionary<string, string> hrefsDict)
         {
 #if DEBUG
             //NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
@@ -55,13 +96,44 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
             {
                 var parentNode = rootNode.ParentNode;
 
-                var href = rootNode.GetAttributeValue("href", string.Empty);
+                var dataHref = rootNode.GetAttributeValue("data-href", string.Empty);
 
-                var linkNode = doc.CreateElement("a");
-                parentNode.ReplaceChild(linkNode, rootNode);
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"dataHref = '{dataHref}'");
+#endif
 
-                linkNode.SetAttributeValue("href", href);
-                linkNode.InnerHtml = "See more for details";
+                if(dataHref.Contains(".html"))
+                {
+                    throw new NotSupportedException();
+                }
+                else
+                {
+                    var title = hrefsDict[dataHref];
+
+#if DEBUG
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"title = '{title}'");
+#endif
+
+                    if (!dataHref.StartsWith("#"))
+                    {
+                        dataHref = $"#{dataHref}";
+                    }
+
+                    var rootSpanNode = doc.CreateElement("span");
+                    parentNode.ReplaceChild(rootSpanNode, rootNode);
+
+                    var textSpanNode = doc.CreateElement("span");
+                    textSpanNode.InnerHtml = "See more for details in&nbsp;<i class='fas fa-link' style='font-size:12px;'></i>";
+
+                    rootSpanNode.AppendChild(textSpanNode);
+
+                    var linkNode = doc.CreateElement("a");
+                    
+                    linkNode.SetAttributeValue("href", dataHref);
+                    linkNode.InnerHtml = title;
+
+                    rootSpanNode.AppendChild(linkNode);                
+                }
 
                 return;
             }
@@ -136,7 +208,7 @@ namespace CommonSiteGeneratorLib.Pipeline.ShortTagsPreparation
 
             foreach (var node in rootNode.ChildNodes.ToList())
             {
-                DiscoverNodes(node, doc);
+                DiscoverNodes(node, doc, hrefsDict);
             }
         }
     }
