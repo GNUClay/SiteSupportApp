@@ -38,15 +38,106 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 
         private void DiscoverNodes(HtmlNode rootNode, HtmlDocument doc)
         {
+//#if DEBUG
+//            if (rootNode.Name != "#document")
+//            {
+//                NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
+//                NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
+//                NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
+//                NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
+//            }
+//#endif
+
+            if (rootNode.Name == "keywords")
+            {
+                var targetColsCount = rootNode.GetAttributeValue("cols", 0);
+
 #if DEBUG
-            //if (rootNode.Name != "#document")
-            //{
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.Name = '{rootNode.Name}'");
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.OuterHtml = {rootNode.OuterHtml}");
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerHtml = {rootNode.InnerHtml}");
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"rootNode.InnerText = {rootNode.InnerText}");
-            //}
+                //NLog.LogManager.GetCurrentClassLogger().Info($"targetColsCount = '{targetColsCount}'");
 #endif
+
+                var tdWidth = 100 / targetColsCount;
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"tdWidth = {tdWidth}");
+#endif
+
+                var list = rootNode.ChildNodes.Where(p => p.Name == "kw").Select(p => p.GetAttributeValue("name", string.Empty)).Where(p => !string.IsNullOrWhiteSpace(p)).Distinct().OrderBy(p => p).ToList();
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented)}");
+#endif
+
+                var countInCol = list.Count / targetColsCount;
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"list.Count = {list.Count}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"countInCol = {countInCol}");
+                //NLog.LogManager.GetCurrentClassLogger().Info($"list.Count % targetColsCount = {list.Count % targetColsCount}");
+#endif
+                if ((list.Count % targetColsCount) > 0)
+                {
+                    countInCol++;
+                }
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"countInCol (2) = {countInCol}");
+#endif
+                var counter = countInCol;
+
+                var groupedDict = list.GroupBy(p => counter++ / countInCol).ToDictionary(p => p.Key, p => p.ToList());
+
+#if DEBUG
+                //NLog.LogManager.GetCurrentClassLogger().Info($"groupedDict = {JsonConvert.SerializeObject(groupedDict, Newtonsoft.Json.Formatting.Indented)}");
+#endif
+                var parentNode = rootNode.ParentNode;
+                var tableNode = doc.CreateElement("table");
+                parentNode.ReplaceChild(tableNode, rootNode);
+                tableNode.AddClass("keywords-table");
+                //tableNode.SetAttributeValue("border", "1");
+
+                var tbodyNode = doc.CreateElement("tbody");
+                tableNode.AppendChild(tbodyNode);
+
+                for (var i = 0; i < countInCol; i++)
+                {
+#if DEBUG
+                    //NLog.LogManager.GetCurrentClassLogger().Info($"i = {i}");
+#endif
+
+                    var trNode = doc.CreateElement("tr");
+                    tbodyNode.AppendChild(trNode);
+
+                    foreach (var groupedItem in groupedDict)
+                    {
+                        var tdNode = doc.CreateElement("td");
+                        trNode.AppendChild(tdNode);
+                        tdNode.SetAttributeValue("style", $"width: {tdWidth}%;");
+
+#if DEBUG
+                        //NLog.LogManager.GetCurrentClassLogger().Info($"groupedItem.Value.Count = {groupedItem.Value.Count}");
+#endif
+                        if (groupedItem.Value.Count > i)
+                        {
+                            var val = groupedItem.Value[i];
+#if DEBUG
+                            //NLog.LogManager.GetCurrentClassLogger().Info($"val = {val}");
+#endif
+
+                            var spanNode = doc.CreateElement("span");
+                            tdNode.AppendChild(spanNode);
+                            spanNode.AddClass("keyword");
+                            spanNode.SetAttributeValue("ebnf-type", "keyword");
+                            spanNode.SetAttributeValue("ebnf-kind", "decl");
+                            spanNode.InnerHtml = val;
+                        }
+                    }
+                }
+
+                //throw new NotImplementedException();
+
+                return;
+            }
 
             if (rootNode.Name == "ebnfcdecl")
             {
@@ -59,6 +150,8 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
                 var linkNode = doc.CreateElement("a");
                 parentNode.ReplaceChild(linkNode, rootNode);
 
+                linkNode.SetAttributeValue("ebnf-type", name);
+                linkNode.SetAttributeValue("ebnf-kind", "decl");
                 linkNode.SetAttributeValue("href", $"#{name}");
                 linkNode.SetAttributeValue("name", name);
                 linkNode.InnerHtml = name;
@@ -74,9 +167,13 @@ namespace CommonSiteGeneratorLib.Pipeline.EBNFPreparation
 #if DEBUG
                 //NLog.LogManager.GetCurrentClassLogger().Info($"name = '{name}'");
 #endif
+
+
                 var linkNode = doc.CreateElement("a");
                 parentNode.ReplaceChild(linkNode, rootNode);
 
+                linkNode.SetAttributeValue("ebnf-type", name);
+                linkNode.SetAttributeValue("ebnf-kind", "use");
                 linkNode.SetAttributeValue("href", $"#{name}");
                 linkNode.InnerHtml = name;
 

@@ -19,6 +19,7 @@
 using CommonSiteGeneratorLib;
 using CommonUtils;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 using SiteGenerator;
 using SiteGenerator.ApiReferenceGenerator;
 using System;
@@ -37,12 +38,77 @@ namespace TstApp
 {
     class Program
     {
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info($"CurrentDomain_UnhandledException e.ExceptionObject = {e.ExceptionObject}");
+        }
+
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            TstKwSort();
             //TstAddEBNFGroups();
             //TSTLoadDocumentation();
             //GetPath();
             //TstVersion();
+        }
+
+        private static void TstKwSort()
+        {
+            NLog.LogManager.GetCurrentClassLogger().Info("TstKwSort Begin");
+
+            var targetColsCount = 2;
+
+            var list = new List<string>() { "let", "class", "if", "delete", "case", "switch", "wait" };
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort list = {JsonConvert.SerializeObject(list, Newtonsoft.Json.Formatting.Indented)}");
+
+            list = list.OrderBy(p => p).ToList();
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort list (2) = {JsonConvert.SerializeObject(list, Newtonsoft.Json.Formatting.Indented)}");
+
+            var countInCol = list.Count / targetColsCount;
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort list.Count = {list.Count}");         
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort countInCol = {countInCol}");
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort list.Count % 2 = {list.Count % 2}");
+
+            if((list.Count % 2) > 0)
+            {
+                countInCol++;
+            }
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort countInCol (2) = {countInCol}");
+
+            var counter = countInCol;
+
+            var groupedDict = list.GroupBy(p => counter++/countInCol).ToDictionary(p => p.Key, p => p.ToList());
+
+            NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort groupedDict = {JsonConvert.SerializeObject(groupedDict, Newtonsoft.Json.Formatting.Indented)}");
+
+            for (var i = 0; i < countInCol; i++)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort i = {i}");
+
+                foreach(var groupedItem in groupedDict)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort groupedItem.Value.Count = {groupedItem.Value.Count}");
+
+                    if (groupedItem.Value.Count > i)
+                    {
+                        var val = groupedItem.Value[i];
+
+                        NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort val = {val}");
+                    }
+                    else
+                    {
+                        NLog.LogManager.GetCurrentClassLogger().Info($"TstKwSort val = -");
+                    }
+                }
+            }
+
+            NLog.LogManager.GetCurrentClassLogger().Info("TstKwSort End");
         }
 
         private static void TstAddEBNFGroups()
