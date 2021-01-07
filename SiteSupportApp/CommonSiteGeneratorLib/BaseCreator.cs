@@ -40,7 +40,7 @@ namespace CommonSiteGeneratorLib
 
         private BaseSiteItemsFactory mSiteItemsFactory;
         private BaseDirProcesor mDirProcesor;
-
+        
         public void Run()
         {
             mSiteItemsFactory = GetsiteItemsFactory();
